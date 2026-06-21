@@ -1,16 +1,11 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, Inter } from "next/font/google";
+import { Geist_Mono, Inter } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
-import { ThemeProvider } from "@/component/theme-provider";
-import Navbar from "@/component/navbar";
+import { ThemeProvider } from "@/components/theme-provider";
+import Navbar from "@/components/layout/navbar";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
 
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
@@ -29,11 +24,10 @@ export default function RootLayout({
 }>) {
   return (
     <html
-      lang="en"
+      lang="tr"
+      suppressHydrationWarning
       className={cn(
-        "h-full",
-        "antialiased",
-        geistSans.variable,
+        "h-full antialiased",
         geistMono.variable,
         "font-sans",
         inter.variable,
