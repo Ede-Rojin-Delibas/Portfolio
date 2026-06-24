@@ -12,8 +12,8 @@ type AnimatedTextProps = {
 
 export function AnimatedText({
   text,
-  className,
-  as: Tag = "h1",
+  className, //tailwind css
+  as: Tag = "h1", //hangi HTML etiketleriyle render edilecek(h1 varsayılan)
   delay = 0,
 }: AnimatedTextProps) {
   const words = text.split(" ");
@@ -28,7 +28,7 @@ export function AnimatedText({
           animate={{ opacity: 1, y: 0 }}
           transition={{
             duration: 0.55,
-            delay: delay + index * 0.045,
+            delay: delay + index * 0.045, //stagger animation
             ease: [0.22, 1, 0.36, 1],
           }}
           key={`${word}-${index}`}
