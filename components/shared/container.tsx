@@ -2,13 +2,14 @@ import * as React from "react";
 import { cn } from "@/lib/utils";
 
 const containerSizes = {
-  default: "max-w-6xl",
-  narrow: "max-w-3xl",
-  wide: "max-w-7xl",
+  default: "max-w-6xl", //normal sayfa genişliği
+  narrow: "max-w-3xl", //daha dar içerikler için, yazı/heading alanları
+  wide: "max-w-7xl", //daha geniş grid veya büyük layout'lar için
 };
 
 type ContainerProps = React.ComponentProps<"div"> & {
-  size?: keyof typeof containerSizes;
+  //container normal bir div gibi davranabilir. Yani -id- div proplarını alabilir.
+  size?: keyof typeof containerSizes; //default | narrow | wide gibi değerlerden biri olabilir.
 };
 
 export function Container({
@@ -20,8 +21,8 @@ export function Container({
     <div
       className={cn(
         "mx-auto w-full px-4 sm:px-6 lg:px-8",
-        containerSizes[size],
-        className,
+        containerSizes[size], //seçilen max-width ı uygular.
+        className, //dışarıdan extra class eklememize izin verir.
       )}
       {...props}
     />
