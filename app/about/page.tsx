@@ -9,8 +9,8 @@ export default function AboutPage() {
         description="Bu sayfa daha sonra eğitim, deneyim ve yetkinlik bölümleriyle genişleyecek. Bugün ana layout, tema ve navigation sistemini oturttuğumuz için burada şimdilik temiz bir route iskeleti bırakıyoruz."
       >
         <div className="glass-panel rounded-lg p-6 text-sm leading-7 text-muted-foreground">
-          Next adımda bu alana hakkımda, eğitim, deneyim ve yetkinlik kartlarını
-          ekleyeceğiz.
+          Sonraki adımda bu alana hakkımda, eğitim, deneyim ve yetkinlik
+          kartlarını ekleyeceğiz.
         </div>
       </Section>
     </main>
