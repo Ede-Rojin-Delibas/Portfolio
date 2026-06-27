@@ -1,4 +1,5 @@
 import { FeaturedProjects } from "@/components/sections/featured-projects";
+import { CallToAction } from "@/components/sections/call-to-action";
 import { Hero } from "@/components/sections/hero";
 import { TechStack } from "@/components/sections/tech-stack";
 
@@ -8,6 +9,7 @@ export default function Home() {
       <Hero />
       <TechStack />
       <FeaturedProjects />
+      <CallToAction />
     </main>
   );
 }
