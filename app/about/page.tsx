@@ -1,24 +1,31 @@
+import type { Metadata } from "next";
 import { BriefcaseBusiness, GraduationCap, Sparkles } from "lucide-react";
 import { Reveal } from "@/components/shared/reveal";
 import { Section } from "@/components/shared/section";
 import { StaggerItem, StaggerList } from "@/components/shared/stagger-list";
 import { TechBadge } from "@/components/shared/tech-badge";
 
+export const metadata: Metadata = {
+  title: "About",
+  description:
+    "Learn about Ede-Rojin's frontend, data science, education and technical skills.",
+};
+
 const profileCards = [
   {
     title: "About me",
     icon: Sparkles,
-    body: "I focus on frontend interfaces that feel clear, responsive and intentional. I like combining visual polish with reusable component systems.",
+    body: "I am interested in building interfaces and data products that turn complex information into clear, useful experiences.",
   },
   {
     title: "Education",
     icon: GraduationCap,
-    body: "I keep improving my frontend foundation through project-based learning, UI research and modern React/Next.js practices.",
+    body: "I studied Computer Engineering at Nevsehir Haci Bektas Veli University and keep learning through frontend, AI and data science projects.",
   },
   {
     title: "Experience",
     icon: BriefcaseBusiness,
-    body: "This portfolio is shaped like a product surface: routing, theme handling, motion, project data and responsive layouts work together.",
+    body: "My projects include portfolio interfaces, synthetic data generation, sentiment analysis, customer analytics and machine learning experiments.",
   },
 ];
 
@@ -28,6 +35,9 @@ const skills = [
   "Tailwind CSS",
   "shadcn/ui",
   "Motion",
+  "Python",
+  "Machine Learning",
+  "Data Analysis",
   "Responsive Design",
   "React Hook Form",
   "Zod",
@@ -39,7 +49,7 @@ export default function AboutPage() {
     <main>
       <Section
         eyebrow="About"
-        title="A frontend developer profile with motion, structure and a clear learning path."
+        title="A developer profile shaped by frontend craft, data science and AI systems."
         description="This page turns the basic about content into scannable sections: who I am, how I learn, what I have built and which skills shape the work."
       >
         <div className="grid gap-5 lg:grid-cols-3">

@@ -1,3 +1,6 @@
+//home sayfasının sonunda kullanıcıya bir aksiyona yönlendiren bölüm
+//bir sonraki adımı söyleyen alan
+//iki ana yönlendirme: projeleri görüntüle, iletişime geç
 import Link from "next/link";
 import { ArrowRight, MessageCircle } from "lucide-react";
 import { ParallaxCard } from "@/components/shared/parallax-card";
@@ -7,10 +10,15 @@ import { Button } from "@/components/ui/button";
 
 export function CallToAction() {
   return (
+    //section ile sayfa bölümü haline getirme, wide geniş container
     <Section className="pb-24" containerSize="wide">
-      <ParallaxCard offset={28} className="glass-panel relative overflow-hidden rounded-lg p-6 md:p-10">
+      <ParallaxCard
+        //CTA kutusuna hafif parallax hareketi
+        offset={28}
+        className="glass-panel relative overflow-hidden rounded-lg p-6 md:p-10"
+      >
         <div className="technical-grid absolute inset-0 opacity-60" />
-        <div className="absolute right-0 top-0 h-64 w-64 rounded-full bg-primary/20 blur-3xl" />
+        <div className="absolute inset-y-0 right-0 w-1/2 bg-gradient-to-l from-primary/15 to-transparent" />
         <div className="relative grid gap-8 lg:grid-cols-[1fr_auto] lg:items-center">
           <Reveal direction="left">
             <p className="mb-3 text-xs font-semibold uppercase tracking-[0.24em] text-primary">
@@ -34,7 +42,12 @@ export function CallToAction() {
                   <ArrowRight className="size-4" />
                 </Link>
               </Button>
-              <Button asChild size="lg" variant="outline" className="rounded-md">
+              <Button
+                asChild
+                size="lg"
+                variant="outline"
+                className="rounded-md"
+              >
                 <Link href="/contact">
                   <MessageCircle className="size-4" />
                   Start a conversation

@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeft, ArrowUpRight, Code2, Monitor } from "lucide-react";
@@ -24,6 +25,29 @@ export function generateStaticParams() {
   return projects.map((project) => ({
     slug: project.slug,
   }));
+}
+
+export async function generateMetadata({
+  params,
+}: ProjectDetailPageProps): Promise<Metadata> {
+  const { slug } = await params;
+  const project = projects.find((item) => item.slug === slug);
+
+  if (!project) {
+    return {
+      title: "Project not found",
+    };
+  }
+
+  return {
+    title: project.title,
+    description: project.description,
+    openGraph: {
+      title: project.title,
+      description: project.description,
+      type: "article",
+    },
+  };
 }
 
 export default async function ProjectDetailPage({
@@ -121,7 +145,9 @@ export default async function ProjectDetailPage({
                 </div>
               </div>
 
-              <h2 className="mt-6 text-lg font-semibold tracking-tight">Stack</h2>
+              <h2 className="mt-6 text-lg font-semibold tracking-tight">
+                Stack
+              </h2>
               <div className="mt-4 flex flex-wrap gap-2">
                 {project.tech.map((item) => (
                   <TechBadge key={item}>{item}</TechBadge>

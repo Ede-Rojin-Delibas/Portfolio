@@ -1,5 +1,6 @@
 "use client";
 
+//sitenin navigasyon merkezi. Hem yönlendirme hem tema kontrolü hem de mobil menü
 import * as React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -11,6 +12,7 @@ import { Container } from "@/components/shared/container";
 import { cn } from "@/lib/utils";
 
 const navItems = [
+  //menüde gözükecek linklerin listesi
   { label: "Home", href: "/" },
   { label: "About", href: "/about" },
   { label: "Projects", href: "/projects" },
@@ -18,6 +20,7 @@ const navItems = [
 ];
 
 function isActivePath(pathname: string, href: string) {
+  //bu link şu an aktif mi kontrolü
   if (href === "/") {
     return pathname === "/";
   }
@@ -26,8 +29,8 @@ function isActivePath(pathname: string, href: string) {
 }
 
 export function Navbar() {
-  const pathname = usePathname();
-  const [isOpen, setIsOpen] = React.useState(false);
+  const pathname = usePathname(); //şu anda hangi sayfadayız onu öğrenir.
+  const [isOpen, setIsOpen] = React.useState(false); //mobil menü açık mı kapalı mı bilgisini tutar.
 
   return (
     <header className="sticky top-0 z-50 border-b border-border/60 bg-background/70 backdrop-blur-xl">
@@ -65,7 +68,7 @@ export function Navbar() {
                   )}
                 >
                   {active ? (
-                    <motion.span
+                    <motion.span //desktop menüde aktif linkin arkasındaki küçük highlight animasyonu
                       layoutId="active-nav-item"
                       className="absolute inset-0 rounded-[6px] bg-primary/10 ring-1 ring-primary/20"
                       transition={{
@@ -97,7 +100,9 @@ export function Navbar() {
               variant="ghost"
               size="icon"
               className="size-9 rounded-md border border-border/70 bg-background/50 md:hidden"
-              aria-label={isOpen ? "Close navigation menu" : "Open navigation menu"}
+              aria-label={
+                isOpen ? "Close navigation menu" : "Open navigation menu"
+              }
               onClick={() => setIsOpen((value) => !value)}
             >
               {isOpen ? <X className="size-4" /> : <Menu className="size-4" />}
@@ -106,7 +111,7 @@ export function Navbar() {
         </nav>
 
         <AnimatePresence>
-          {isOpen ? (
+          {isOpen ? ( //mobil menü kapanırken de animasyonlu kapanabilsin diye kullanılır.
             <motion.div
               initial={{ opacity: 0, y: -8 }}
               animate={{ opacity: 1, y: 0 }}

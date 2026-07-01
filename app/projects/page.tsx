@@ -1,6 +1,13 @@
+import type { Metadata } from "next";
 import { projects } from "@/data/projects";
 import { ProjectExplorer } from "@/components/projects/project-explorer";
 import { Section } from "@/components/shared/section";
+
+export const metadata: Metadata = {
+  title: "Projects",
+  description:
+    "Browse searchable and filterable frontend projects built with Next.js, TypeScript and motion-led UI.",
+};
 
 export default function ProjectsPage() {
   return (

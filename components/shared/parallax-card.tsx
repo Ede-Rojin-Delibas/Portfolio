@@ -19,12 +19,14 @@ export function ParallaxCard({
   style,
   ...props
 }: ParallaxCardProps) {
-  const ref = React.useRef<HTMLDivElement>(null);
+  const ref = React.useRef<HTMLDivElement>(null); //bu component in DOM daki gerçek div ini takip etmek için referans oluşturur.
   const { scrollYProgress } = useScroll({
+    // bu component in scroll içindeki ilerlemesini ölçer.
+
     target: ref,
     offset: ["start end", "end start"],
   });
-  const y = useTransform(scrollYProgress, [0, 1], [offset, -offset]);
+  const y = useTransform(scrollYProgress, [0, 1], [offset, -offset]); //scroll değerini hareket değerine çevirir.
 
   return (
     <motion.div

@@ -10,13 +10,17 @@ const footerLinks = [
 ];
 
 const socialLinks = [
-  { label: "GitHub", href: "https://github.com/", icon: Code2 },
   {
-    label: "LinkedIn",
-    href: "https://www.linkedin.com/",
+    label: "GitHub",
+    href: "https://github.com/Ede-Rojin-Delibas",
+    icon: Code2,
+  },
+  {
+    label: "Old Portfolio",
+    href: "https://ede-rojin-delibas.github.io/",
     icon: BriefcaseBusiness,
   },
-  { label: "Email", href: "mailto:hello@example.com", icon: Mail },
+  { label: "Contact", href: "/contact", icon: Mail },
 ];
 
 export function Footer() {
@@ -31,8 +35,9 @@ export function Footer() {
             <span className="font-semibold tracking-tight">Ede-Rojin Portfolio</span>
           </Link>
           <p className="mt-4 max-w-sm text-sm leading-6 text-muted-foreground">
-            Dark-first frontend portfolio built with Next.js, TypeScript,
-            Tailwind CSS, shadcn/ui and motion-driven interactions.
+            Dark-first portfolio for frontend craft, data science projects and
+            AI-focused case studies built with Next.js and motion-led
+            interactions.
           </p>
         </div>
 

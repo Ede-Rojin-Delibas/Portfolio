@@ -2,6 +2,7 @@ import Link from "next/link";
 import { ArrowRight, Sparkles } from "lucide-react";
 import { AnimatedText } from "@/components/shared/animated-text";
 import { Container } from "@/components/shared/container";
+import { ParallaxCard } from "@/components/shared/parallax-card";
 import { Reveal } from "@/components/shared/reveal";
 import { TechBadge } from "@/components/shared/tech-badge";
 import { Button } from "@/components/ui/button";
@@ -11,15 +12,24 @@ const heroTech = [
   "Next.js",
   "TypeScript",
   "Tailwind CSS",
-  "shadcn/ui",
+  "Python",
+  "Machine Learning",
   "Motion",
-  "React Hook Form",
   "Zod",
 ];
 
 export function Hero() {
   return (
     <section className="relative overflow-hidden pt-20 pb-16 md:pt-28 md:pb-24">
+      <ParallaxCard
+        offset={24}
+        className="pointer-events-none absolute inset-x-0 top-8 -z-10 h-[28rem]"
+      >
+        <div className="technical-grid absolute inset-0 opacity-40" />
+        <div className="absolute inset-x-0 top-0 h-48 bg-gradient-to-b from-primary/20 via-accent/10 to-transparent" />
+        <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-background to-transparent" />
+      </ParallaxCard>
+
       <Container className="grid items-center gap-12 lg:grid-cols-[1.05fr_0.95fr]">
         <div>
           <Reveal>
@@ -30,16 +40,16 @@ export function Hero() {
           </Reveal>
 
           <AnimatedText
-            text="Building clean interfaces with depth, motion and technical clarity."
+            text="I do not just analyze data. I design systems that think with it."
             className="text-balance text-5xl font-semibold tracking-tight text-foreground md:text-7xl"
           />
 
           <Reveal delay={0.15}>
             <p className="mt-6 max-w-2xl text-base leading-8 text-muted-foreground md:text-lg">
-              I design and build frontend experiences with Next.js, TypeScript
-              and component-driven UI systems. The goal is simple: responsive,
-              readable and memorable interfaces that feel good in both dark and
-              light mode.
+              I build responsive interfaces with Next.js and TypeScript while
+              bringing a data science perspective into the work. This portfolio
+              connects frontend craft, machine learning projects and clear case
+              study storytelling.
             </p>
           </Reveal>
 
