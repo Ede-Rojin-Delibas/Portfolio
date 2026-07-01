@@ -24,6 +24,12 @@ const contactLinks = [
     icon: ExternalLink,
   },
   {
+    label: "LinkedIn",
+    value: "linkedin.com/in/ede-rojin-delibas",
+    href: "https://www.linkedin.com/in/ede-rojin-deliba%C5%9F/",
+    icon: ExternalLink,
+  },
+  {
     label: "Availability",
     value: "Open to frontend and data projects",
     href: "/projects",
@@ -53,6 +59,12 @@ export default function ContactPage() {
                     <a
                       key={item.label}
                       href={item.href}
+                      target={item.href.startsWith("http") ? "_blank" : undefined}
+                      rel={
+                        item.href.startsWith("http")
+                          ? "noopener noreferrer"
+                          : undefined
+                      }
                       className="rounded-md border border-border/70 bg-background/60 p-4 transition duration-300 hover:-translate-y-1 hover:border-primary/40"
                     >
                       <Icon className="mb-5 size-5 text-primary" />

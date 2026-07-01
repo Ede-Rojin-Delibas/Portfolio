@@ -6,6 +6,7 @@ export type Project = {
   tech: string[];
   github?: string;
   demo?: string;
+  demoLabel?: string;
   featured?: boolean;
   accent: "blue" | "cyan" | "indigo";
   role: string;
@@ -215,6 +216,147 @@ export const projects: Project[] = [
         title: "E-commerce signals",
         description:
           "Product, customer and conversion analysis in a case-study format.",
+      },
+    ],
+  },
+  {
+    slug: "remote-work-calendar",
+    title: "Remote Work Calendar Assistant",
+    category: "Productivity",
+    description:
+      "A remote work productivity assistant with daily goals, smart time blocks, focus routines and progress reporting ideas.",
+    tech: [
+      "JavaScript",
+      "Productivity UX",
+      "Time Blocking",
+      "Pomodoro",
+      "AI Suggestions",
+    ],
+    github: "https://github.com/Ede-Rojin-Delibas/Calendar",
+    demo: "https://github.com/Ede-Rojin-Delibas/Calendar",
+    demoLabel: "Project README",
+    featured: false,
+    accent: "blue",
+    role: "Product Developer",
+    year: "2026",
+    highlights: [
+      "Plans daily work with goals, tasks and time blocks",
+      "Explores AI-assisted focus, mood and energy recommendations",
+      "Frames remote work productivity as a user-centered workflow",
+    ],
+    screenshots: [
+      {
+        title: "Planning surface",
+        description:
+          "Daily goals, todos and suggested work blocks for remote routines.",
+      },
+      {
+        title: "Focus assistant",
+        description:
+          "Pomodoro, energy tracking and weekly progress report concepts.",
+      },
+    ],
+  },
+  {
+    slug: "code-generation-models",
+    title: "Code Generation Models",
+    category: "AI Systems",
+    description:
+      "A research-style project for curating permissive GitHub code and fine-tuning open-source code generation models.",
+    tech: [
+      "Python",
+      "LLM Fine-Tuning",
+      "LoRA",
+      "PEFT",
+      "Streamlit",
+      "Evaluation",
+    ],
+    github: "https://github.com/Ede-Rojin-Delibas/Code-Generation-Models",
+    demo: "https://github.com/Ede-Rojin-Delibas/Code-Generation-Models",
+    demoLabel: "Project README",
+    featured: true,
+    accent: "cyan",
+    role: "AI Developer",
+    year: "2025",
+    highlights: [
+      "Curates permissively licensed GitHub code for model training",
+      "Uses fine-tuning concepts such as PEFT and LoRA",
+      "Includes evaluation and demo planning for code generation quality",
+    ],
+    screenshots: [
+      {
+        title: "Dataset pipeline",
+        description:
+          "Repository ingestion, preprocessing and provenance-aware dataset flow.",
+      },
+      {
+        title: "Model workflow",
+        description:
+          "Fine-tuning, evaluation and demo structure for a code LLM project.",
+      },
+    ],
+  },
+  {
+    slug: "yks-ranking-predictor",
+    title: "YKS Ranking Predictor",
+    category: "Machine Learning",
+    description:
+      "A machine learning system that estimates exam ranking from trial exam net scores for Turkish university exam preparation.",
+    tech: ["Python", "Pandas", "Machine Learning", "API", "Education Analytics"],
+    github: "https://github.com/Ede-Rojin-Delibas/TEKNOFEST",
+    demo: "https://github.com/Ede-Rojin-Delibas/TEKNOFEST",
+    demoLabel: "Project README",
+    featured: false,
+    accent: "indigo",
+    role: "Machine Learning Developer",
+    year: "2025",
+    highlights: [
+      "Supports score prediction from TYT and AYT net values",
+      "Uses past exam data to model education performance signals",
+      "Packages the prediction logic as an API-oriented system",
+    ],
+    screenshots: [
+      {
+        title: "Prediction input",
+        description:
+          "Exam net fields and branch-specific inputs for ranking estimation.",
+      },
+      {
+        title: "Model output",
+        description:
+          "Estimated ranking result designed for student decision support.",
+      },
+    ],
+  },
+  {
+    slug: "onion-architecture-api",
+    title: "Onion Architecture API",
+    category: "Backend",
+    description:
+      "A C# and ASP.NET project collection for practicing layered backend design with Onion Architecture principles.",
+    tech: ["C#", "ASP.NET", "Onion Architecture", "API Design", "Entity Models"],
+    github: "https://github.com/Ede-Rojin-Delibas/Onion-Architecture",
+    demo: "https://github.com/Ede-Rojin-Delibas/Onion-Architecture",
+    demoLabel: "Project README",
+    featured: false,
+    accent: "blue",
+    role: "Backend Developer",
+    year: "2025",
+    highlights: [
+      "Separates domain, application and infrastructure responsibilities",
+      "Practices API structure through different model examples",
+      "Shows backend fundamentals beyond frontend and data projects",
+    ],
+    screenshots: [
+      {
+        title: "Layered structure",
+        description:
+          "Domain, service and API folders organized around separation of concerns.",
+      },
+      {
+        title: "API practice",
+        description:
+          "Entity models and endpoints used to practice backend architecture.",
       },
     ],
   },

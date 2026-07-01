@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { BriefcaseBusiness, GraduationCap, Sparkles } from "lucide-react";
+import { Timeline } from "@/components/about/timeline";
 import { Reveal } from "@/components/shared/reveal";
 import { Section } from "@/components/shared/section";
 import { StaggerItem, StaggerList } from "@/components/shared/stagger-list";
@@ -44,6 +45,37 @@ const skills = [
   "Component Architecture",
 ];
 
+const timelineItems = [
+  {
+    period: "Education",
+    title: "Computer Engineering foundation",
+    description:
+      "Studied Computer Engineering at Nevsehir Haci Bektas Veli University, building a technical base across software, data and systems thinking.",
+    tags: ["Computer Engineering", "Software Fundamentals"],
+  },
+  {
+    period: "Data science",
+    title: "Machine learning and analytics projects",
+    description:
+      "Built projects around synthetic data generation, sentiment analysis, customer churn prediction and e-commerce behavior analysis.",
+    tags: ["Python", "Machine Learning", "Analytics"],
+  },
+  {
+    period: "AI systems",
+    title: "Applied AI and model-oriented work",
+    description:
+      "Explored code generation models, education ranking prediction and AI-assisted productivity workflows through GitHub projects.",
+    tags: ["LLM", "Prediction", "Productivity"],
+  },
+  {
+    period: "Now",
+    title: "Frontend portfolio with data-driven storytelling",
+    description:
+      "Combines Next.js, TypeScript, Tailwind CSS, shadcn/ui, motion and validated forms into a portfolio that presents both frontend and data work.",
+    tags: ["Next.js", "TypeScript", "Motion"],
+  },
+];
+
 export default function AboutPage() {
   return (
     <main>
@@ -79,6 +111,21 @@ export default function AboutPage() {
         </div>
 
         <Reveal delay={0.18}>
+          <div className="mt-8 glass-panel rounded-lg p-5 md:p-6">
+            <div className="mb-6">
+              <p className="text-xs font-semibold uppercase tracking-[0.24em] text-primary">
+                Timeline
+              </p>
+              <h2 className="mt-3 text-2xl font-semibold tracking-tight">
+                A clear path from engineering foundations to AI-focused product
+                work.
+              </h2>
+            </div>
+            <Timeline items={timelineItems} />
+          </div>
+        </Reveal>
+
+        <Reveal delay={0.22}>
           <div className="mt-8 glass-panel rounded-lg p-5 md:p-6">
             <div className="grid gap-6 md:grid-cols-[0.75fr_1.25fr] md:items-start">
               <div>

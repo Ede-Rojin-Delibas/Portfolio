@@ -174,7 +174,7 @@ export default async function ProjectDetailPage({
                       target="_blank"
                       rel="noopener noreferrer"
                     >
-                      Live Demo
+                      {project.demoLabel ?? "Live Demo"}
                       <ArrowUpRight className="size-4" />
                     </Link>
                   </Button>

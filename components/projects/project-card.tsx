@@ -22,6 +22,7 @@ type ProjectCardProps = Pick<
   | "tech"
   | "github"
   | "demo"
+  | "demoLabel"
   | "accent"
 >;
 
@@ -33,6 +34,7 @@ export function ProjectCard({
   tech,
   github,
   demo,
+  demoLabel,
   accent,
 }: ProjectCardProps) {
   return (
@@ -112,7 +114,7 @@ export function ProjectCard({
               rel="noopener noreferrer"
               className="inline-flex h-9 items-center gap-2 rounded-md bg-primary px-3 text-sm font-medium text-primary-foreground transition hover:bg-primary/90"
             >
-              Live Demo
+              {demoLabel ?? "Live Demo"}
               <ArrowUpRight className="size-4" />
             </Link>
           ) : null}

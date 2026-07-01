@@ -1,5 +1,10 @@
 import Link from "next/link";
-import { ArrowUpRight, BriefcaseBusiness, Code2, Mail } from "lucide-react";
+import {
+  ArrowUpRight,
+  BriefcaseBusiness,
+  Code2,
+  Mail,
+} from "lucide-react";
 import { Container } from "@/components/shared/container";
 
 const footerLinks = [
@@ -18,6 +23,11 @@ const socialLinks = [
   {
     label: "Old Portfolio",
     href: "https://ede-rojin-delibas.github.io/",
+    icon: BriefcaseBusiness,
+  },
+  {
+    label: "LinkedIn",
+    href: "https://www.linkedin.com/in/ede-rojin-deliba%C5%9F/",
     icon: BriefcaseBusiness,
   },
   { label: "Contact", href: "/contact", icon: Mail },
