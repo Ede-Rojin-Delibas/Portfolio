@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { Search } from "lucide-react";
+import { Filter, Search } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
 import type { Project } from "@/data/projects";
 import { ProjectCard } from "@/components/projects/project-card";
@@ -23,10 +23,12 @@ export function ProjectExplorer({ projects }: ProjectExplorerProps) {
     [projects],
   );
 
+  const categoryCount = Math.max(categories.length - 1, 0);
+
   const filteredProjects = projects.filter((project) => {
     const matchesCategory =
       activeCategory === "All" || project.category === activeCategory;
-    const searchText = `${project.title} ${project.description} ${project.tech.join(
+    const searchText = `${project.title} ${project.description} ${project.problem} ${project.approach} ${project.outcome} ${project.tech.join(
       " ",
     )}`.toLowerCase();
     const matchesQuery = searchText.includes(query.trim().toLowerCase());
@@ -36,19 +38,36 @@ export function ProjectExplorer({ projects }: ProjectExplorerProps) {
 
   return (
     <div className="space-y-6">
-      <div className="glass-panel grid gap-4 rounded-lg p-4 md:grid-cols-[1fr_auto] md:items-center">
-        <label className="relative block">
-          <Search className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
-          <span className="sr-only">Search projects</span>
-          <input
-            value={query}
-            onChange={(event) => setQuery(event.target.value)}
-            placeholder="Search by title, stack or description"
-            className="h-11 w-full rounded-md border border-border/70 bg-background/70 pl-10 pr-3 text-sm outline-none transition focus:border-primary/50 focus:ring-4 focus:ring-primary/10"
-          />
-        </label>
+      <div className="glass-panel grid gap-5 rounded-lg p-4 md:grid-cols-[1fr_auto] md:items-end">
+        <div>
+          <div className="mb-3 flex flex-wrap items-center justify-between gap-3">
+            <div>
+              <p className="text-xs font-semibold uppercase tracking-[0.22em] text-primary">
+                Search projects
+              </p>
+              <p className="mt-1 text-sm text-muted-foreground">
+                {filteredProjects.length} of {projects.length} projects shown
+              </p>
+            </div>
+            <div className="inline-flex items-center gap-2 rounded-md border border-border/70 bg-background/60 px-3 py-2 text-xs font-medium text-muted-foreground">
+              <Filter className="size-3.5 text-primary" />
+              {categoryCount} categories
+            </div>
+          </div>
 
-        <div className="flex flex-wrap gap-2">
+          <label className="relative block">
+            <Search className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
+            <span className="sr-only">Search projects</span>
+            <input
+              value={query}
+              onChange={(event) => setQuery(event.target.value)}
+              placeholder="Search projects..."
+              className="h-11 w-full rounded-md border border-border/70 bg-background/70 pl-10 pr-3 text-sm outline-none transition focus:border-primary/50 focus:ring-4 focus:ring-primary/10"
+            />
+          </label>
+        </div>
+
+        <div className="flex max-w-2xl flex-wrap gap-2 md:justify-end">
           {categories.map((category) => {
             const active = activeCategory === category;
 

@@ -69,6 +69,19 @@ export function ContactForm() {
           className="glass-panel rounded-lg p-5 md:p-6"
           noValidate
         >
+          <div className="mb-6 border-b border-border/70 pb-5">
+            <p className="text-xs font-semibold uppercase tracking-[0.22em] text-primary">
+              Contact form
+            </p>
+            <h2 className="mt-2 text-2xl font-semibold tracking-tight">
+              Tell me what you want to build.
+            </h2>
+            <p className="mt-2 text-sm leading-6 text-muted-foreground">
+              Name, email, subject and message are checked before the form can
+              be submitted.
+            </p>
+          </div>
+
           <div className="grid gap-4 md:grid-cols-2">
             <FormField
               control={form.control}
@@ -147,7 +160,8 @@ export function ContactForm() {
                   animate={{ opacity: 1, y: 0, scale: 1 }}
                   exit={{ opacity: 0, y: -8, scale: 0.98 }}
                   transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
-                  className="inline-flex items-center gap-2 text-sm text-emerald-500"
+                  aria-live="polite"
+                  className="inline-flex items-center gap-2 rounded-md border border-emerald-500/25 bg-emerald-500/10 px-3 py-2 text-sm text-emerald-500"
                 >
                   <CheckCircle2 className="size-4" />
                   Message format looks good. Email delivery can be connected

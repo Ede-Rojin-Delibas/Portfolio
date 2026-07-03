@@ -11,6 +11,9 @@ export type Project = {
   accent: "blue" | "cyan" | "indigo";
   role: string;
   year: string;
+  problem: string;
+  approach: string;
+  outcome: string;
   highlights: string[];
   screenshots: {
     title: string;
@@ -40,6 +43,12 @@ export const projects: Project[] = [
     accent: "blue",
     role: "Portfolio Developer",
     year: "2026",
+    problem:
+      "A portfolio needed to present technical skills, project work and contact flow in one polished experience.",
+    approach:
+      "Built a responsive Next.js interface with shared project data, animated sections, theme support and validated form handling.",
+    outcome:
+      "Built a searchable and responsive project showcase with theme switching and a validated contact flow.",
     highlights: [
       "Hydration-safe dark/light theme with responsive navigation",
       "Animated hero, scroll reveal sections and interactive project cards",
@@ -71,6 +80,12 @@ export const projects: Project[] = [
     accent: "cyan",
     role: "Portfolio Designer",
     year: "2026",
+    problem:
+      "Earlier work needed a public portfolio surface to introduce data and AI interests.",
+    approach:
+      "Organized selected analytics and machine learning projects into a simple GitHub Pages portfolio.",
+    outcome:
+      "Created a public portfolio foundation that now informs the new professional case-study structure.",
     highlights: [
       "Introduces a data and AI centered personal brand",
       "Collects selected machine learning and analytics projects",
@@ -102,6 +117,12 @@ export const projects: Project[] = [
     accent: "indigo",
     role: "Machine Learning Developer",
     year: "2025",
+    problem:
+      "Working with sensitive datasets can be risky when teams need realistic data for analysis and testing.",
+    approach:
+      "Designed a Flask-based workflow for uploading datasets, generating synthetic data and comparing quality metrics.",
+    outcome:
+      "Produced a full synthetic data workflow with generation, evaluation and downloadable outputs.",
     highlights: [
       "Generates synthetic data from uploaded real datasets",
       "Compares quality with statistical similarity and ML efficacy metrics",
@@ -133,6 +154,12 @@ export const projects: Project[] = [
     accent: "blue",
     role: "AI & Data Developer",
     year: "2025",
+    problem:
+      "Unstructured social media text is difficult to read quickly without automated sentiment signals.",
+    approach:
+      "Prepared a notebook-based NLP workflow for text processing, classification and insight extraction.",
+    outcome:
+      "Turned raw text into readable sentiment categories and analysis notes for portfolio presentation.",
     highlights: [
       "Processes social media text for sentiment signals",
       "Uses notebook-based exploration for transparent analysis",
@@ -170,6 +197,12 @@ export const projects: Project[] = [
     accent: "cyan",
     role: "Machine Learning Developer",
     year: "2025",
+    problem:
+      "Customer churn decisions need clearer signals about which users may leave and why.",
+    approach:
+      "Used exploratory analysis and machine learning practice to frame churn as a decision-support problem.",
+    outcome:
+      "Created a churn prediction case study focused on behavior patterns, risk signals and retention thinking.",
     highlights: [
       "Frames churn as a business decision support problem",
       "Uses exploratory analysis to understand customer behavior",
@@ -201,6 +234,12 @@ export const projects: Project[] = [
     accent: "indigo",
     role: "Data Analyst",
     year: "2025",
+    problem:
+      "E-commerce behavior data can hide useful product, customer and purchase patterns.",
+    approach:
+      "Applied exploratory data analysis and visualization concepts to identify commerce signals.",
+    outcome:
+      "Built a required dynamic project route with an analytics case study around customer behavior.",
     highlights: [
       "Uses exploratory data analysis to read customer behavior",
       "Focuses on purchase patterns and e-commerce performance signals",
@@ -239,6 +278,12 @@ export const projects: Project[] = [
     accent: "blue",
     role: "Product Developer",
     year: "2026",
+    problem:
+      "Remote workers need clearer structure around goals, time blocks and focus routines.",
+    approach:
+      "Designed productivity concepts around daily planning, Pomodoro routines, mood and progress reporting.",
+    outcome:
+      "Outlined a remote work assistant concept that connects planning UX with AI-assisted focus suggestions.",
     highlights: [
       "Plans daily work with goals, tasks and time blocks",
       "Explores AI-assisted focus, mood and energy recommendations",
@@ -278,6 +323,12 @@ export const projects: Project[] = [
     accent: "cyan",
     role: "AI Developer",
     year: "2025",
+    problem:
+      "Code generation models need curated data, fine-tuning plans and evaluation steps to be useful.",
+    approach:
+      "Explored permissive code collection, preprocessing, LoRA/PEFT fine-tuning concepts and demo planning.",
+    outcome:
+      "Documented an AI workflow for code model experimentation from dataset pipeline to evaluation.",
     highlights: [
       "Curates permissively licensed GitHub code for model training",
       "Uses fine-tuning concepts such as PEFT and LoRA",
@@ -310,6 +361,12 @@ export const projects: Project[] = [
     accent: "indigo",
     role: "Machine Learning Developer",
     year: "2025",
+    problem:
+      "Students preparing for YKS need a practical way to estimate ranking from trial exam net scores.",
+    approach:
+      "Modeled ranking prediction around TYT/AYT inputs and education performance data.",
+    outcome:
+      "Built an education analytics case study with API-oriented prediction logic.",
     highlights: [
       "Supports score prediction from TYT and AYT net values",
       "Uses past exam data to model education performance signals",
@@ -342,6 +399,12 @@ export const projects: Project[] = [
     accent: "blue",
     role: "Backend Developer",
     year: "2025",
+    problem:
+      "Backend practice needs clear separation between domain, application and infrastructure concerns.",
+    approach:
+      "Practiced C# and ASP.NET examples using Onion Architecture principles and entity-based API structure.",
+    outcome:
+      "Created a backend architecture case study that demonstrates layered system thinking.",
     highlights: [
       "Separates domain, application and infrastructure responsibilities",
       "Practices API structure through different model examples",

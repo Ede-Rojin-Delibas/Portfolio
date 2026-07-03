@@ -4,6 +4,7 @@ import { AnimatedText } from "@/components/shared/animated-text";
 import { Container } from "@/components/shared/container";
 import { ParallaxCard } from "@/components/shared/parallax-card";
 import { Reveal } from "@/components/shared/reveal";
+import { StaggerItem, StaggerList } from "@/components/shared/stagger-list";
 import { TechBadge } from "@/components/shared/tech-badge";
 import { Button } from "@/components/ui/button";
 import { HeroVisual } from "@/components/sections/hero-visual";
@@ -45,13 +46,19 @@ export function Hero() {
           />
 
           <Reveal delay={0.15}>
-            <p className="mt-6 max-w-2xl text-base leading-8 text-muted-foreground md:text-lg">
-              I am a Computer Engineer who enjoys understanding how systems
-              work, turning data into insight and building reliable software.
-              This portfolio brings backend development, machine learning,
-              data analysis and user-focused interfaces into one engineering
-              story.
-            </p>
+            <div className="mt-6 max-w-2xl space-y-3">
+              <p className="text-base leading-8 text-muted-foreground md:text-lg">
+                I am a Computer Engineer who enjoys understanding how systems
+                work, turning data into insight and building reliable software.
+                This portfolio brings backend development, machine learning,
+                data analysis and user-focused interfaces into one engineering
+                story.
+              </p>
+              <p className="rounded-md border border-primary/25 bg-primary/5 px-4 py-3 text-sm font-medium leading-6 text-foreground shadow-[0_18px_60px_-44px_var(--primary)] dark:bg-primary/10">
+                Focused on backend systems, data analysis, machine learning
+                and clean user interfaces.
+              </p>
+            </div>
           </Reveal>
 
           <Reveal delay={0.25}>
@@ -69,11 +76,13 @@ export function Hero() {
           </Reveal>
 
           <Reveal delay={0.35}>
-            <div className="mt-8 flex flex-wrap gap-2">
+            <StaggerList className="mt-8 flex flex-wrap gap-2" staggerDelay={0.045}>
               {heroTech.map((item) => (
-                <TechBadge key={item}>{item}</TechBadge>
+                <StaggerItem key={item}>
+                  <TechBadge>{item}</TechBadge>
+                </StaggerItem>
               ))}
-            </div>
+            </StaggerList>
           </Reveal>
         </div>
 

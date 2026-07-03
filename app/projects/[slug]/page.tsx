@@ -1,7 +1,15 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ArrowLeft, ArrowUpRight, Code2, Monitor } from "lucide-react";
+import {
+  ArrowLeft,
+  ArrowUpRight,
+  Code2,
+  Lightbulb,
+  Monitor,
+  Route,
+  Target,
+} from "lucide-react";
 import { projects } from "@/data/projects";
 import { ParallaxCard } from "@/components/shared/parallax-card";
 import { Reveal } from "@/components/shared/reveal";
@@ -20,6 +28,24 @@ const accentStyles = {
   cyan: "from-cyan-400/30 via-blue-500/10 to-transparent",
   indigo: "from-indigo-500/30 via-sky-400/10 to-transparent",
 };
+
+const caseStudySections = [
+  {
+    label: "Problem",
+    field: "problem",
+    icon: Lightbulb,
+  },
+  {
+    label: "Approach",
+    field: "approach",
+    icon: Route,
+  },
+  {
+    label: "Outcome",
+    field: "outcome",
+    icon: Target,
+  },
+] as const;
 
 export function generateStaticParams() {
   return projects.map((project) => ({
@@ -107,6 +133,10 @@ export default async function ProjectDetailPage({
                   <span className="text-primary">motion</span>: &quot;scroll
                   reveal, hover, parallax&quot;
                 </p>
+                <p className="mt-2">
+                  <span className="text-primary">outcome</span>: &quot;
+                  {project.outcome}&quot;
+                </p>
               </div>
 
               <div className="relative mt-5 grid gap-4 md:grid-cols-2">
@@ -183,6 +213,36 @@ export default async function ProjectDetailPage({
             </aside>
           </Reveal>
         </div>
+
+        <Reveal delay={0.14}>
+          <div className="mt-8 grid gap-4 md:grid-cols-3">
+            {caseStudySections.map((section, index) => {
+              const Icon = section.icon;
+
+              return (
+                <article
+                  key={section.label}
+                  className="glass-panel rounded-lg p-5 transition duration-300 hover:-translate-y-1 hover:border-primary/40"
+                >
+                  <div className="mb-5 flex items-center justify-between gap-4">
+                    <div className="grid size-10 place-items-center rounded-md border border-primary/25 bg-primary/10 text-primary">
+                      <Icon className="size-5" />
+                    </div>
+                    <span className="font-mono text-xs text-muted-foreground">
+                      0{index + 1}
+                    </span>
+                  </div>
+                  <p className="text-xs font-semibold uppercase tracking-[0.22em] text-primary">
+                    {section.label}
+                  </p>
+                  <p className="mt-3 text-sm leading-7 text-muted-foreground">
+                    {project[section.field]}
+                  </p>
+                </article>
+              );
+            })}
+          </div>
+        </Reveal>
 
         <Reveal delay={0.18}>
           <div className="mt-8 glass-panel rounded-lg p-6">

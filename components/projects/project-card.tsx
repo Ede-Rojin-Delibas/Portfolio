@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { ArrowUpRight, Code2 } from "lucide-react";
+import { ArrowUpRight, Code2, Target } from "lucide-react";
 import { motion } from "motion/react";
 import type { Project } from "@/data/projects";
 import { TechBadge } from "@/components/shared/tech-badge";
@@ -30,6 +30,7 @@ type ProjectCardProps = Pick<
   | "demo"
   | "demoLabel"
   | "accent"
+  | "outcome"
 >;
 
 export function ProjectCard({
@@ -42,13 +43,19 @@ export function ProjectCard({
   demo,
   demoLabel,
   accent,
+  outcome,
 }: ProjectCardProps) {
   return (
     <motion.article
-      whileHover={{ y: -6 }}
+      whileHover={{ y: -8, scale: 1.01 }}
       transition={{ type: "spring", stiffness: 260, damping: 22 }}
-      className="group glass-panel overflow-hidden rounded-lg"
+      className="group glass-panel relative overflow-hidden rounded-lg"
     >
+      <motion.div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-x-6 top-0 h-px bg-gradient-to-r from-transparent via-primary/80 to-transparent opacity-0"
+        whileHover={{ opacity: 1 }}
+      />
       <Link href={`/projects/${slug}`} className="block">
         <div className="relative h-48 overflow-hidden border-b border-border/70 bg-background/60">
           <div
@@ -114,6 +121,14 @@ export function ProjectCard({
         </div>
 
         <p className="text-sm leading-6 text-muted-foreground">{description}</p>
+
+        <div className="rounded-md border border-border/70 bg-background/55 p-3">
+          <div className="mb-2 flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.18em] text-primary">
+            <Target className="size-3.5" />
+            Outcome
+          </div>
+          <p className="text-sm leading-6 text-muted-foreground">{outcome}</p>
+        </div>
 
         <div className="flex flex-wrap gap-2">
           {tech.map((item) => (
