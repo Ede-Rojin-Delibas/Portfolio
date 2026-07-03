@@ -20,7 +20,7 @@ export function Section({
   containerSize = "default",
   ...props
 }: SectionProps) {
-  const hasHeader = eyebrow || title || description; //eğer bunlardan biri varsa section header alanı gösteriliyor. Yoksa sadece children basılıyor.
+  const hasHeader = eyebrow || title || description;
 
   return (
     <section className={cn("py-16 md:py-24", className)} {...props}>

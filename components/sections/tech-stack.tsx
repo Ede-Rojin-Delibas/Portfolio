@@ -1,47 +1,54 @@
-import { Code2, Component, Database, Gauge, Palette, ShieldCheck } from "lucide-react";
+import {
+  BrainCircuit,
+  Code2,
+  Component,
+  Database,
+  Gauge,
+  Network,
+} from "lucide-react";
 import { Reveal } from "@/components/shared/reveal";
 import { Section } from "@/components/shared/section";
 import { TechBadge } from "@/components/shared/tech-badge";
 
 const techGroups = [
   {
-    title: "Framework",
+    title: "Software Engineering",
     icon: Code2,
-    items: ["Next.js App Router", "React", "TypeScript"],
+    items: ["Python", "OOP", "Git & GitHub", "Problem Solving"],
   },
   {
-    title: "Interface",
+    title: "Backend & APIs",
     icon: Component,
-    items: ["Tailwind CSS", "shadcn/ui", "Lucide React"],
+    items: ["Flask", "REST APIs", "SQL", "Backend Development"],
   },
   {
-    title: "Motion",
-    icon: Gauge,
-    items: ["Motion", "Scroll reveal", "Hover states"],
+    title: "AI & Machine Learning",
+    icon: BrainCircuit,
+    items: ["Machine Learning", "Scikit-learn", "Model Evaluation"],
   },
   {
-    title: "Forms",
-    icon: ShieldCheck,
-    items: ["React Hook Form", "Zod", "Validation"],
-  },
-  {
-    title: "Design",
-    icon: Palette,
-    items: ["Dark mode", "Light mode", "Glass UI"],
-  },
-  {
-    title: "Data",
+    title: "Data Analysis",
     icon: Database,
-    items: ["Project data", "Dynamic routes", "SEO-ready"],
+    items: ["Pandas", "NumPy", "EDA", "Data Visualization"],
+  },
+  {
+    title: "Systems Foundation",
+    icon: Network,
+    items: ["Networking Fundamentals", "Linux", "Cloud Concepts"],
+  },
+  {
+    title: "Interface Delivery",
+    icon: Gauge,
+    items: ["Next.js", "TypeScript", "Tailwind CSS", "Motion"],
   },
 ];
 
 export function TechStack() {
   return (
     <Section
-      eyebrow="Stack"
-      title="A component system that matches the brief."
-      description="These badges make the required technologies visible without turning the page into a checklist."
+      eyebrow="Engineering toolkit"
+      title="A practical stack for software, data and intelligent systems."
+      description="The technologies are grouped by engineering purpose: backend work, data analysis, machine learning, system fundamentals and user-facing delivery."
       className="pt-8"
     >
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">

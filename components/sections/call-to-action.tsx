@@ -1,6 +1,4 @@
-//home sayfasının sonunda kullanıcıya bir aksiyona yönlendiren bölüm
-//bir sonraki adımı söyleyen alan
-//iki ana yönlendirme: projeleri görüntüle, iletişime geç
+import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, MessageCircle } from "lucide-react";
 import { ParallaxCard } from "@/components/shared/parallax-card";
@@ -10,27 +8,35 @@ import { Button } from "@/components/ui/button";
 
 export function CallToAction() {
   return (
-    //section ile sayfa bölümü haline getirme, wide geniş container
     <Section className="pb-24" containerSize="wide">
       <ParallaxCard
-        //CTA kutusuna hafif parallax hareketi
         offset={28}
         className="glass-panel relative overflow-hidden rounded-lg p-6 md:p-10"
       >
-        <div className="technical-grid absolute inset-0 opacity-60" />
-        <div className="absolute inset-y-0 right-0 w-1/2 bg-gradient-to-l from-primary/15 to-transparent" />
+        <div className="technical-grid absolute inset-0 opacity-45" />
+        <div className="absolute inset-y-0 right-0 hidden w-1/2 overflow-hidden opacity-45 md:block">
+          <Image
+            src="/images/ai-engineering-hero.png"
+            alt=""
+            fill
+            sizes="50vw"
+            className="object-cover"
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-background via-background/60 to-transparent" />
+        </div>
+
         <div className="relative grid gap-8 lg:grid-cols-[1fr_auto] lg:items-center">
           <Reveal direction="left">
             <p className="mb-3 text-xs font-semibold uppercase tracking-[0.24em] text-primary">
-              Next step
+              Build practical impact
             </p>
             <h2 className="text-balance text-3xl font-semibold tracking-tight md:text-5xl">
-              Want to see how the full portfolio experience comes together?
+              Explore the work, then continue the engineering conversation.
             </h2>
             <p className="mt-4 max-w-2xl text-base leading-7 text-muted-foreground md:text-lg">
-              Explore the project library or jump directly to contact. This
-              section works as a clear conversion point after the animated
-              content blocks.
+              My goal is to design intelligent systems, build reliable software
+              and contribute to projects where technology creates meaningful
+              value.
             </p>
           </Reveal>
 
@@ -38,7 +44,7 @@ export function CallToAction() {
             <div className="flex flex-col gap-3 sm:flex-row lg:flex-col">
               <Button asChild size="lg" className="rounded-md">
                 <Link href="/projects">
-                  View all projects
+                  View projects
                   <ArrowRight className="size-4" />
                 </Link>
               </Button>

@@ -24,7 +24,7 @@ export const projects: Project[] = [
     title: "Ede-Rojin Portfolio",
     category: "Portfolio",
     description:
-      "A dark-first developer portfolio built with Next.js, motion, project filtering, theme switching and a validated contact workflow.",
+      "A dark-first intelligent systems portfolio built with Next.js, motion, project filtering, theme switching and a validated contact workflow.",
     tech: [
       "Next.js",
       "TypeScript",
@@ -38,7 +38,7 @@ export const projects: Project[] = [
     demo: "https://portfolio-tan-theta-86.vercel.app",
     featured: true,
     accent: "blue",
-    role: "Frontend Developer",
+    role: "Portfolio Developer",
     year: "2026",
     highlights: [
       "Hydration-safe dark/light theme with responsive navigation",
@@ -64,7 +64,7 @@ export const projects: Project[] = [
     category: "Portfolio",
     description:
       "A previous portfolio focused on data science, AI systems and analytics case studies with a personal introduction.",
-    tech: ["HTML", "CSS", "JavaScript", "GitHub Pages", "Data Science"],
+    tech: ["HTML", "CSS", "JavaScript", "GitHub Pages", "Data Analysis"],
     github: "https://github.com/Ede-Rojin-Delibas/Ede-Rojin-Delibas.github.io",
     demo: "https://ede-rojin-delibas.github.io/",
     featured: true,
@@ -92,7 +92,7 @@ export const projects: Project[] = [
   {
     slug: "synthetic-data-generator",
     title: "Synthetic Data Generator",
-    category: "AI Systems",
+    category: "AI & Data",
     description:
       "A Flask-based system for generating synthetic datasets, comparing quality metrics and protecting sensitive data workflows.",
     tech: ["Python", "Flask", "SDV", "SDMetrics", "Pandas", "Data Privacy"],
@@ -123,7 +123,7 @@ export const projects: Project[] = [
   {
     slug: "sentiment-analysis",
     title: "Sentiment Analysis",
-    category: "Data Science",
+    category: "AI & Data",
     description:
       "A social media sentiment analysis project that classifies text signals and turns opinion data into readable insights.",
     tech: ["Python", "Jupyter Notebook", "NLP", "Text Classification", "Pandas"],
@@ -131,7 +131,7 @@ export const projects: Project[] = [
     demo: "https://ede-rojin-delibas.github.io/",
     featured: false,
     accent: "blue",
-    role: "Data Science Developer",
+    role: "AI & Data Developer",
     year: "2025",
     highlights: [
       "Processes social media text for sentiment signals",
@@ -154,7 +154,7 @@ export const projects: Project[] = [
   {
     slug: "customer-churn-prediction",
     title: "Customer Churn Prediction",
-    category: "Machine Learning",
+    category: "AI & Data",
     description:
       "A machine learning case study focused on predicting churn risk and supporting customer retention decisions.",
     tech: [
@@ -191,7 +191,7 @@ export const projects: Project[] = [
   {
     slug: "e-commerce-platform",
     title: "E-Commerce Analytics Platform",
-    category: "E-commerce",
+    category: "AI & Data",
     description:
       "An exploratory analytics project for understanding customer behavior, product patterns and e-commerce decision signals.",
     tech: ["Python", "EDA", "Data Visualization", "Customer Behavior", "Analytics"],
@@ -222,7 +222,7 @@ export const projects: Project[] = [
   {
     slug: "remote-work-calendar",
     title: "Remote Work Calendar Assistant",
-    category: "Productivity",
+    category: "Productivity Systems",
     description:
       "A remote work productivity assistant with daily goals, smart time blocks, focus routines and progress reporting ideas.",
     tech: [
@@ -260,7 +260,7 @@ export const projects: Project[] = [
   {
     slug: "code-generation-models",
     title: "Code Generation Models",
-    category: "AI Systems",
+    category: "AI & Data",
     description:
       "A research-style project for curating permissive GitHub code and fine-tuning open-source code generation models.",
     tech: [
@@ -299,7 +299,7 @@ export const projects: Project[] = [
   {
     slug: "yks-ranking-predictor",
     title: "YKS Ranking Predictor",
-    category: "Machine Learning",
+    category: "AI & Data",
     description:
       "A machine learning system that estimates exam ranking from trial exam net scores for Turkish university exam preparation.",
     tech: ["Python", "Pandas", "Machine Learning", "API", "Education Analytics"],
@@ -331,7 +331,7 @@ export const projects: Project[] = [
   {
     slug: "onion-architecture-api",
     title: "Onion Architecture API",
-    category: "Backend",
+    category: "Backend Systems",
     description:
       "A C# and ASP.NET project collection for practicing layered backend design with Onion Architecture principles.",
     tech: ["C#", "ASP.NET", "Onion Architecture", "API Design", "Entity Models"],

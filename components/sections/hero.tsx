@@ -9,13 +9,13 @@ import { Button } from "@/components/ui/button";
 import { HeroVisual } from "@/components/sections/hero-visual";
 
 const heroTech = [
-  "Next.js",
-  "TypeScript",
-  "Tailwind CSS",
   "Python",
+  "Flask",
   "Machine Learning",
-  "Motion",
-  "Zod",
+  "REST APIs",
+  "SQL",
+  "Data Analysis",
+  "Next.js",
 ];
 
 export function Hero() {
@@ -35,21 +35,22 @@ export function Hero() {
           <Reveal>
             <div className="mb-6 inline-flex items-center gap-2 rounded-md border border-primary/25 bg-primary/10 px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.18em] text-primary">
               <Sparkles className="size-3.5" />
-              Dark-first developer portfolio
+              Computer Engineering for Intelligent Systems
             </div>
           </Reveal>
 
           <AnimatedText
-            text="I do not just analyze data. I design systems that think with it."
+            text="Building practical technology from data, software and intelligent systems."
             className="text-balance text-5xl font-semibold tracking-tight text-foreground md:text-7xl"
           />
 
           <Reveal delay={0.15}>
             <p className="mt-6 max-w-2xl text-base leading-8 text-muted-foreground md:text-lg">
-              I build responsive interfaces with Next.js and TypeScript while
-              bringing a data science perspective into the work. This portfolio
-              connects frontend craft, machine learning projects and clear case
-              study storytelling.
+              I am a Computer Engineer who enjoys understanding how systems
+              work, turning data into insight and building reliable software.
+              This portfolio brings backend development, machine learning,
+              data analysis and user-focused interfaces into one engineering
+              story.
             </p>
           </Reveal>
 

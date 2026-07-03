@@ -6,16 +6,16 @@ import { Section } from "@/components/shared/section";
 export const metadata: Metadata = {
   title: "Projects",
   description:
-    "Browse searchable and filterable frontend projects built with Next.js, TypeScript and motion-led UI.",
+    "Browse searchable and filterable computer engineering projects across backend development, data analysis, machine learning and intelligent systems.",
 };
 
 export default function ProjectsPage() {
   return (
     <main>
       <Section
-        eyebrow="Projects"
-        title="Project library"
-        description="Search and filter the project list by category, title, stack or description. The animated grid makes changes easier to follow."
+        eyebrow="Systems library"
+        title="Project case studies across software, AI, data and systems."
+        description="Search and filter the work by category, title, stack or description. Each card is framed around the problem, the engineering approach and the value of the output."
       >
         <ProjectExplorer projects={projects} />
       </Section>

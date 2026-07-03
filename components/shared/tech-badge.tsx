@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Badge } from "@/components/ui/badge"; //shadcn/ui dan gelen badge componentleri kullanılıyor.
+import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 
 type TechBadgeProps = React.ComponentProps<typeof Badge>;

@@ -150,8 +150,8 @@ export function ContactForm() {
                   className="inline-flex items-center gap-2 text-sm text-emerald-500"
                 >
                   <CheckCircle2 className="size-4" />
-                  Form validated successfully. Email integration can be
-                  connected next.
+                  Message format looks good. Email delivery can be connected
+                  next.
                 </motion.p>
               ) : (
                 <motion.p
@@ -162,8 +162,8 @@ export function ContactForm() {
                   transition={{ duration: 0.22 }}
                   className="text-sm text-muted-foreground"
                 >
-                  Validation runs with React Hook Form and Zod before
-                  submission.
+                  Share the project context, goal and the kind of collaboration
+                  you have in mind.
                 </motion.p>
               )}
             </AnimatePresence>

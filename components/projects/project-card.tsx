@@ -13,6 +13,12 @@ const accentStyles = {
   indigo: "from-indigo-500/30 via-sky-400/10 to-transparent",
 };
 
+const signalStyles = {
+  blue: "bg-blue-400/75",
+  cyan: "bg-cyan-300/75",
+  indigo: "bg-indigo-400/75",
+};
+
 type ProjectCardProps = Pick<
   Project,
   | "slug"
@@ -52,6 +58,7 @@ export function ProjectCard({
             )}
           />
           <div className="technical-grid absolute inset-0" />
+          <div className="absolute inset-x-8 top-8 h-px bg-gradient-to-r from-transparent via-foreground/30 to-transparent" />
           <div className="absolute left-4 right-4 top-4 rounded-md border border-border/70 bg-background/80 p-3 font-mono text-[11px] shadow-2xl backdrop-blur-md">
             <div className="mb-3 flex items-center gap-1.5">
               <span className="size-2 rounded-full bg-red-400/80" />
@@ -71,6 +78,25 @@ export function ProjectCard({
                 stack: <span className="text-accent">{tech[0]}</span>,
               </div>
               <div>{"}"}</div>
+            </div>
+          </div>
+
+          <div className="absolute bottom-4 left-4 right-4 flex items-end justify-between gap-4">
+            <div className="flex h-10 items-end gap-1.5">
+              {[42, 26, 34, 18, 38, 30].map((height, index) => (
+                <span
+                  aria-hidden="true"
+                  key={`${title}-${height}-${index}`}
+                  className={cn(
+                    "w-2 rounded-t-sm shadow-[0_0_18px_currentColor]",
+                    signalStyles[accent],
+                  )}
+                  style={{ height }}
+                />
+              ))}
+            </div>
+            <div className="rounded-md border border-border/70 bg-background/80 px-2.5 py-1.5 text-[11px] font-medium text-muted-foreground backdrop-blur-md">
+              {tech[0]} signal
             </div>
           </div>
         </div>

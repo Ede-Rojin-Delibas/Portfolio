@@ -10,9 +10,9 @@ export function FeaturedProjects() {
   return (
     <Section
       id="featured-projects"
-      eyebrow="Selected work"
-      title="Featured project cards with a technical UI feel."
-      description="Each card previews the project like a small product surface: category, stack, detail route, GitHub and live demo actions."
+      eyebrow="Selected systems"
+      title="Case studies in software, data and intelligent systems."
+      description="Each card presents one practical engineering problem: what it solves, which tools it uses, and how the work connects to real-world value."
     >
       <div className="grid gap-5 lg:grid-cols-3">
         {featuredProjects.map((project, index) => (

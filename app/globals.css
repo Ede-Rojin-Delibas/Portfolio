@@ -81,6 +81,9 @@
   --sidebar-accent-foreground: oklch(0.205 0 0);
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
+  --page-grid-line: color-mix(in oklch, var(--primary) 7%, transparent);
+  --technical-grid-line: color-mix(in oklch, var(--primary) 12%, transparent);
+  --technical-grid-dot: color-mix(in oklch, var(--accent) 12%, transparent);
 }
 
 .dark {
@@ -115,6 +118,9 @@
   --sidebar-accent-foreground: oklch(0.985 0 0);
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.556 0 0);
+  --page-grid-line: color-mix(in oklch, var(--foreground) 5%, transparent);
+  --technical-grid-line: color-mix(in oklch, var(--foreground) 9%, transparent);
+  --technical-grid-dot: color-mix(in oklch, var(--accent) 18%, transparent);
 }
 
 @layer base {
@@ -127,12 +133,9 @@
   }
   body {
     @apply min-h-screen bg-background text-foreground;
-    background-image:
-      radial-gradient(circle at 50% -20%, color-mix(in oklch, var(--primary) 24%, transparent), transparent 34rem),
-      radial-gradient(circle at 85% 12%, color-mix(in oklch, var(--accent) 16%, transparent), transparent 28rem),
-      linear-gradient(color-mix(in oklch, var(--foreground) 5%, transparent) 1px, transparent 1px),
-      linear-gradient(90deg, color-mix(in oklch, var(--foreground) 5%, transparent) 1px, transparent 1px);
-    background-size: auto, auto, 72px 72px, 72px 72px;
+    background:
+      linear-gradient(180deg, color-mix(in oklch, var(--background) 84%, var(--primary) 16%) 0%, var(--background) 34rem),
+      var(--background);
     background-attachment: fixed;
   }
   ::selection {
@@ -141,6 +144,60 @@
 }
 
 @layer utilities {
+  .site-background {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    overflow: hidden;
+    pointer-events: none;
+    background:
+      linear-gradient(115deg, color-mix(in oklch, var(--primary) 10%, transparent) 0%, transparent 36%),
+      linear-gradient(245deg, color-mix(in oklch, var(--accent) 11%, transparent) 2%, transparent 42%),
+      linear-gradient(180deg, transparent 0%, color-mix(in oklch, var(--background) 70%, transparent) 68%, var(--background) 100%);
+  }
+
+  .site-background__grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(var(--page-grid-line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--page-grid-line) 1px, transparent 1px),
+      linear-gradient(135deg, color-mix(in oklch, var(--accent) 5%, transparent) 1px, transparent 1px);
+    background-size: 92px 92px, 92px 92px, 184px 184px;
+    mask-image: linear-gradient(to bottom, black 0%, black 64%, transparent 100%);
+  }
+
+  .site-background__beam {
+    position: absolute;
+    inset-inline: -12%;
+    height: 34rem;
+    transform: rotate(-8deg);
+    filter: blur(26px);
+    opacity: 0.72;
+  }
+
+  .site-background__beam--primary {
+    top: -18rem;
+    background: linear-gradient(90deg, transparent, color-mix(in oklch, var(--primary) 22%, transparent), transparent);
+  }
+
+  .site-background__beam--accent {
+    top: 18rem;
+    transform: rotate(10deg);
+    background: linear-gradient(90deg, transparent, color-mix(in oklch, var(--accent) 16%, transparent), transparent);
+    opacity: 0.42;
+  }
+
+  .site-background__noise {
+    position: absolute;
+    inset: 0;
+    opacity: 0.26;
+    background-image:
+      repeating-linear-gradient(0deg, color-mix(in oklch, var(--foreground) 3%, transparent) 0 1px, transparent 1px 4px),
+      repeating-linear-gradient(90deg, color-mix(in oklch, var(--foreground) 2%, transparent) 0 1px, transparent 1px 5px);
+    mix-blend-mode: soft-light;
+  }
+
   .glass-panel {
     @apply border border-border/70 bg-card/70 backdrop-blur-xl;
     box-shadow: 0 24px 80px -48px color-mix(in oklch, var(--primary) 85%, transparent);
@@ -148,12 +205,21 @@
 
   .technical-grid {
     background-image:
-      linear-gradient(color-mix(in oklch, var(--foreground) 9%, transparent) 1px, transparent 1px),
-      linear-gradient(90deg, color-mix(in oklch, var(--foreground) 9%, transparent) 1px, transparent 1px);
-    background-size: 28px 28px;
+      linear-gradient(var(--technical-grid-line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--technical-grid-line) 1px, transparent 1px),
+      radial-gradient(circle at 1px 1px, var(--technical-grid-dot) 1px, transparent 1.6px);
+    background-size: 32px 32px, 32px 32px, 96px 96px;
+    background-position: center;
   }
 
   .text-balance {
     text-wrap: balance;
+  }
+
+  .contact-map-grid {
+    background-image:
+      linear-gradient(var(--technical-grid-line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--technical-grid-line) 1px, transparent 1px);
+    background-size: 28px 28px;
   }
 }

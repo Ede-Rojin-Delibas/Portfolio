@@ -1,7 +1,9 @@
-# Ede-Rojin Portfolio
+# Ede-Rojin Computer Engineering Portfolio
 
-Dark-first frontend portfolio built with Next.js App Router, TypeScript,
-Tailwind CSS, shadcn/ui, Motion, React Hook Form and Zod.
+Dark-first computer engineering portfolio focused on practical software,
+backend development, data analysis, machine learning and intelligent systems.
+Built with Next.js App Router, TypeScript, Tailwind CSS, shadcn/ui, Motion,
+React Hook Form and Zod.
 
 ## Features
 
@@ -13,6 +15,8 @@ Tailwind CSS, shadcn/ui, Motion, React Hook Form and Zod.
 - Dynamic project detail routes under `/projects/[slug]`
 - Contact form validation with React Hook Form and Zod
 - SEO metadata and Open Graph/Twitter metadata
+- Software, backend, AI, data and system-oriented projects presented under one
+  coherent computer engineering narrative
 
 ## Tech Stack
 

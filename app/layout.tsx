@@ -4,39 +4,45 @@ import { cn } from "@/lib/utils";
 import { ThemeProvider } from "@/components/theme-provider";
 import Navbar from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
+import { SiteBackground } from "@/components/layout/site-background";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://ede-rojin.vercel.app"),
   title: {
-    default: "Ede-Rojin | Frontend Portfolio",
+    default: "Ede-Rojin | Computer Engineering for Intelligent Systems",
     template: "%s | Ede-Rojin",
   },
   description:
-    "Dark-first frontend portfolio built with Next.js, TypeScript, Tailwind CSS, shadcn/ui, Motion, React Hook Form and Zod.",
+    "Computer engineering portfolio focused on practical software, backend development, data analysis, machine learning and intelligent systems.",
   keywords: [
-    "Frontend Developer",
-    "Next.js",
+    "Computer Engineering",
+    "Software Engineering",
+    "Artificial Intelligence",
+    "Machine Learning",
+    "Data Analysis",
+    "Backend Development",
+    "Flask",
+    "Python",
+    "SQL",
+    "REST API",
     "TypeScript",
-    "Tailwind CSS",
-    "shadcn/ui",
-    "React Hook Form",
-    "Zod",
+    "Next.js",
     "Portfolio",
   ],
   authors: [{ name: "Ede-Rojin" }],
   openGraph: {
-    title: "Ede-Rojin | Frontend Portfolio",
+    title: "Ede-Rojin | Computer Engineering for Intelligent Systems",
     description:
-      "A dark-first developer portfolio with animated project surfaces and validated contact workflows.",
+      "A portfolio for practical software, backend, AI, data and system-oriented engineering work.",
     url: "https://ede-rojin.vercel.app",
-    siteName: "Ede-Rojin Portfolio",
+    siteName: "Ede-Rojin Computer Engineering Portfolio",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Ede-Rojin | Frontend Portfolio",
+    title: "Ede-Rojin | Computer Engineering for Intelligent Systems",
     description:
-      "Next.js portfolio with motion, project filtering, dark/light theme and form validation.",
+      "Computer engineering portfolio with software, AI, data and backend case studies.",
   },
   robots: {
     index: true,
@@ -51,7 +57,7 @@ export default function RootLayout({
 }>) {
   return (
     <html
-      lang="tr"
+      lang="en"
       suppressHydrationWarning
       className={cn(
         "dark h-full antialiased",
@@ -60,7 +66,8 @@ export default function RootLayout({
     >
       <body className="min-h-full">
         <ThemeProvider>
-          <div className="flex min-h-screen flex-col">
+          <SiteBackground />
+          <div className="relative z-10 flex min-h-screen flex-col">
             <Navbar />
             <div className="flex-1">{children}</div>
             <Footer />
