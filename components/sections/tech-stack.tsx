@@ -6,6 +6,13 @@ import {
   Gauge,
   Network,
 } from "lucide-react";
+import {
+  AnimatedBeam,
+  AnimatedCircularProgress,
+  AuroraText,
+  IconCloud,
+  TechMarquee,
+} from "@/components/shared/animation-effects";
 import { Reveal } from "@/components/shared/reveal";
 import { Section } from "@/components/shared/section";
 import { TechBadge } from "@/components/shared/tech-badge";
@@ -43,6 +50,52 @@ const techGroups = [
   },
 ];
 
+const iconCloudItems = [
+  "PY",
+  "TS",
+  "SQL",
+  "AI",
+  "ML",
+  "API",
+  "GIT",
+  "UX",
+  "EDA",
+  "LIN",
+];
+
+const marqueeItems = [
+  "Python",
+  "Flask",
+  "SQL",
+  "REST API",
+  "Pandas",
+  "NumPy",
+  "Scikit-learn",
+  "Next.js",
+  "TypeScript",
+  "Tailwind CSS",
+  "GitHub",
+  "Linux",
+];
+
+const progressItems = [
+  {
+    label: "Backend systems",
+    value: 86,
+    detail: "APIs, data flow and structured application logic.",
+  },
+  {
+    label: "AI & data",
+    value: 82,
+    detail: "ML workflows, EDA and model evaluation practice.",
+  },
+  {
+    label: "Interface delivery",
+    value: 78,
+    detail: "Responsive UI, interaction states and motion details.",
+  },
+];
+
 export function TechStack() {
   return (
     <Section
@@ -51,6 +104,55 @@ export function TechStack() {
       description="The technologies are grouped by engineering purpose: backend work, data analysis, machine learning, system fundamentals and user-facing delivery."
       className="pt-8"
     >
+      <div className="mb-5 grid gap-4 lg:grid-cols-[1.2fr_0.8fr]">
+        <Reveal direction="left">
+          <div className="glass-panel relative min-h-80 overflow-hidden rounded-lg p-5 md:p-6">
+            <div className="technical-grid absolute inset-0 opacity-45" />
+            <AnimatedBeam className="opacity-90" />
+            <div className="relative grid gap-6 md:grid-cols-[0.8fr_1.2fr] md:items-center">
+              <div>
+                <p className="text-xs font-semibold uppercase tracking-[0.22em] text-primary">
+                  Animated beam map
+                </p>
+                <h3 className="mt-3 text-2xl font-semibold tracking-tight">
+                  A connected stack for{" "}
+                  <AuroraText>software, AI and data</AuroraText>.
+                </h3>
+                <p className="mt-3 text-sm leading-7 text-muted-foreground">
+                  The beam layer connects the core areas visually: backend,
+                  analysis, machine learning and interface delivery.
+                </p>
+              </div>
+              <IconCloud items={iconCloudItems} />
+            </div>
+          </div>
+        </Reveal>
+
+        <Reveal direction="right" delay={0.08}>
+          <div className="glass-panel grid h-full gap-4 rounded-lg p-5 md:p-6">
+            <div>
+              <p className="text-xs font-semibold uppercase tracking-[0.22em] text-primary">
+                Circular progress
+              </p>
+              <h3 className="mt-3 text-2xl font-semibold tracking-tight">
+                Focus distribution
+              </h3>
+            </div>
+            <div className="grid gap-4">
+              {progressItems.map((item) => (
+                <AnimatedCircularProgress key={item.label} {...item} />
+              ))}
+            </div>
+          </div>
+        </Reveal>
+      </div>
+
+      <Reveal delay={0.1}>
+        <div className="mb-5 glass-panel rounded-lg p-3">
+          <TechMarquee items={marqueeItems} />
+        </div>
+      </Reveal>
+
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
         {techGroups.map((group, index) => {
           const Icon = group.icon;

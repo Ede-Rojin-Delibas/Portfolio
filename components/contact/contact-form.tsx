@@ -6,6 +6,7 @@ import { CheckCircle2, Send } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import { BorderBeam } from "@/components/shared/animation-effects";
 import { Reveal } from "@/components/shared/reveal";
 import { Button } from "@/components/ui/button";
 import {
@@ -66,9 +67,10 @@ export function ContactForm() {
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
-          className="glass-panel rounded-lg p-5 md:p-6"
+          className="glass-panel relative overflow-hidden rounded-lg p-5 md:p-6"
           noValidate
         >
+          <BorderBeam />
           <div className="mb-6 border-b border-border/70 pb-5">
             <p className="text-xs font-semibold uppercase tracking-[0.22em] text-primary">
               Contact form

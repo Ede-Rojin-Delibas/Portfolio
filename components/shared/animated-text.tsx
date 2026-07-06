@@ -24,10 +24,18 @@ export function AnimatedText({
         <motion.span
           aria-hidden="true"
           className="inline-block pr-[0.22em]"
-          initial={{ opacity: 0, y: 18 }}
-          animate={{ opacity: 1, y: 0 }}
+          initial={{
+            opacity: 0,
+            y: 24,
+            clipPath: "polygon(0 100%, 100% 100%, 100% 100%, 0 100%)",
+          }}
+          animate={{
+            opacity: 1,
+            y: 0,
+            clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)",
+          }}
           transition={{
-            duration: 0.55,
+            duration: 0.7,
             delay: delay + index * 0.045,
             ease: [0.22, 1, 0.36, 1],
           }}

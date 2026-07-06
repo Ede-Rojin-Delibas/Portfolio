@@ -1,5 +1,10 @@
 import Link from "next/link";
 import { ArrowRight, Sparkles } from "lucide-react";
+import {
+  AuroraText,
+  HyperText,
+  WordRotate,
+} from "@/components/shared/animation-effects";
 import { AnimatedText } from "@/components/shared/animated-text";
 import { Container } from "@/components/shared/container";
 import { ParallaxCard } from "@/components/shared/parallax-card";
@@ -36,14 +41,30 @@ export function Hero() {
           <Reveal>
             <div className="mb-6 inline-flex items-center gap-2 rounded-md border border-primary/25 bg-primary/10 px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.18em] text-primary">
               <Sparkles className="size-3.5" />
-              Computer Engineering for Intelligent Systems
+              <HyperText text="Computer Engineering for Intelligent Systems" />
             </div>
           </Reveal>
 
-          <AnimatedText
-            text="Building practical technology from data, software and intelligent systems."
-            className="text-balance text-5xl font-semibold tracking-tight text-foreground md:text-7xl"
-          />
+          <div>
+            <AnimatedText
+              text="Building practical technology from data, software and intelligent systems."
+              className="text-balance text-5xl font-semibold tracking-tight text-foreground md:text-7xl"
+            />
+            <Reveal delay={0.08}>
+              <p className="mt-4 text-lg font-medium text-muted-foreground md:text-2xl">
+                Currently shaping{" "}
+                <WordRotate
+                  className="min-w-56 text-left text-foreground"
+                  words={[
+                    "backend systems",
+                    "machine learning workflows",
+                    "data-driven products",
+                    "clean interfaces",
+                  ]}
+                />
+              </p>
+            </Reveal>
+          </div>
 
           <Reveal delay={0.15}>
             <div className="mt-6 max-w-2xl space-y-3">
@@ -55,15 +76,16 @@ export function Hero() {
                 story.
               </p>
               <p className="rounded-md border border-primary/25 bg-primary/5 px-4 py-3 text-sm font-medium leading-6 text-foreground shadow-[0_18px_60px_-44px_var(--primary)] dark:bg-primary/10">
-                Focused on backend systems, data analysis, machine learning
-                and clean user interfaces.
+                Focused on{" "}
+                <AuroraText>backend systems, data analysis, machine learning</AuroraText>
+                {" "}and clean user interfaces.
               </p>
             </div>
           </Reveal>
 
           <Reveal delay={0.25}>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-              <Button asChild size="lg" className="rounded-md">
+              <Button asChild size="lg" className="rainbow-button rounded-md">
                 <Link href="/projects">
                   View projects
                   <ArrowRight className="size-4" />

@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, MessageCircle } from "lucide-react";
+import { AuroraText } from "@/components/shared/animation-effects";
 import { ParallaxCard } from "@/components/shared/parallax-card";
 import { Reveal } from "@/components/shared/reveal";
 import { Section } from "@/components/shared/section";
@@ -31,7 +32,8 @@ export function CallToAction() {
               Build practical impact
             </p>
             <h2 className="text-balance text-3xl font-semibold tracking-tight md:text-5xl">
-              Explore the work, then continue the engineering conversation.
+              Explore the work, then continue the{" "}
+              <AuroraText>engineering conversation</AuroraText>.
             </h2>
             <p className="mt-4 max-w-2xl text-base leading-7 text-muted-foreground md:text-lg">
               My goal is to design intelligent systems, build reliable software
@@ -42,7 +44,7 @@ export function CallToAction() {
 
           <Reveal direction="right" delay={0.12}>
             <div className="flex flex-col gap-3 sm:flex-row lg:flex-col">
-              <Button asChild size="lg" className="rounded-md">
+              <Button asChild size="lg" className="rainbow-button rounded-md">
                 <Link href="/projects">
                   View projects
                   <ArrowRight className="size-4" />

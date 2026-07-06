@@ -222,4 +222,254 @@
       linear-gradient(90deg, var(--technical-grid-line) 1px, transparent 1px);
     background-size: 28px 28px;
   }
+
+  .aurora-text {
+    background:
+      linear-gradient(110deg, var(--foreground), var(--primary), var(--accent), var(--foreground));
+    background-size: 220% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: aurora-text 6s ease-in-out infinite;
+  }
+
+  .border-beam {
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    padding: 1px;
+    background:
+      linear-gradient(90deg, transparent, var(--primary), var(--accent), transparent)
+      border-box;
+    mask:
+      linear-gradient(#000 0 0) content-box,
+      linear-gradient(#000 0 0);
+    mask-composite: exclude;
+    opacity: 0.82;
+    animation: border-beam 4.5s linear infinite;
+  }
+
+  .rainbow-button {
+    position: relative;
+    overflow: hidden;
+    border-color: color-mix(in oklch, var(--primary) 40%, transparent);
+    background:
+      linear-gradient(110deg, var(--primary), var(--accent), oklch(0.72 0.16 284), var(--primary));
+    background-size: 220% 100%;
+    color: var(--primary-foreground);
+    box-shadow: 0 18px 60px -34px var(--primary);
+    animation: rainbow-button 7s ease-in-out infinite;
+  }
+
+  .rainbow-button::before {
+    content: "";
+    position: absolute;
+    inset: 1px;
+    border-radius: inherit;
+    background: linear-gradient(180deg, color-mix(in oklch, white 12%, transparent), transparent);
+    pointer-events: none;
+  }
+
+  .rainbow-button > * {
+    position: relative;
+    z-index: 1;
+  }
+
+  .tech-marquee {
+    overflow: hidden;
+    mask-image: linear-gradient(90deg, transparent, black 12%, black 88%, transparent);
+  }
+
+  .tech-marquee__track {
+    display: flex;
+    width: max-content;
+    gap: 0.5rem;
+    animation: tech-marquee 24s linear infinite;
+  }
+
+  .tech-marquee__item {
+    display: inline-flex;
+    height: 2rem;
+    align-items: center;
+    border-radius: var(--radius-md);
+    border: 1px solid color-mix(in oklch, var(--primary) 24%, transparent);
+    background: color-mix(in oklch, var(--background) 66%, transparent);
+    padding-inline: 0.75rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: color-mix(in oklch, var(--foreground) 84%, transparent);
+    backdrop-filter: blur(12px);
+  }
+
+  .icon-cloud {
+    position: relative;
+    min-height: 17rem;
+    display: grid;
+    place-items: center;
+    overflow: hidden;
+  }
+
+  .icon-cloud::before {
+    content: "";
+    position: absolute;
+    width: 14rem;
+    height: 14rem;
+    border-radius: 999px;
+    border: 1px solid color-mix(in oklch, var(--primary) 20%, transparent);
+    background:
+      radial-gradient(circle, color-mix(in oklch, var(--primary) 14%, transparent), transparent 62%);
+    animation: icon-cloud-spin 18s linear infinite;
+  }
+
+  .icon-cloud__center {
+    z-index: 2;
+    display: grid;
+    width: 5rem;
+    height: 5rem;
+    place-items: center;
+    border-radius: 999px;
+    border: 1px solid color-mix(in oklch, var(--primary) 32%, transparent);
+    background: color-mix(in oklch, var(--background) 74%, transparent);
+    color: var(--primary);
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    backdrop-filter: blur(18px);
+    box-shadow: 0 20px 70px -46px var(--primary);
+  }
+
+  .icon-cloud__item {
+    --angle: calc((360deg / var(--total)) * var(--index));
+    position: absolute;
+    z-index: 1;
+    display: inline-flex;
+    height: 2rem;
+    min-width: 2.6rem;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius-md);
+    border: 1px solid color-mix(in oklch, var(--border) 74%, transparent);
+    background: color-mix(in oklch, var(--card) 84%, transparent);
+    padding-inline: 0.55rem;
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    font-weight: 700;
+    color: color-mix(in oklch, var(--foreground) 86%, transparent);
+    transform:
+      rotate(var(--angle))
+      translateX(6.9rem)
+      rotate(calc(var(--angle) * -1));
+    animation: icon-cloud-float 5s ease-in-out infinite;
+    animation-delay: calc(var(--index) * -0.28s);
+    backdrop-filter: blur(16px);
+  }
+
+  .animated-beam {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    fill: none;
+    pointer-events: none;
+  }
+
+  .animated-beam path {
+    stroke: url("#unused");
+    stroke-width: 1.4;
+    stroke-linecap: round;
+    stroke-dasharray: 10 18;
+    animation: beam-flow 3.8s linear infinite;
+  }
+
+  .animated-beam path:nth-child(1) {
+    stroke: color-mix(in oklch, var(--primary) 58%, transparent);
+  }
+
+  .animated-beam path:nth-child(2) {
+    stroke: color-mix(in oklch, var(--accent) 62%, transparent);
+    animation-delay: -1s;
+  }
+
+  .animated-beam path:nth-child(3) {
+    stroke: color-mix(in oklch, var(--foreground) 28%, transparent);
+    animation-delay: -2s;
+  }
+
+  @keyframes aurora-text {
+    0%,
+    100% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+  }
+
+  @keyframes border-beam {
+    0% {
+      filter: hue-rotate(0deg);
+      opacity: 0.42;
+    }
+    50% {
+      opacity: 0.95;
+    }
+    100% {
+      filter: hue-rotate(360deg);
+      opacity: 0.42;
+    }
+  }
+
+  @keyframes rainbow-button {
+    0%,
+    100% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+  }
+
+  @keyframes tech-marquee {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-50%);
+    }
+  }
+
+  @keyframes icon-cloud-spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  @keyframes icon-cloud-float {
+    0%,
+    100% {
+      margin-top: 0;
+    }
+    50% {
+      margin-top: -0.55rem;
+    }
+  }
+
+  @keyframes beam-flow {
+    to {
+      stroke-dashoffset: -56;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .aurora-text,
+    .border-beam,
+    .rainbow-button,
+    .tech-marquee__track,
+    .icon-cloud::before,
+    .icon-cloud__item,
+    .animated-beam path {
+      animation: none;
+    }
+  }
 }

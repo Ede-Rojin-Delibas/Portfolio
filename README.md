@@ -9,8 +9,11 @@ React Hook Form and Zod.
 
 - Responsive Home, About, Projects, Project Detail and Contact pages
 - Dark/light theme toggle
-- Animated headline, scroll reveal, stagger animations, hover interactions, page
-  transitions and parallax cards
+- Animated headline, aurora text, hyper text, word rotation, scroll reveal,
+  stagger animations, hover interactions, page transitions and parallax cards
+- Tech stack bento grid with animated beams, icon cloud, marquee row and
+  circular progress indicators
+- Contact form border beam and animated success state
 - Searchable and filterable project listing with visible category controls
 - Dynamic project detail routes under `/projects/[slug]`
 - Project detail pages with description, stack, screenshots/placeholders, GitHub

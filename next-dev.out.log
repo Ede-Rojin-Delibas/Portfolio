@@ -84,3 +84,5 @@ Creating turbopack project { dir: 'C:\\Users\\emreo\\portfolio-site', testMode: 
  GET /about 200 in 206ms (next.js: 54ms, application-code: 152ms)
  GET /about 200 in 206ms (next.js: 126ms, application-code: 79ms)
  GET / 200 in 270ms (next.js: 62ms, application-code: 208ms)
+ GET / 200 in 137ms (next.js: 4ms, application-code: 133ms)
+ GET / 200 in 163ms (next.js: 5ms, application-code: 159ms)
