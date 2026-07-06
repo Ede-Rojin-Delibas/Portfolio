@@ -42,6 +42,7 @@ export default function ContactPage() {
   return (
     <main>
       <Section
+        className="contact-skin section-skin"
         eyebrow="Collaboration"
         title="Let's talk about practical technology solutions."
         description="Use this page for project ideas, collaboration opportunities, feedback or engineering conversations around software, AI and data."

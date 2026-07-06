@@ -148,6 +148,7 @@ export default function AboutPage() {
   return (
     <main>
       <Section
+        className="about-skin section-skin"
         eyebrow="Engineering profile"
         title="A Computer Engineer focused on practical, intelligent technology."
         description="This page frames the portfolio as one path: engineering foundations, backend and API work, data analysis, machine learning and system-level curiosity."

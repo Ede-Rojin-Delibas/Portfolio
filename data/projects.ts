@@ -9,6 +9,10 @@ export type Project = {
   demoLabel?: string;
   featured?: boolean;
   accent: "blue" | "cyan" | "indigo";
+  image?: {
+    src: string;
+    alt: string;
+  };
   role: string;
   year: string;
   problem: string;
@@ -41,6 +45,10 @@ export const projects: Project[] = [
     demo: "https://portfolio-tan-theta-86.vercel.app",
     featured: true,
     accent: "blue",
+    image: {
+      src: "/images/ai-engineering-hero.png",
+      alt: "Abstract AI engineering workspace used as the portfolio visual preview",
+    },
     role: "Portfolio Developer",
     year: "2026",
     problem:

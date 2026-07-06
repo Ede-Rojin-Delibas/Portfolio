@@ -13,6 +13,7 @@ export default function ProjectsPage() {
   return (
     <main>
       <Section
+        className="projects-skin section-skin"
         eyebrow="Systems library"
         title="Project case studies across software, AI, data and systems."
         description="Search and filter the work by category, title, stack or description. Each card is framed around the problem, the engineering approach and the value of the output."

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import {
@@ -114,6 +115,21 @@ export default async function ProjectDetailPage({
                   accentStyles[project.accent],
                 )}
               />
+              {project.image ? (
+                <div className="relative mb-5 overflow-hidden rounded-lg border border-border/70 bg-background/70">
+                  <div className="relative aspect-[16/9]">
+                    <Image
+                      src={project.image.src}
+                      alt={project.image.alt}
+                      fill
+                      sizes="(min-width: 1024px) 58vw, 92vw"
+                      className="object-cover"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-background via-background/10 to-transparent" />
+                    <div className="technical-grid absolute inset-0 opacity-20" />
+                  </div>
+                </div>
+              ) : null}
               <div className="relative rounded-lg border border-border/70 bg-background/80 p-4 font-mono text-xs text-muted-foreground backdrop-blur-md">
                 <div className="mb-4 flex items-center gap-2">
                   <span className="size-2.5 rounded-full bg-red-400" />

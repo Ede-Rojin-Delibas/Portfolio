@@ -7,7 +7,6 @@ import {
 } from "@/components/shared/animation-effects";
 import { AnimatedText } from "@/components/shared/animated-text";
 import { Container } from "@/components/shared/container";
-import { ParallaxCard } from "@/components/shared/parallax-card";
 import { Reveal } from "@/components/shared/reveal";
 import { StaggerItem, StaggerList } from "@/components/shared/stagger-list";
 import { TechBadge } from "@/components/shared/tech-badge";
@@ -26,17 +25,18 @@ const heroTech = [
 
 export function Hero() {
   return (
-    <section className="relative overflow-hidden pt-20 pb-16 md:pt-28 md:pb-24">
-      <ParallaxCard
-        offset={24}
-        className="pointer-events-none absolute inset-x-0 top-8 -z-10 h-[28rem]"
-      >
-        <div className="technical-grid absolute inset-0 opacity-40" />
-        <div className="absolute inset-x-0 top-0 h-48 bg-gradient-to-b from-primary/20 via-accent/10 to-transparent" />
-        <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-background to-transparent" />
-      </ParallaxCard>
+    <section className="hero-skin section-skin relative overflow-hidden pt-10 pb-16 md:pt-16 md:pb-24">
+      <div aria-hidden="true" className="hero-wireframe" />
+      <div
+        aria-hidden="true"
+        className="hero-abstract-object hero-abstract-object--primary"
+      />
+      <div
+        aria-hidden="true"
+        className="hero-abstract-object hero-abstract-object--secondary"
+      />
 
-      <Container className="grid items-center gap-12 lg:grid-cols-[1.05fr_0.95fr]">
+      <Container className="relative z-10 grid items-start gap-12 lg:grid-cols-[1.05fr_0.95fr]">
         <div>
           <Reveal>
             <div className="mb-6 inline-flex items-center gap-2 rounded-md border border-primary/25 bg-primary/10 px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.18em] text-primary">

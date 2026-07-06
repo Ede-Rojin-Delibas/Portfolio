@@ -14,6 +14,7 @@ const footerLinks = [
   { label: "Home", href: "/" },
   { label: "About", href: "/about" },
   { label: "Projects", href: "/projects" },
+  { label: "Blog", href: "/blog" },
   { label: "Contact", href: "/contact" },
 ];
 
@@ -38,7 +39,7 @@ const socialLinks = [
 
 export function Footer() {
   return (
-    <footer className="relative overflow-hidden border-t border-border/70 bg-background/80 py-12 backdrop-blur-xl">
+    <footer className="footer-skin relative overflow-hidden border-t border-border/70 bg-background/80 py-12 backdrop-blur-xl">
       <div className="technical-grid absolute inset-0 opacity-25" />
       <Container
         size="wide"

@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { ArrowUpRight, Code2, Target } from "lucide-react";
 import { motion } from "motion/react";
@@ -37,6 +38,7 @@ type ProjectCardProps = Pick<
   | "demo"
   | "demoLabel"
   | "accent"
+  | "image"
   | "outcome"
 >;
 
@@ -50,6 +52,7 @@ export function ProjectCard({
   demo,
   demoLabel,
   accent,
+  image,
   outcome,
 }: ProjectCardProps) {
   return (
@@ -73,76 +76,101 @@ export function ProjectCard({
       />
       <Link href={`/projects/${slug}`} className="block">
         <div className="relative h-56 overflow-hidden border-b border-border/70 bg-background/60">
-          <div
-            className={cn(
-              "absolute inset-0 bg-gradient-to-br opacity-90",
-              accentStyles[accent],
-            )}
-          />
-          <div className="technical-grid absolute inset-0" />
-          <div className="absolute inset-x-8 top-8 h-px bg-gradient-to-r from-transparent via-foreground/30 to-transparent" />
-          <div className="absolute left-4 right-4 top-4 rounded-lg border border-border/70 bg-background/85 p-3 shadow-2xl backdrop-blur-md transition duration-300 group-hover:-translate-y-1 group-hover:border-primary/35">
-            <div className="mb-3 flex items-center gap-1.5">
-              <span className="size-2 rounded-full bg-red-400/80" />
-              <span className="size-2 rounded-full bg-amber-300/80" />
-              <span className="size-2 rounded-full bg-emerald-400/80" />
-              <span className="ml-2 font-mono text-[11px] text-muted-foreground">
-                {category}.tsx
-              </span>
-            </div>
-
-            <div className="grid gap-3 sm:grid-cols-[0.8fr_1.2fr]">
-              <div className="rounded-md border border-border/60 bg-card/70 p-2">
-                <div className="mb-2 h-2 w-16 rounded-full bg-primary/45" />
-                <div className="space-y-1.5">
-                  {[78, 56, 88, 46].map((width, index) => (
-                    <span
-                      aria-hidden="true"
-                      key={`${title}-mock-line-${index}`}
-                      className="block h-1.5 rounded-full bg-muted-foreground/20"
-                      style={{ width: `${width}%` }}
-                    />
-                  ))}
-                </div>
-                <div className="mt-3 grid grid-cols-3 gap-1">
-                  {[42, 64, 52].map((height, index) => (
-                    <span
-                      aria-hidden="true"
-                      key={`${title}-mock-mini-${index}`}
-                      className={cn(
-                        "rounded-sm shadow-[0_0_18px_currentColor]",
-                        signalStyles[accent],
-                      )}
-                      style={{ height }}
-                    />
-                  ))}
-                </div>
+          {image ? (
+            <>
+              <Image
+                src={image.src}
+                alt={image.alt}
+                fill
+                sizes="(min-width: 1024px) 31vw, 92vw"
+                className="object-cover transition duration-700 group-hover:scale-105"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-background via-background/28 to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-r from-background/50 via-transparent to-background/10" />
+              <div className="technical-grid absolute inset-0 opacity-20" />
+              <div className="absolute left-4 right-4 top-4 rounded-lg border border-border/70 bg-background/78 p-3 backdrop-blur-xl">
+                <p className="text-xs font-semibold uppercase tracking-[0.2em] text-primary">
+                  Visual preview
+                </p>
+                <h3 className="mt-1 text-sm font-semibold tracking-tight">
+                  {title}
+                </h3>
               </div>
-
-              <div className="rounded-md border border-border/60 bg-card/70 p-2">
-                <div className="mb-2 flex items-center justify-between">
-                  <span className="h-2 w-20 rounded-full bg-foreground/15" />
-                  <span className="h-5 w-12 rounded-md border border-primary/25 bg-primary/10" />
+            </>
+          ) : (
+            <>
+              <div
+                className={cn(
+                  "absolute inset-0 bg-gradient-to-br opacity-90",
+                  accentStyles[accent],
+                )}
+              />
+              <div className="technical-grid absolute inset-0" />
+              <div className="absolute inset-x-8 top-8 h-px bg-gradient-to-r from-transparent via-foreground/30 to-transparent" />
+              <div className="absolute left-4 right-4 top-4 rounded-lg border border-border/70 bg-background/85 p-3 shadow-2xl backdrop-blur-md transition duration-300 group-hover:-translate-y-1 group-hover:border-primary/35">
+                <div className="mb-3 flex items-center gap-1.5">
+                  <span className="size-2 rounded-full bg-red-400/80" />
+                  <span className="size-2 rounded-full bg-amber-300/80" />
+                  <span className="size-2 rounded-full bg-emerald-400/80" />
+                  <span className="ml-2 font-mono text-[11px] text-muted-foreground">
+                    {category}.tsx
+                  </span>
                 </div>
-                <div className="relative h-20 overflow-hidden rounded-md border border-border/60 bg-background/70">
-                  <div className="technical-grid absolute inset-0 opacity-45" />
-                  <div className="absolute bottom-3 left-3 right-3 flex items-end gap-1.5">
-                    {[24, 40, 32, 58, 44, 66, 52].map((height, index) => (
-                      <span
-                        aria-hidden="true"
-                        key={`${title}-mock-chart-${index}`}
-                        className={cn(
-                          "flex-1 rounded-t-sm shadow-[0_0_18px_currentColor]",
-                          signalStyles[accent],
-                        )}
-                        style={{ height }}
-                      />
-                    ))}
+
+                <div className="grid gap-3 sm:grid-cols-[0.8fr_1.2fr]">
+                  <div className="rounded-md border border-border/60 bg-card/70 p-2">
+                    <div className="mb-2 h-2 w-16 rounded-full bg-primary/45" />
+                    <div className="space-y-1.5">
+                      {[78, 56, 88, 46].map((width, index) => (
+                        <span
+                          aria-hidden="true"
+                          key={`${title}-mock-line-${index}`}
+                          className="block h-1.5 rounded-full bg-muted-foreground/20"
+                          style={{ width: `${width}%` }}
+                        />
+                      ))}
+                    </div>
+                    <div className="mt-3 grid grid-cols-3 gap-1">
+                      {[42, 64, 52].map((height, index) => (
+                        <span
+                          aria-hidden="true"
+                          key={`${title}-mock-mini-${index}`}
+                          className={cn(
+                            "rounded-sm shadow-[0_0_18px_currentColor]",
+                            signalStyles[accent],
+                          )}
+                          style={{ height }}
+                        />
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="rounded-md border border-border/60 bg-card/70 p-2">
+                    <div className="mb-2 flex items-center justify-between">
+                      <span className="h-2 w-20 rounded-full bg-foreground/15" />
+                      <span className="h-5 w-12 rounded-md border border-primary/25 bg-primary/10" />
+                    </div>
+                    <div className="relative h-20 overflow-hidden rounded-md border border-border/60 bg-background/70">
+                      <div className="technical-grid absolute inset-0 opacity-45" />
+                      <div className="absolute bottom-3 left-3 right-3 flex items-end gap-1.5">
+                        {[24, 40, 32, 58, 44, 66, 52].map((height, index) => (
+                          <span
+                            aria-hidden="true"
+                            key={`${title}-mock-chart-${index}`}
+                            className={cn(
+                              "flex-1 rounded-t-sm shadow-[0_0_18px_currentColor]",
+                              signalStyles[accent],
+                            )}
+                            style={{ height }}
+                          />
+                        ))}
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-          </div>
+            </>
+          )}
 
           <div className="absolute bottom-4 left-4 right-4 flex items-end justify-between gap-4">
             <div className="rounded-md border border-border/70 bg-background/80 px-2.5 py-1.5 text-[11px] font-medium text-muted-foreground backdrop-blur-md">

@@ -14,6 +14,7 @@ const navItems = [
   { label: "Home", href: "/" },
   { label: "About", href: "/about" },
   { label: "Projects", href: "/projects" },
+  { label: "Blog", href: "/blog" },
   { label: "Contact", href: "/contact" },
 ];
 
@@ -32,7 +33,7 @@ export function Navbar() {
   return (
     <header className="sticky top-3 z-50 px-2">
       <Container size="wide">
-        <nav className="glass-panel flex h-16 items-center justify-between gap-4 rounded-lg px-3 shadow-[0_18px_70px_-44px_var(--primary)] md:px-4">
+        <nav className="navbar-shell glass-panel flex h-16 items-center justify-between gap-4 rounded-lg px-3 shadow-[0_18px_70px_-44px_var(--primary)] md:px-4">
           <Link
             href="/"
             className="group flex min-w-0 items-center gap-3"
@@ -88,7 +89,7 @@ export function Navbar() {
             <Button
               asChild
               size="sm"
-              className="hidden h-10 rounded-md bg-foreground text-background shadow-[0_14px_34px_-18px_var(--foreground)] hover:bg-foreground/90 dark:bg-primary dark:text-primary-foreground dark:hover:bg-primary/90 md:inline-flex"
+              className="navbar-cta hidden h-10 rounded-md bg-foreground text-background shadow-[0_14px_34px_-18px_var(--foreground)] hover:bg-foreground/90 dark:bg-primary dark:text-primary-foreground dark:hover:bg-primary/90 md:inline-flex"
             >
               <Link href="/contact">
                 Let&apos;s talk
