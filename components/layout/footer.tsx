@@ -134,12 +134,12 @@ export function Footer() {
                   rel={
                     item.href.startsWith("http") ? "noopener noreferrer" : undefined
                   }
-                  className="inline-flex h-10 items-center gap-2 rounded-md border border-border/70 bg-background/55 px-3 text-sm text-muted-foreground transition hover:-translate-y-0.5 hover:border-primary/40 hover:text-foreground"
+                  className="group/social inline-flex h-10 items-center gap-2 rounded-md border border-border/70 bg-background/55 px-3 text-sm text-muted-foreground transition hover:-translate-y-0.5 hover:border-primary/45 hover:bg-primary/10 hover:text-primary"
                 >
-                  <Icon className="size-4" />
+                  <Icon className="size-4 transition group-hover/social:text-primary" />
                   {item.label}
                   {item.href.startsWith("http") ? (
-                    <ArrowUpRight className="size-3.5" />
+                    <ArrowUpRight className="size-3.5 transition group-hover/social:translate-x-0.5 group-hover/social:-translate-y-0.5" />
                   ) : null}
                 </Link>
               );

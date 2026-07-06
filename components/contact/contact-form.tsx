@@ -67,7 +67,7 @@ export function ContactForm() {
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
-          className="glass-panel relative overflow-hidden rounded-lg p-5 md:p-6"
+          className="contact-glow-surface glass-panel relative overflow-hidden rounded-lg p-5 md:p-6"
           noValidate
         >
           <BorderBeam />
@@ -187,7 +187,7 @@ export function ContactForm() {
             <Button
               type="submit"
               disabled={form.formState.isSubmitting}
-              className="rounded-md sm:min-w-36"
+              className="pulse-button rounded-md sm:min-w-36"
             >
               {form.formState.isSubmitting ? "Sending..." : "Send message"}
               <Send className="size-4" />
