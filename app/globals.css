@@ -7,8 +7,11 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: Inter, "Segoe UI", system-ui, -apple-system, BlinkMacSystemFont, Arial, sans-serif;
-  --font-mono: "Geist Mono", "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+  --font-sans:
+    Inter, "Segoe UI", system-ui, -apple-system, BlinkMacSystemFont, Arial,
+    sans-serif;
+  --font-mono:
+    "Geist Mono", "SFMono-Regular", Consolas, "Liberation Mono", monospace;
   --font-heading: var(--font-sans);
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
@@ -134,7 +137,11 @@
   body {
     @apply min-h-screen bg-background text-foreground;
     background:
-      linear-gradient(180deg, color-mix(in oklch, var(--background) 84%, var(--primary) 16%) 0%, var(--background) 34rem),
+      linear-gradient(
+        180deg,
+        color-mix(in oklch, var(--background) 84%, var(--primary) 16%) 0%,
+        var(--background) 34rem
+      ),
       var(--background);
     background-attachment: fixed;
   }
@@ -152,15 +159,23 @@
     z-index: 0;
     overflow: hidden;
     pointer-events: none;
-    background:
-      linear-gradient(180deg, #ffffff 0%, var(--background) 40%, #eef6ff 100%);
+    background: linear-gradient(
+      180deg,
+      #ffffff 0%,
+      var(--background) 40%,
+      #eef6ff 100%
+    );
   }
 
   .dark .site-background {
     background:
       linear-gradient(180deg, #050816 0%, #08111f 48%, #020617 100%),
       radial-gradient(circle at 24% 12%, rgb(37 99 235 / 0.3), transparent 38%),
-      radial-gradient(circle at 76% 18%, rgb(168 85 247 / 0.28), transparent 36%);
+      radial-gradient(
+        circle at 76% 18%,
+        rgb(168 85 247 / 0.28),
+        transparent 36%
+      );
   }
 
   .site-background__aurora {
@@ -168,10 +183,27 @@
     inset: -20% -14% auto -14%;
     height: 42rem;
     background:
-      radial-gradient(ellipse at 12% 20%, rgb(37 99 235 / 0.18), transparent 42%),
-      radial-gradient(ellipse at 48% 2%, rgb(6 182 212 / 0.15), transparent 36%),
-      radial-gradient(ellipse at 78% 18%, rgb(124 58 237 / 0.12), transparent 42%),
-      linear-gradient(120deg, transparent 10%, rgb(37 99 235 / 0.08), transparent 72%);
+      radial-gradient(
+        ellipse at 12% 20%,
+        rgb(37 99 235 / 0.18),
+        transparent 42%
+      ),
+      radial-gradient(
+        ellipse at 48% 2%,
+        rgb(6 182 212 / 0.15),
+        transparent 36%
+      ),
+      radial-gradient(
+        ellipse at 78% 18%,
+        rgb(124 58 237 / 0.12),
+        transparent 42%
+      ),
+      linear-gradient(
+        120deg,
+        transparent 10%,
+        rgb(37 99 235 / 0.08),
+        transparent 72%
+      );
     filter: blur(18px);
     opacity: 0.72;
     animation: aurora-drift 18s ease-in-out infinite alternate;
@@ -179,10 +211,27 @@
 
   .dark .site-background__aurora {
     background:
-      radial-gradient(ellipse at 10% 18%, rgb(37 99 235 / 0.36), transparent 44%),
-      radial-gradient(ellipse at 46% 2%, rgb(34 211 238 / 0.22), transparent 36%),
-      radial-gradient(ellipse at 78% 18%, rgb(168 85 247 / 0.34), transparent 42%),
-      linear-gradient(120deg, transparent 8%, rgb(96 165 250 / 0.18), transparent 72%);
+      radial-gradient(
+        ellipse at 10% 18%,
+        rgb(37 99 235 / 0.36),
+        transparent 44%
+      ),
+      radial-gradient(
+        ellipse at 46% 2%,
+        rgb(34 211 238 / 0.22),
+        transparent 36%
+      ),
+      radial-gradient(
+        ellipse at 78% 18%,
+        rgb(168 85 247 / 0.34),
+        transparent 42%
+      ),
+      linear-gradient(
+        120deg,
+        transparent 8%,
+        rgb(96 165 250 / 0.18),
+        transparent 72%
+      );
     filter: blur(22px);
     opacity: 0.95;
   }
@@ -195,16 +244,27 @@
     aspect-ratio: 1;
     border-radius: 999px;
     transform: translate(-50%, -50%);
-    background:
-      radial-gradient(circle, rgb(37 99 235 / 0.16), rgb(6 182 212 / 0.08) 34%, transparent 66%);
-    filter: blur(8px);
-    opacity: 0.34;
-    transition: opacity 180ms ease;
+    background: radial-gradient(
+      circle,
+      rgb(37 99 235 / 0.22),
+      rgb(6 182 212 / 0.12) 34%,
+      transparent 66%
+    );
+    filter: blur(10px);
+    opacity: 0.5;
+    transition:
+      opacity 180ms ease,
+      transform 180ms ease;
+    box-shadow: 0 0 3rem color-mix(in oklch, var(--primary) 18%, transparent);
   }
 
   .dark .site-background__mouse {
-    background:
-      radial-gradient(circle, rgb(96 165 250 / 0.34), rgb(168 85 247 / 0.16) 38%, transparent 68%);
+    background: radial-gradient(
+      circle,
+      rgb(96 165 250 / 0.34),
+      rgb(168 85 247 / 0.16) 38%,
+      transparent 68%
+    );
     opacity: 0.56;
   }
 
@@ -214,9 +274,21 @@
     background-image:
       linear-gradient(var(--page-grid-line) 1px, transparent 1px),
       linear-gradient(90deg, var(--page-grid-line) 1px, transparent 1px),
-      linear-gradient(135deg, color-mix(in oklch, var(--accent) 5%, transparent) 1px, transparent 1px);
-    background-size: 92px 92px, 92px 92px, 184px 184px;
-    mask-image: linear-gradient(to bottom, black 0%, black 62%, transparent 100%);
+      linear-gradient(
+        135deg,
+        color-mix(in oklch, var(--accent) 5%, transparent) 1px,
+        transparent 1px
+      );
+    background-size:
+      92px 92px,
+      92px 92px,
+      184px 184px;
+    mask-image: linear-gradient(
+      to bottom,
+      black 0%,
+      black 62%,
+      transparent 100%
+    );
     opacity: 0.85;
   }
 
@@ -231,13 +303,23 @@
 
   .site-background__beam--primary {
     top: -18rem;
-    background: linear-gradient(90deg, transparent, color-mix(in oklch, var(--primary) 18%, transparent), transparent);
+    background: linear-gradient(
+      90deg,
+      transparent,
+      color-mix(in oklch, var(--primary) 18%, transparent),
+      transparent
+    );
   }
 
   .site-background__beam--accent {
     top: 18rem;
     transform: rotate(10deg);
-    background: linear-gradient(90deg, transparent, color-mix(in oklch, var(--accent) 12%, transparent), transparent);
+    background: linear-gradient(
+      90deg,
+      transparent,
+      color-mix(in oklch, var(--accent) 12%, transparent),
+      transparent
+    );
     opacity: 0.26;
   }
 
@@ -246,11 +328,22 @@
   }
 
   .dark .site-background__beam--primary {
-    background: linear-gradient(90deg, transparent, rgb(37 99 235 / 0.28), rgb(168 85 247 / 0.18), transparent);
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgb(37 99 235 / 0.28),
+      rgb(168 85 247 / 0.18),
+      transparent
+    );
   }
 
   .dark .site-background__beam--accent {
-    background: linear-gradient(90deg, transparent, rgb(34 211 238 / 0.18), transparent);
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgb(34 211 238 / 0.18),
+      transparent
+    );
     opacity: 0.44;
   }
 
@@ -261,7 +354,11 @@
     border: 1px solid color-mix(in oklch, var(--primary) 24%, transparent);
     border-radius: 0.75rem;
     background:
-      linear-gradient(135deg, color-mix(in oklch, var(--card) 78%, transparent), transparent),
+      linear-gradient(
+        135deg,
+        color-mix(in oklch, var(--card) 78%, transparent),
+        transparent
+      ),
       linear-gradient(45deg, rgb(37 99 235 / 0.1), rgb(6 182 212 / 0.07));
     box-shadow:
       inset 0 1px 0 rgb(255 255 255 / 0.34),
@@ -311,18 +408,28 @@
     inset: 0;
     opacity: 0.16;
     background-image:
-      repeating-linear-gradient(0deg, color-mix(in oklch, var(--foreground) 3%, transparent) 0 1px, transparent 1px 4px),
-      repeating-linear-gradient(90deg, color-mix(in oklch, var(--foreground) 2%, transparent) 0 1px, transparent 1px 5px);
+      repeating-linear-gradient(
+        0deg,
+        color-mix(in oklch, var(--foreground) 3%, transparent) 0 1px,
+        transparent 1px 4px
+      ),
+      repeating-linear-gradient(
+        90deg,
+        color-mix(in oklch, var(--foreground) 2%, transparent) 0 1px,
+        transparent 1px 5px
+      );
     mix-blend-mode: soft-light;
   }
 
   .glass-panel {
     @apply border border-border/70 bg-card/70 backdrop-blur-xl;
-    box-shadow: 0 18px 64px -54px color-mix(in oklch, var(--primary) 34%, transparent);
+    box-shadow: 0 18px 64px -54px
+      color-mix(in oklch, var(--primary) 34%, transparent);
   }
 
   .dark .glass-panel {
-    box-shadow: 0 24px 80px -48px color-mix(in oklch, var(--primary) 85%, transparent);
+    box-shadow: 0 24px 80px -48px
+      color-mix(in oklch, var(--primary) 85%, transparent);
   }
 
   .project-card-shell {
@@ -392,8 +499,15 @@
     background-image:
       linear-gradient(var(--technical-grid-line) 1px, transparent 1px),
       linear-gradient(90deg, var(--technical-grid-line) 1px, transparent 1px),
-      radial-gradient(circle at 1px 1px, var(--technical-grid-dot) 1px, transparent 1.6px);
-    background-size: 32px 32px, 32px 32px, 96px 96px;
+      radial-gradient(
+        circle at 1px 1px,
+        var(--technical-grid-dot) 1px,
+        transparent 1.6px
+      );
+    background-size:
+      32px 32px,
+      32px 32px,
+      96px 96px;
     background-position: center;
   }
 
@@ -414,14 +528,30 @@
 
   .hero-skin {
     background:
-      radial-gradient(ellipse at 24% 4%, rgb(37 99 235 / 0.08), transparent 36%),
-      radial-gradient(ellipse at 78% 0%, rgb(124 58 237 / 0.07), transparent 38%);
+      radial-gradient(
+        ellipse at 24% 4%,
+        rgb(37 99 235 / 0.08),
+        transparent 36%
+      ),
+      radial-gradient(
+        ellipse at 78% 0%,
+        rgb(124 58 237 / 0.07),
+        transparent 38%
+      );
   }
 
   .dark .hero-skin {
     background:
-      radial-gradient(ellipse at 24% 4%, rgb(37 99 235 / 0.18), transparent 38%),
-      radial-gradient(ellipse at 78% 0%, rgb(168 85 247 / 0.16), transparent 38%);
+      radial-gradient(
+        ellipse at 24% 4%,
+        rgb(37 99 235 / 0.18),
+        transparent 38%
+      ),
+      radial-gradient(
+        ellipse at 78% 0%,
+        rgb(168 85 247 / 0.16),
+        transparent 38%
+      );
   }
 
   .hero-skin::before {
@@ -431,9 +561,21 @@
     z-index: 0;
     height: 34rem;
     background:
-      radial-gradient(ellipse at 20% 22%, rgb(37 99 235 / 0.14), transparent 42%),
-      radial-gradient(ellipse at 54% 2%, rgb(6 182 212 / 0.09), transparent 34%),
-      radial-gradient(ellipse at 86% 18%, rgb(124 58 237 / 0.1), transparent 42%);
+      radial-gradient(
+        ellipse at 20% 22%,
+        rgb(37 99 235 / 0.14),
+        transparent 42%
+      ),
+      radial-gradient(
+        ellipse at 54% 2%,
+        rgb(6 182 212 / 0.09),
+        transparent 34%
+      ),
+      radial-gradient(
+        ellipse at 86% 18%,
+        rgb(124 58 237 / 0.1),
+        transparent 42%
+      );
     filter: blur(20px);
     opacity: 0.44;
     animation: aurora-drift 16s ease-in-out infinite alternate;
@@ -448,10 +590,19 @@
     position: absolute;
     inset: 0;
     z-index: 0;
-    background-image:
-      radial-gradient(circle at 1px 1px, color-mix(in oklch, var(--primary) 22%, transparent) 1px, transparent 1.8px);
+    background-image: radial-gradient(
+      circle at 1px 1px,
+      color-mix(in oklch, var(--primary) 22%, transparent) 1px,
+      transparent 1.8px
+    );
     background-size: 24px 24px;
-    mask-image: linear-gradient(120deg, transparent 0%, black 18%, black 62%, transparent 100%);
+    mask-image: linear-gradient(
+      120deg,
+      transparent 0%,
+      black 18%,
+      black 62%,
+      transparent 100%
+    );
     opacity: 0.18;
   }
 
@@ -465,9 +616,23 @@
     border: 1px solid color-mix(in oklch, var(--primary) 16%, transparent);
     border-radius: 1rem;
     background:
-      linear-gradient(115deg, transparent 0 22%, color-mix(in oklch, var(--primary) 20%, transparent) 22.2% 22.6%, transparent 22.8% 100%),
-      linear-gradient(35deg, transparent 0 52%, color-mix(in oklch, var(--accent) 18%, transparent) 52.2% 52.8%, transparent 53% 100%),
-      repeating-linear-gradient(90deg, color-mix(in oklch, var(--foreground) 5%, transparent) 0 1px, transparent 1px 34px);
+      linear-gradient(
+        115deg,
+        transparent 0 22%,
+        color-mix(in oklch, var(--primary) 20%, transparent) 22.2% 22.6%,
+        transparent 22.8% 100%
+      ),
+      linear-gradient(
+        35deg,
+        transparent 0 52%,
+        color-mix(in oklch, var(--accent) 18%, transparent) 52.2% 52.8%,
+        transparent 53% 100%
+      ),
+      repeating-linear-gradient(
+        90deg,
+        color-mix(in oklch, var(--foreground) 5%, transparent) 0 1px,
+        transparent 1px 34px
+      );
     opacity: 0.3;
     transform: perspective(900px) rotateX(58deg) rotateZ(-12deg);
   }
@@ -480,7 +645,11 @@
     border: 1px solid color-mix(in oklch, var(--primary) 32%, transparent);
     border-radius: 1rem;
     background:
-      linear-gradient(135deg, color-mix(in oklch, var(--card) 75%, transparent), transparent),
+      linear-gradient(
+        135deg,
+        color-mix(in oklch, var(--card) 75%, transparent),
+        transparent
+      ),
       linear-gradient(45deg, rgb(37 99 235 / 0.12), rgb(124 58 237 / 0.09));
     box-shadow:
       inset 0 1px 0 rgb(255 255 255 / 0.28),
@@ -527,8 +696,12 @@
   }
 
   .projects-skin {
-    background:
-      linear-gradient(180deg, transparent 0%, color-mix(in oklch, var(--card) 62%, transparent) 48%, transparent 100%);
+    background: linear-gradient(
+      180deg,
+      transparent 0%,
+      color-mix(in oklch, var(--card) 62%, transparent) 48%,
+      transparent 100%
+    );
   }
 
   .projects-skin::before {
@@ -537,10 +710,27 @@
     inset: 0;
     z-index: 0;
     background-image:
-      radial-gradient(circle at 1px 1px, color-mix(in oklch, var(--foreground) 10%, transparent) 1px, transparent 1.7px),
-      linear-gradient(115deg, transparent 0 44%, color-mix(in oklch, var(--primary) 12%, transparent) 44.2% 44.5%, transparent 44.8% 100%);
-    background-size: 26px 26px, 100% 100%;
-    mask-image: linear-gradient(90deg, transparent 0%, black 14%, black 86%, transparent 100%);
+      radial-gradient(
+        circle at 1px 1px,
+        color-mix(in oklch, var(--foreground) 10%, transparent) 1px,
+        transparent 1.7px
+      ),
+      linear-gradient(
+        115deg,
+        transparent 0 44%,
+        color-mix(in oklch, var(--primary) 12%, transparent) 44.2% 44.5%,
+        transparent 44.8% 100%
+      );
+    background-size:
+      26px 26px,
+      100% 100%;
+    mask-image: linear-gradient(
+      90deg,
+      transparent 0%,
+      black 14%,
+      black 86%,
+      transparent 100%
+    );
     opacity: 0.28;
   }
 
@@ -551,15 +741,24 @@
     top: 5rem;
     z-index: 0;
     height: 1px;
-    background: linear-gradient(90deg, transparent, color-mix(in oklch, var(--primary) 34%, transparent), transparent);
+    background: linear-gradient(
+      90deg,
+      transparent,
+      color-mix(in oklch, var(--primary) 34%, transparent),
+      transparent
+    );
     box-shadow:
       0 5rem 0 color-mix(in oklch, var(--accent) 12%, transparent),
       0 13rem 0 color-mix(in oklch, var(--primary) 10%, transparent);
   }
 
   .about-skin {
-    background:
-      linear-gradient(180deg, color-mix(in oklch, var(--background) 90%, var(--primary) 10%) 0%, transparent 30%, transparent 100%);
+    background: linear-gradient(
+      180deg,
+      color-mix(in oklch, var(--background) 90%, var(--primary) 10%) 0%,
+      transparent 30%,
+      transparent 100%
+    );
   }
 
   .about-skin::before {
@@ -570,9 +769,22 @@
     background-image:
       linear-gradient(var(--page-grid-line) 1px, transparent 1px),
       linear-gradient(90deg, var(--page-grid-line) 1px, transparent 1px),
-      radial-gradient(circle at 1px 1px, color-mix(in oklch, var(--accent) 10%, transparent) 1px, transparent 1.7px);
-    background-size: 64px 64px, 64px 64px, 128px 128px;
-    mask-image: linear-gradient(to bottom, transparent 0%, black 16%, black 80%, transparent 100%);
+      radial-gradient(
+        circle at 1px 1px,
+        color-mix(in oklch, var(--accent) 10%, transparent) 1px,
+        transparent 1.7px
+      );
+    background-size:
+      64px 64px,
+      64px 64px,
+      128px 128px;
+    mask-image: linear-gradient(
+      to bottom,
+      transparent 0%,
+      black 16%,
+      black 80%,
+      transparent 100%
+    );
     opacity: 0.54;
   }
 
@@ -586,16 +798,27 @@
     aspect-ratio: 1;
     border: 1px solid color-mix(in oklch, var(--primary) 18%, transparent);
     border-radius: 1.5rem;
-    background:
-      repeating-linear-gradient(45deg, color-mix(in oklch, var(--primary) 8%, transparent) 0 1px, transparent 1px 18px);
+    background: repeating-linear-gradient(
+      45deg,
+      color-mix(in oklch, var(--primary) 8%, transparent) 0 1px,
+      transparent 1px 18px
+    );
     opacity: 0.32;
     transform: rotate(18deg);
   }
 
   .contact-skin {
     background:
-      linear-gradient(135deg, color-mix(in oklch, var(--primary) 8%, transparent), transparent 36%),
-      linear-gradient(315deg, color-mix(in oklch, var(--accent) 8%, transparent), transparent 44%);
+      linear-gradient(
+        135deg,
+        color-mix(in oklch, var(--primary) 8%, transparent),
+        transparent 36%
+      ),
+      linear-gradient(
+        315deg,
+        color-mix(in oklch, var(--accent) 8%, transparent),
+        transparent 44%
+      );
   }
 
   .contact-skin::before {
@@ -617,8 +840,11 @@
     position: absolute;
     inset: 0;
     z-index: 0;
-    background-image:
-      radial-gradient(circle at 1px 1px, color-mix(in oklch, var(--primary) 12%, transparent) 1px, transparent 1.6px);
+    background-image: radial-gradient(
+      circle at 1px 1px,
+      color-mix(in oklch, var(--primary) 12%, transparent) 1px,
+      transparent 1.6px
+    );
     background-size: 32px 32px;
     mask-image: linear-gradient(135deg, black 0%, transparent 66%);
     opacity: 0.24;
@@ -626,16 +852,36 @@
 
   .blog-skin {
     background:
-      linear-gradient(180deg, color-mix(in oklch, var(--background) 94%, var(--primary) 6%) 0%, transparent 40%),
-      radial-gradient(ellipse at 15% 10%, rgb(37 99 235 / 0.08), transparent 34%),
-      radial-gradient(ellipse at 85% 24%, rgb(6 182 212 / 0.07), transparent 32%);
+      linear-gradient(
+        180deg,
+        color-mix(in oklch, var(--background) 94%, var(--primary) 6%) 0%,
+        transparent 40%
+      ),
+      radial-gradient(
+        ellipse at 15% 10%,
+        rgb(37 99 235 / 0.08),
+        transparent 34%
+      ),
+      radial-gradient(
+        ellipse at 85% 24%,
+        rgb(6 182 212 / 0.07),
+        transparent 32%
+      );
   }
 
   .dark .blog-skin {
     background:
       linear-gradient(180deg, rgb(5 8 22 / 0.42) 0%, transparent 46%),
-      radial-gradient(ellipse at 15% 10%, rgb(96 165 250 / 0.13), transparent 34%),
-      radial-gradient(ellipse at 85% 24%, rgb(34 211 238 / 0.1), transparent 32%);
+      radial-gradient(
+        ellipse at 15% 10%,
+        rgb(96 165 250 / 0.13),
+        transparent 34%
+      ),
+      radial-gradient(
+        ellipse at 85% 24%,
+        rgb(34 211 238 / 0.1),
+        transparent 32%
+      );
   }
 
   .blog-skin::before {
@@ -644,11 +890,24 @@
     inset: 0;
     z-index: 0;
     background-image:
-      linear-gradient(120deg, transparent 0 28%, color-mix(in oklch, var(--primary) 12%, transparent) 28.2% 28.6%, transparent 28.8% 100%),
+      linear-gradient(
+        120deg,
+        transparent 0 28%,
+        color-mix(in oklch, var(--primary) 12%, transparent) 28.2% 28.6%,
+        transparent 28.8% 100%
+      ),
       linear-gradient(var(--page-grid-line) 1px, transparent 1px),
       linear-gradient(90deg, var(--page-grid-line) 1px, transparent 1px);
-    background-size: 100% 100%, 72px 72px, 72px 72px;
-    mask-image: linear-gradient(to bottom, black 0%, black 72%, transparent 100%);
+    background-size:
+      100% 100%,
+      72px 72px,
+      72px 72px;
+    mask-image: linear-gradient(
+      to bottom,
+      black 0%,
+      black 72%,
+      transparent 100%
+    );
     opacity: 0.34;
   }
 
@@ -663,8 +922,16 @@
     border: 1px solid color-mix(in oklch, var(--primary) 18%, transparent);
     border-radius: 1.25rem;
     background:
-      linear-gradient(135deg, color-mix(in oklch, var(--card) 72%, transparent), transparent),
-      repeating-linear-gradient(0deg, color-mix(in oklch, var(--foreground) 7%, transparent) 0 1px, transparent 1px 14px);
+      linear-gradient(
+        135deg,
+        color-mix(in oklch, var(--card) 72%, transparent),
+        transparent
+      ),
+      repeating-linear-gradient(
+        0deg,
+        color-mix(in oklch, var(--foreground) 7%, transparent) 0 1px,
+        transparent 1px 14px
+      );
     opacity: 0.28;
     transform: rotate(-10deg);
   }
@@ -675,15 +942,35 @@
 
   .footer-skin {
     background:
-      radial-gradient(ellipse at 16% 0%, rgb(37 99 235 / 0.12), transparent 36%),
-      radial-gradient(ellipse at 82% 12%, rgb(6 182 212 / 0.1), transparent 34%),
-      linear-gradient(180deg, color-mix(in oklch, var(--background) 78%, #020617 22%) 0%, #020617 145%);
+      radial-gradient(
+        ellipse at 16% 0%,
+        rgb(37 99 235 / 0.12),
+        transparent 36%
+      ),
+      radial-gradient(
+        ellipse at 82% 12%,
+        rgb(6 182 212 / 0.1),
+        transparent 34%
+      ),
+      linear-gradient(
+        180deg,
+        color-mix(in oklch, var(--background) 78%, #020617 22%) 0%,
+        #020617 145%
+      );
   }
 
   .dark .footer-skin {
     background:
-      radial-gradient(ellipse at 16% 0%, rgb(37 99 235 / 0.18), transparent 36%),
-      radial-gradient(ellipse at 82% 12%, rgb(168 85 247 / 0.14), transparent 34%),
+      radial-gradient(
+        ellipse at 16% 0%,
+        rgb(37 99 235 / 0.18),
+        transparent 36%
+      ),
+      radial-gradient(
+        ellipse at 82% 12%,
+        rgb(168 85 247 / 0.14),
+        transparent 34%
+      ),
       linear-gradient(180deg, rgb(5 8 22 / 0.92) 0%, #020617 100%);
   }
 
@@ -693,8 +980,15 @@
     inset: 0;
     z-index: 0;
     background-image:
-      linear-gradient(color-mix(in oklch, var(--foreground) 6%, transparent) 1px, transparent 1px),
-      linear-gradient(90deg, color-mix(in oklch, var(--foreground) 5%, transparent) 1px, transparent 1px);
+      linear-gradient(
+        color-mix(in oklch, var(--foreground) 6%, transparent) 1px,
+        transparent 1px
+      ),
+      linear-gradient(
+        90deg,
+        color-mix(in oklch, var(--foreground) 5%, transparent) 1px,
+        transparent 1px
+      );
     background-size: 48px 48px;
     mask-image: linear-gradient(to bottom, black 0%, transparent 88%);
     opacity: 0.34;
@@ -717,8 +1011,12 @@
     inset: 0;
     z-index: 0;
     pointer-events: none;
-    background:
-      linear-gradient(90deg, transparent, color-mix(in oklch, var(--primary) 16%, transparent), transparent);
+    background: linear-gradient(
+      90deg,
+      transparent,
+      color-mix(in oklch, var(--primary) 16%, transparent),
+      transparent
+    );
     opacity: 0.36;
     transform: translateX(-65%);
     animation: navbar-scan 8s ease-in-out infinite;
@@ -732,7 +1030,13 @@
     z-index: 0;
     height: 1px;
     pointer-events: none;
-    background: linear-gradient(90deg, transparent, var(--primary), var(--accent), transparent);
+    background: linear-gradient(
+      90deg,
+      transparent,
+      var(--primary),
+      var(--accent),
+      transparent
+    );
     opacity: 0.7;
   }
 
@@ -751,7 +1055,12 @@
     position: absolute;
     inset: 1px;
     border-radius: inherit;
-    background: linear-gradient(110deg, transparent, rgb(255 255 255 / 0.18), transparent);
+    background: linear-gradient(
+      110deg,
+      transparent,
+      rgb(255 255 255 / 0.18),
+      transparent
+    );
     transform: translateX(-110%);
     transition: transform 420ms ease;
   }
@@ -768,8 +1077,13 @@
   }
 
   .aurora-text {
-    background:
-      linear-gradient(110deg, var(--foreground), var(--primary), var(--accent), var(--foreground));
+    background: linear-gradient(
+      110deg,
+      var(--foreground),
+      var(--primary),
+      var(--accent),
+      var(--foreground)
+    );
     background-size: 220% 100%;
     -webkit-background-clip: text;
     background-clip: text;
@@ -784,8 +1098,13 @@
     pointer-events: none;
     padding: 1px;
     z-index: 3;
-    background:
-      linear-gradient(90deg, transparent, var(--primary), var(--accent), transparent)
+    background: linear-gradient(
+        90deg,
+        transparent,
+        var(--primary),
+        var(--accent),
+        transparent
+      )
       border-box;
     mask:
       linear-gradient(#000 0 0) content-box,
@@ -799,8 +1118,13 @@
     position: relative;
     overflow: hidden;
     border-color: color-mix(in oklch, var(--primary) 40%, transparent);
-    background:
-      linear-gradient(110deg, var(--primary), var(--accent), oklch(0.72 0.16 284), var(--primary));
+    background: linear-gradient(
+      110deg,
+      var(--primary),
+      var(--accent),
+      oklch(0.72 0.16 284),
+      var(--primary)
+    );
     background-size: 220% 100%;
     color: var(--primary-foreground);
     box-shadow: 0 18px 60px -34px var(--primary);
@@ -812,7 +1136,11 @@
     position: absolute;
     inset: 1px;
     border-radius: inherit;
-    background: linear-gradient(180deg, color-mix(in oklch, white 12%, transparent), transparent);
+    background: linear-gradient(
+      180deg,
+      color-mix(in oklch, white 12%, transparent),
+      transparent
+    );
     pointer-events: none;
   }
 
@@ -828,7 +1156,13 @@
 
   .tech-marquee {
     overflow: hidden;
-    mask-image: linear-gradient(90deg, transparent, black 12%, black 88%, transparent);
+    mask-image: linear-gradient(
+      90deg,
+      transparent,
+      black 12%,
+      black 88%,
+      transparent
+    );
   }
 
   .tech-marquee__track {
@@ -867,8 +1201,11 @@
     height: 14rem;
     border-radius: 999px;
     border: 1px solid color-mix(in oklch, var(--primary) 20%, transparent);
-    background:
-      radial-gradient(circle, color-mix(in oklch, var(--primary) 14%, transparent), transparent 62%);
+    background: radial-gradient(
+      circle,
+      color-mix(in oklch, var(--primary) 14%, transparent),
+      transparent 62%
+    );
     animation: icon-cloud-spin 18s linear infinite;
   }
 
@@ -906,9 +1243,7 @@
     font-size: 0.68rem;
     font-weight: 700;
     color: color-mix(in oklch, var(--foreground) 86%, transparent);
-    transform:
-      rotate(var(--angle))
-      translateX(6.9rem)
+    transform: rotate(var(--angle)) translateX(6.9rem)
       rotate(calc(var(--angle) * -1));
     animation: icon-cloud-float 5s ease-in-out infinite;
     animation-delay: calc(var(--index) * -0.28s);
@@ -1000,7 +1335,8 @@
       box-shadow: 0 0 0 0 color-mix(in oklch, var(--primary) 30%, transparent);
     }
     50% {
-      box-shadow: 0 0 0 0.45rem color-mix(in oklch, var(--primary) 0%, transparent);
+      box-shadow: 0 0 0 0.45rem
+        color-mix(in oklch, var(--primary) 0%, transparent);
     }
   }
 

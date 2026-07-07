@@ -22,6 +22,10 @@ export type Project = {
   screenshots: {
     title: string;
     description: string;
+    image?: {
+      src: string;
+      alt: string;
+    };
   }[];
 };
 
@@ -46,8 +50,8 @@ export const projects: Project[] = [
     featured: true,
     accent: "blue",
     image: {
-      src: "/images/ai-engineering-hero.png",
-      alt: "Abstract AI engineering workspace used as the portfolio visual preview",
+      src: "/images/projects/ede-rojin-portfolio/hero.svg",
+      alt: "Preview of the personal portfolio experience with animated project cards and deep blue UI",
     },
     role: "Portfolio Developer",
     year: "2026",
@@ -86,6 +90,10 @@ export const projects: Project[] = [
     demo: "https://ede-rojin-delibas.github.io/",
     featured: true,
     accent: "cyan",
+    image: {
+      src: "/images/projects/legacy-data-portfolio/hero.svg",
+      alt: "Preview of the legacy data portfolio landing page and project cards",
+    },
     role: "Portfolio Designer",
     year: "2026",
     problem:
@@ -123,6 +131,10 @@ export const projects: Project[] = [
     demo: "https://ede-rojin-delibas.github.io/",
     featured: true,
     accent: "indigo",
+    image: {
+      src: "/images/projects/synthetic-data-generator/data1.jpg",
+      alt: "Preview of the synthetic data generator workflow dashboard",
+    },
     role: "Machine Learning Developer",
     year: "2025",
     problem:
@@ -155,11 +167,21 @@ export const projects: Project[] = [
     category: "AI & Data",
     description:
       "A social media sentiment analysis project that classifies text signals and turns opinion data into readable insights.",
-    tech: ["Python", "Jupyter Notebook", "NLP", "Text Classification", "Pandas"],
+    tech: [
+      "Python",
+      "Jupyter Notebook",
+      "NLP",
+      "Text Classification",
+      "Pandas",
+    ],
     github: "https://github.com/Ede-Rojin-Delibas/Sentiment-Analysis",
     demo: "https://ede-rojin-delibas.github.io/",
     featured: false,
     accent: "blue",
+    image: {
+      src: "/images/projects/sentiment-analysis/sentiments.png",
+      alt: "Preview of the sentiment analysis project interface",
+    },
     role: "AI & Data Developer",
     year: "2025",
     problem:
@@ -203,6 +225,10 @@ export const projects: Project[] = [
     demo: "https://ede-rojin-delibas.github.io/",
     featured: false,
     accent: "cyan",
+    image: {
+      src: "/images/projects/churn-prediction/churn.jpg",
+      alt: "Customer churn prediction dashboard preview",
+    },
     role: "Machine Learning Developer",
     year: "2025",
     problem:
@@ -235,11 +261,21 @@ export const projects: Project[] = [
     category: "AI & Data",
     description:
       "An exploratory analytics project for understanding customer behavior, product patterns and e-commerce decision signals.",
-    tech: ["Python", "EDA", "Data Visualization", "Customer Behavior", "Analytics"],
+    tech: [
+      "Python",
+      "EDA",
+      "Data Visualization",
+      "Customer Behavior",
+      "Analytics",
+    ],
     github: "https://github.com/Ede-Rojin-Delibas/Ede-Rojin-Delibas.github.io",
     demo: "https://ede-rojin-delibas.github.io/",
     featured: true,
     accent: "indigo",
+    image: {
+      src: "/images/projects/e-commerce-platform/eda.jpg",
+      alt: "Preview of the e-commerce analytics platform dashboard concept",
+    },
     role: "Data Analyst",
     year: "2025",
     problem:
@@ -284,6 +320,10 @@ export const projects: Project[] = [
     demoLabel: "Project README",
     featured: false,
     accent: "blue",
+    image: {
+      src: "/images/projects/remote-work-calendar/calendar.jpg",
+      alt: "Preview of the remote work calendar assistant experience",
+    },
     role: "Product Developer",
     year: "2026",
     problem:
@@ -329,6 +369,10 @@ export const projects: Project[] = [
     demoLabel: "Project README",
     featured: true,
     accent: "cyan",
+    image: {
+      src: "/images/projects/code-generation-models/code.png",
+      alt: "Preview of the code generation models dataset and fine-tuning workflow",
+    },
     role: "AI Developer",
     year: "2025",
     problem:
@@ -361,12 +405,22 @@ export const projects: Project[] = [
     category: "AI & Data",
     description:
       "A machine learning system that estimates exam ranking from trial exam net scores for Turkish university exam preparation.",
-    tech: ["Python", "Pandas", "Machine Learning", "API", "Education Analytics"],
+    tech: [
+      "Python",
+      "Pandas",
+      "Machine Learning",
+      "API",
+      "Education Analytics",
+    ],
     github: "https://github.com/Ede-Rojin-Delibas/TEKNOFEST",
     demo: "https://github.com/Ede-Rojin-Delibas/TEKNOFEST",
     demoLabel: "Project README",
     featured: false,
     accent: "indigo",
+    image: {
+      src: "/images/projects/yks-ranking-predictor/dash.png",
+      alt: "Preview of the YKS ranking predictor dashboard",
+    },
     role: "Machine Learning Developer",
     year: "2025",
     problem:
@@ -399,12 +453,22 @@ export const projects: Project[] = [
     category: "Backend Systems",
     description:
       "A C# and ASP.NET project collection for practicing layered backend design with Onion Architecture principles.",
-    tech: ["C#", "ASP.NET", "Onion Architecture", "API Design", "Entity Models"],
+    tech: [
+      "C#",
+      "ASP.NET",
+      "Onion Architecture",
+      "API Design",
+      "Entity Models",
+    ],
     github: "https://github.com/Ede-Rojin-Delibas/Onion-Architecture",
     demo: "https://github.com/Ede-Rojin-Delibas/Onion-Architecture",
     demoLabel: "Project README",
     featured: false,
     accent: "blue",
+    image: {
+      src: "/images/projects/onion-architecture/web-architecture.jpg",
+      alt: "Preview of the onion architecture backend project structure",
+    },
     role: "Backend Developer",
     year: "2025",
     problem:

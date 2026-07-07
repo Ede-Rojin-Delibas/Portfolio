@@ -13,6 +13,7 @@ import {
 } from "lucide-react";
 import { projects } from "@/data/projects";
 import { ParallaxCard } from "@/components/shared/parallax-card";
+import type { Project } from "@/data/projects";
 import { Reveal } from "@/components/shared/reveal";
 import { Section } from "@/components/shared/section";
 import { StaggerItem, StaggerList } from "@/components/shared/stagger-list";
@@ -29,6 +30,67 @@ const accentStyles = {
   cyan: "from-cyan-400/30 via-blue-500/10 to-transparent",
   indigo: "from-indigo-500/30 via-sky-400/10 to-transparent",
 };
+
+type ScreenshotCardProps = {
+  screenshot: Project["screenshots"][number];
+  accent: Project["accent"];
+};
+
+function ScreenshotCard({ screenshot, accent }: ScreenshotCardProps) {
+  const accentTone = {
+    blue: "from-blue-500/22 via-sky-400/10 to-transparent",
+    cyan: "from-cyan-400/22 via-blue-500/10 to-transparent",
+    indigo: "from-indigo-500/22 via-violet-400/10 to-transparent",
+  }[accent];
+
+  return (
+    <article className="group rounded-lg border border-border/70 bg-background/75 p-4 backdrop-blur-md transition duration-300 hover:-translate-y-1 hover:border-primary/40">
+      {screenshot.image ? (
+        <div className="mb-4 overflow-hidden rounded-md border border-border/60 bg-background/80">
+          <div className="relative aspect-[16/10]">
+            <Image
+              src={screenshot.image.src}
+              alt={screenshot.image.alt}
+              fill
+              sizes="(min-width: 1024px) 22vw, 92vw"
+              className="object-cover transition duration-500 group-hover:scale-[1.03]"
+            />
+          </div>
+        </div>
+      ) : (
+        <div
+          className={cn(
+            "mb-4 rounded-md border border-border/70 bg-gradient-to-br p-3",
+            accentTone,
+          )}
+        >
+          <div className="flex items-center gap-2">
+            <span className="size-2.5 rounded-full bg-red-400" />
+            <span className="size-2.5 rounded-full bg-amber-300" />
+            <span className="size-2.5 rounded-full bg-emerald-400" />
+          </div>
+          <div className="mt-4 space-y-2">
+            <div className="h-2.5 w-24 rounded-full bg-foreground/15" />
+            <div className="h-2 w-4/5 rounded-full bg-muted-foreground/20" />
+            <div className="grid grid-cols-3 gap-2 pt-2">
+              {[58, 82, 66].map((height, index) => (
+                <div
+                  key={`${screenshot.title}-${index}`}
+                  className="h-12 rounded-md border border-border/60 bg-background/75"
+                  style={{ height: `${height}px` }}
+                />
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
+      <h2 className="font-semibold tracking-tight">{screenshot.title}</h2>
+      <p className="mt-2 text-sm leading-6 text-muted-foreground">
+        {screenshot.description}
+      </p>
+    </article>
+  );
+}
 
 const caseStudySections = [
   {
@@ -157,18 +219,11 @@ export default async function ProjectDetailPage({
 
               <div className="relative mt-5 grid gap-4 md:grid-cols-2">
                 {project.screenshots.map((screenshot) => (
-                  <article
+                  <ScreenshotCard
                     key={screenshot.title}
-                    className="rounded-lg border border-border/70 bg-background/75 p-4 backdrop-blur-md transition duration-300 hover:-translate-y-1 hover:border-primary/40"
-                  >
-                    <Monitor className="mb-8 size-5 text-primary" />
-                    <h2 className="font-semibold tracking-tight">
-                      {screenshot.title}
-                    </h2>
-                    <p className="mt-2 text-sm leading-6 text-muted-foreground">
-                      {screenshot.description}
-                    </p>
-                  </article>
+                    screenshot={screenshot}
+                    accent={project.accent}
+                  />
                 ))}
               </div>
             </ParallaxCard>
