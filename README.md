@@ -14,13 +14,13 @@
 
 ## What makes it feel alive?
 
-✅ **Animated hero text, aurora glow, and hover states**
+1. **Animated hero text, aurora glow, and hover states**
 
-✅ **Scroll-reveal sections and parallax cards**
+2. **Scroll-reveal sections and parallax cards**
 
-✅ **Project cards with live previews, tech badges, and outcome summaries**
+3. **Project cards with live previews, tech badges, and outcome summaries**
 
-✅ **Theme switcher with dark/light mode and glassmorphism**
+4. **Theme switcher with dark/light mode and glassmorphism**
 
 ---
 
@@ -43,13 +43,6 @@ Eğer GIF veya küçük animasyon eklemek istersen:
 - `public/` klasörüne koyduğun görseller doğrudan `./public/...` yolu ile çalışır.
 - `README.md` içindeki yol, proje kökünden (`README.md` ile aynı dizinden) başlayarak verilir.
 - GIF kullanılınca GitHub, VS Code ve Vercel önizlemelerinde hareketli içerik desteklenir.
-
-### Nasıl daha etkileyici olur?
-
-- Kısa ve güçlü başlıklar kullan.
-- Madde listesini `✅` gibi sembollerle görsel olarak güçlendir.
-- Yeni bir bölüm olarak "Ne öğrendim" veya "İş akışı" ekle.
-- `code` blokları, ekran görüntüleri ve proje linkleri ile metni kır.
 
 ---
 
