@@ -1,41 +1,76 @@
 # Ede-Rojin Computer Engineering Portfolio
 
-Dark-first computer engineering portfolio focused on practical software,
-backend development, data analysis, machine learning and intelligent systems.
-Built with Next.js App Router, TypeScript, Tailwind CSS, shadcn/ui, Motion,
-React Hook Form and Zod.
+![Portfolio Visual Preview](./public/images/readme-hero.svg)
+
+> A dark-first engineering portfolio for backend systems, AI/data work, and real product-ready code.
+
+## Why this portfolio?
+
+- **Practical case studies** that explain the problem, approach, and outcome.
+- **Dark-first design** with light mode support, motion, and polished micro-interactions.
+- **Engineering-focused storytelling** instead of just listing tools.
+
+---
+
+## What makes it feel alive?
+
+✅ **Animated hero text, aurora glow, and hover states**
+
+✅ **Scroll-reveal sections and parallax cards**
+
+✅ **Project cards with live previews, tech badges, and outcome summaries**
+
+✅ **Theme switcher with dark/light mode and glassmorphism**
+
+---
+
+## Visual and animation notes
+
+### Görsel eklemek için
+
+`README.md` içinde image eklemek için bu formatı kullanabilirsin:
+
+```md
+![Short alt text](./public/images/your-image.png)
+```
+
+Eğer GIF veya küçük animasyon eklemek istersen:
+
+```md
+![Animated preview](./public/images/demo.gif)
+```
+
+- `public/` klasörüne koyduğun görseller doğrudan `./public/...` yolu ile çalışır.
+- `README.md` içindeki yol, proje kökünden (`README.md` ile aynı dizinden) başlayarak verilir.
+- GIF kullanılınca GitHub, VS Code ve Vercel önizlemelerinde hareketli içerik desteklenir.
+
+### Nasıl daha etkileyici olur?
+
+- Kısa ve güçlü başlıklar kullan.
+- Madde listesini `✅` gibi sembollerle görsel olarak güçlendir.
+- Yeni bir bölüm olarak "Ne öğrendim" veya "İş akışı" ekle.
+- `code` blokları, ekran görüntüleri ve proje linkleri ile metni kır.
+
+---
 
 ## Features
 
-- Responsive Home, About, Projects, Project Detail and Contact pages
-- Dark/light theme toggle
-- Animated headline, aurora text, hyper text, word rotation, scroll reveal,
-  stagger animations, hover interactions, page transitions and parallax cards
-- Tech stack bento grid with animated beams, icon cloud, marquee row and
-  circular progress indicators
-- Contact form border beam and animated success state
-- Searchable and filterable project listing with visible category controls
-- Dynamic project detail routes under `/projects/[slug]`
-- Project detail pages with description, stack, screenshots/placeholders, GitHub
-  links, demo links and case-study outcomes
-- Contact form validation with React Hook Form, Zod, validation errors and a
-  success state
-- SEO metadata and Open Graph/Twitter metadata
-- Software, backend, AI, data and system-oriented projects presented under one
-  coherent computer engineering narrative
+### Built for engineering clarity
 
-## Implementation Notes
+- **Responsive pages**: Home, About, Projects, Project Detail, Contact
+- **Theme toggle**: dark-first experience with polished light mode
+- **Animated UI**: hero, scroll reveal, hover interactions, page transitions
+- **Project library**: searchable, filterable, category-aware
+- **Dynamic project routes**: `/projects/[slug]`
 
-- Project data lives in `data/projects.ts` and powers both the card grid and the
-  dynamic detail pages.
-- Project cards highlight the problem space through an `Outcome` section so each
-  project communicates value, not only tools.
-- Motion is used for hero text, scroll reveal, staggered badges, project filter
-  transitions, hover states, page transitions and parallax surfaces.
-- The contact form uses React Hook Form for field state and Zod for schema-based
-  validation before submission.
-- The visual system is dark-first but supports light mode with shared color
-  tokens, glass panels and responsive layout rules.
+### Technical story
+
+- **Project data** lives in `data/projects.ts`.
+- **Motion animations** are handled through `motion/react`.
+- **Validation** uses React Hook Form + Zod on the contact form.
+- **SEO** includes metadata plus Open Graph/Twitter cards.
+
+---
 
 ## Tech Stack
 
@@ -49,21 +84,18 @@ React Hook Form and Zod.
 - React Hook Form
 - Zod
 
-## Getting Started
+---
 
-Install dependencies:
+## Getting Started
 
 ```bash
 npm install
-```
-
-Run the development server:
-
-```bash
 npm run dev
 ```
 
-Open `http://localhost:3000` in your browser.
+Open your browser at `http://localhost:3000`.
+
+---
 
 ## Quality Checks
 
@@ -73,13 +105,12 @@ npx tsc --noEmit
 npm run build
 ```
 
+---
+
 ## Deploy on Vercel
 
-1. Push the project to GitHub.
+1. Push the repo to GitHub.
 2. Import the repository on Vercel.
-3. Keep the framework preset as `Next.js`.
-4. Use the default build command: `npm run build`.
-5. After deployment, share the generated `*.vercel.app` URL as the live demo.
-
-If the production branch is `master`, make sure Vercel is using `master` as the
-production branch in Project Settings.
+3. Use `Next.js` framework preset.
+4. Build command: `npm run build`.
+5. Share the live URL after deployment.
