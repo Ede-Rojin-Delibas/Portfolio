@@ -7,7 +7,6 @@ import {
   ArrowUpRight,
   Code2,
   Lightbulb,
-  Monitor,
   Route,
   Target,
 } from "lucide-react";

@@ -1,8 +1,14 @@
 "use client";
 
+/* eslint-disable @next/next/no-img-element */
+
 import * as React from "react";
 import { AnimatePresence, motion } from "motion/react";
 import { cn } from "@/lib/utils";
+import {
+  getTechBadgeToneClass,
+  getTechIconImagePath,
+} from "@/components/shared/tech-badge";
 
 type ClassNameProps = {
   className?: string;
@@ -164,20 +170,31 @@ export function IconCloud({ items, className }: IconCloudProps) {
       <div className="icon-cloud__center">
         <span>Stack</span>
       </div>
-      {items.map((item, index) => (
-        <span
-          key={item}
-          className="icon-cloud__item"
-          style={
-            {
-              "--index": index,
-              "--total": items.length,
-            } as React.CSSProperties
-          }
-        >
-          {item}
-        </span>
-      ))}
+      {items.map((item, index) => {
+        const toneClass = getTechBadgeToneClass(item);
+        const img = getTechIconImagePath(item);
+
+        if (!img) {
+          return null;
+        }
+
+        return (
+          <span
+            key={item}
+            className={cn("icon-cloud__item", toneClass)}
+            title={item}
+            style={
+              {
+                "--index": index,
+                "--total": items.length,
+              } as React.CSSProperties
+            }
+          >
+            <img src={img} alt={item} className="brand-icon-image" />
+            <span className="sr-only">{item}</span>
+          </span>
+        );
+      })}
     </div>
   );
 }
@@ -192,11 +209,25 @@ export function TechMarquee({ items, className }: TechMarqueeProps) {
   return (
     <div className={cn("tech-marquee", className)}>
       <div className="tech-marquee__track">
-        {repeatedItems.map((item, index) => (
-          <span key={`${item}-${index}`} className="tech-marquee__item">
-            {item}
-          </span>
-        ))}
+        {repeatedItems.map((item, index) => {
+          const toneClass = getTechBadgeToneClass(item);
+          const img = getTechIconImagePath(item);
+
+          if (!img) {
+            return null;
+          }
+
+          return (
+            <span
+              key={`${item}-${index}`}
+              className={cn("tech-marquee__item", toneClass)}
+              title={item}
+            >
+              <img src={img} alt={item} className="brand-icon-image" />
+              <span className="sr-only">{item}</span>
+            </span>
+          );
+        })}
       </div>
     </div>
   );

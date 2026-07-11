@@ -7,7 +7,6 @@ import {
   Network,
 } from "lucide-react";
 import {
-  AnimatedBeam,
   AnimatedCircularProgress,
   AuroraText,
   IconCloud,
@@ -51,31 +50,39 @@ const techGroups = [
 ];
 
 const iconCloudItems = [
-  "PY",
-  "TS",
+  "Python",
+  "TypeScript",
   "SQL",
-  "AI",
-  "ML",
-  "API",
-  "GIT",
-  "UX",
-  "EDA",
-  "LIN",
+  "GitHub",
+  "Linux",
+  "Flask",
+  "React",
+  "Next.js",
+  "Tailwind CSS",
+  "Pandas",
+  "NumPy",
+  "Scikit-learn",
 ];
 
 const marqueeItems = [
   "Python",
   "Flask",
-  "SQL",
-  "REST API",
+  "JavaScript",
+  "TypeScript",
+  "React",
+  "Next.js",
+  "Tailwind CSS",
   "Pandas",
   "NumPy",
   "Scikit-learn",
-  "Next.js",
-  "TypeScript",
-  "Tailwind CSS",
+  "SQL",
+  "C#",
+  "ASP.NET",
   "GitHub",
+  "Git",
   "Linux",
+  "HTML",
+  "CSS",
 ];
 
 const progressItems = [
@@ -108,19 +115,18 @@ export function TechStack() {
         <Reveal direction="left">
           <div className="glass-panel relative min-h-80 overflow-hidden rounded-lg p-5 md:p-6">
             <div className="technical-grid absolute inset-0 opacity-45" />
-            <AnimatedBeam className="opacity-90" />
             <div className="relative grid gap-6 md:grid-cols-[0.8fr_1.2fr] md:items-center">
               <div>
                 <p className="text-xs font-semibold uppercase tracking-[0.22em] text-primary">
-                  Animated beam map
+                  Brand icon map
                 </p>
                 <h3 className="mt-3 text-2xl font-semibold tracking-tight">
-                  A connected stack for{" "}
+                  Real tool logos for{" "}
                   <AuroraText>software, AI and data</AuroraText>.
                 </h3>
                 <p className="mt-3 text-sm leading-7 text-muted-foreground">
-                  The beam layer connects the core areas visually: backend,
-                  analysis, machine learning and interface delivery.
+                  This area now uses recognizable technology logos instead of
+                  generic line icons, closer to the GitHub profile style.
                 </p>
               </div>
               <IconCloud items={iconCloudItems} />
@@ -164,7 +170,9 @@ export function TechStack() {
                   <div className="grid size-10 place-items-center rounded-md border border-primary/25 bg-primary/10 text-primary">
                     <Icon className="size-5" />
                   </div>
-                  <h3 className="font-semibold tracking-tight">{group.title}</h3>
+                  <h3 className="font-semibold tracking-tight">
+                    {group.title}
+                  </h3>
                 </div>
                 <div className="flex flex-wrap gap-2">
                   {group.items.map((item) => (
