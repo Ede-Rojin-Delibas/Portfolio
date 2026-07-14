@@ -27,8 +27,8 @@ export function HeroVisual() {
       <div className="relative mt-3 overflow-hidden rounded-lg border border-border/70 bg-background/70">
         <div className="relative aspect-[4/3] min-h-80">
           <Image
-            src="/images/ai-engineering-hero.png"
-            alt="Abstract AI engineering workspace with code, data and neural system visuals"
+            src="/images/code-dashboard-mockup.png"
+            alt="Engineering dashboard mockup with code, API status, data charts and machine learning metrics"
             fill
             loading="eager"
             sizes="(min-width: 1024px) 42vw, 92vw"

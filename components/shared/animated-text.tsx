@@ -19,20 +19,23 @@ export function AnimatedText({
   const words = text.split(" ");
 
   return (
-    <Tag className={cn(className)} aria-label={text}>
+    <Tag
+      className={cn("max-w-full overflow-visible pb-[0.14em]", className)}
+      aria-label={text}
+    >
       {words.map((word, index) => (
         <motion.span
           aria-hidden="true"
-          className="inline-block pr-[0.22em]"
+          className="inline-block overflow-visible pb-[0.14em] pr-[0.22em]"
           initial={{
             opacity: 0,
             y: 24,
-            clipPath: "polygon(0 100%, 100% 100%, 100% 100%, 0 100%)",
+            clipPath: "polygon(0 112%, 100% 112%, 100% 112%, 0 112%)",
           }}
           animate={{
             opacity: 1,
             y: 0,
-            clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)",
+            clipPath: "polygon(0 -12%, 100% -12%, 100% 124%, 0 124%)",
           }}
           transition={{
             duration: 0.7,

@@ -106,15 +106,17 @@ const progressItems = [
 export function TechStack() {
   return (
     <Section
+      chapter="02"
       eyebrow="Engineering toolkit"
       title="A practical stack for software, data and intelligent systems."
       description="The technologies are grouped by engineering purpose: backend work, data analysis, machine learning, system fundamentals and user-facing delivery."
-      className="pt-8"
+      className="tech-skin section-skin"
     >
-      <div className="mb-5 grid gap-4 lg:grid-cols-[1.2fr_0.8fr]">
+      <div className="mb-6 grid gap-5 md:mb-8 lg:grid-cols-[1.2fr_0.8fr]">
         <Reveal direction="left">
           <div className="glass-panel relative min-h-80 overflow-hidden rounded-lg p-5 md:p-6">
-            <div className="technical-grid absolute inset-0 opacity-45" />
+            <div className="tech-pattern-visual absolute inset-0" />
+            <div className="technical-grid absolute inset-0 opacity-25" />
             <div className="relative grid gap-6 md:grid-cols-[0.8fr_1.2fr] md:items-center">
               <div>
                 <p className="text-xs font-semibold uppercase tracking-[0.22em] text-primary">
@@ -154,7 +156,7 @@ export function TechStack() {
       </div>
 
       <Reveal delay={0.1}>
-        <div className="mb-5 glass-panel rounded-lg p-3">
+        <div className="mb-6 glass-panel rounded-lg p-3 md:mb-8">
           <TechMarquee items={marqueeItems} />
         </div>
       </Reveal>

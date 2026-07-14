@@ -84,7 +84,7 @@ export function WordRotate({ words, className }: WordRotateProps) {
   }, [words.length]);
 
   return (
-    <span className={cn("inline-grid overflow-hidden align-bottom", className)}>
+    <span className={cn("inline-grid overflow-visible pb-[0.14em] align-bottom", className)}>
       <AnimatePresence mode="wait">
         <motion.span
           key={words[index]}
@@ -170,13 +170,14 @@ export function IconCloud({ items, className }: IconCloudProps) {
       <div className="icon-cloud__center">
         <span>Stack</span>
       </div>
-      {items.map((item, index) => {
-        const toneClass = getTechBadgeToneClass(item);
-        const img = getTechIconImagePath(item);
+        {items.map((item, index) => {
+          const toneClass = getTechBadgeToneClass(item);
+          const img = getTechIconImagePath(item);
+          const ring = index % 3;
 
-        if (!img) {
-          return null;
-        }
+          if (!img) {
+            return null;
+          }
 
         return (
           <span
@@ -187,6 +188,9 @@ export function IconCloud({ items, className }: IconCloudProps) {
               {
                 "--index": index,
                 "--total": items.length,
+                "--ring-scale": ring === 0 ? 1 : ring === 1 ? 0.84 : 1.12,
+                "--ring-depth": ring === 0 ? "22px" : ring === 1 ? "-24px" : "46px",
+                "--ring-opacity": ring === 1 ? 0.72 : 1,
               } as React.CSSProperties
             }
           >

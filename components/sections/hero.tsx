@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { ArrowRight, Sparkles } from "lucide-react";
 import {
   AuroraText,
@@ -27,6 +28,15 @@ export function Hero() {
   return (
     <section className="hero-skin section-skin relative overflow-hidden pt-10 pb-16 md:pt-16 md:pb-24">
       <div aria-hidden="true" className="hero-wireframe" />
+      <Image
+        src="/images/abstract-3d-object.png"
+        alt=""
+        width={420}
+        height={420}
+        priority
+        aria-hidden="true"
+        className="hero-generated-object"
+      />
       <div
         aria-hidden="true"
         className="hero-abstract-object hero-abstract-object--primary"
@@ -36,25 +46,28 @@ export function Hero() {
         className="hero-abstract-object hero-abstract-object--secondary"
       />
 
-      <Container className="relative z-10 grid items-start gap-12 lg:grid-cols-[1.05fr_0.95fr]">
-        <div>
+      <Container className="relative z-10 grid min-w-0 items-start gap-12 lg:grid-cols-[1.05fr_0.95fr]">
+        <div className="min-w-0">
           <Reveal>
-            <div className="mb-6 inline-flex items-center gap-2 rounded-md border border-primary/25 bg-primary/10 px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.18em] text-primary">
+            <div className="mb-6 inline-flex max-w-full flex-wrap items-center gap-2 rounded-md border border-primary/25 bg-primary/10 px-3 py-1.5 text-left text-xs font-semibold uppercase leading-5 tracking-[0.18em] text-primary">
               <Sparkles className="size-3.5" />
-              <HyperText text="Computer Engineering for Intelligent Systems" />
+              <HyperText
+                text="AI + Software Systems"
+                className="min-w-0 break-words"
+              />
             </div>
           </Reveal>
 
           <div>
             <AnimatedText
               text="Building practical technology from data, software and intelligent systems."
-              className="text-balance text-5xl font-semibold tracking-tight text-foreground md:text-7xl"
+              className="max-w-full text-balance font-heading text-4xl font-semibold leading-[1.06] tracking-tight text-foreground sm:text-5xl md:text-7xl"
             />
             <Reveal delay={0.08}>
-              <p className="mt-4 text-lg font-medium text-muted-foreground md:text-2xl">
+              <p className="mt-4 flex flex-wrap items-baseline gap-x-2 text-lg font-medium leading-8 text-muted-foreground md:text-2xl">
                 Currently shaping{" "}
                 <WordRotate
-                  className="min-w-56 text-left text-foreground"
+                  className="grid w-full min-w-0 overflow-visible text-left text-foreground sm:inline-grid sm:w-auto sm:min-w-56"
                   words={[
                     "backend systems",
                     "machine learning workflows",
@@ -77,21 +90,20 @@ export function Hero() {
               </p>
               <p className="rounded-md border border-primary/25 bg-primary/5 px-4 py-3 text-sm font-medium leading-6 text-foreground shadow-[0_18px_60px_-44px_var(--primary)] dark:bg-primary/10">
                 Focused on{" "}
-                <AuroraText>backend systems, data analysis, machine learning</AuroraText>
-                {" "}and clean user interfaces.
+                <AuroraText>backend, data, ML</AuroraText> and clean interfaces.
               </p>
             </div>
           </Reveal>
 
           <Reveal delay={0.25}>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-              <Button asChild size="lg" className="rainbow-button rounded-md">
+              <Button asChild size="lg" className="rainbow-button rounded-md sm:w-auto">
                 <Link href="/projects">
                   View projects
                   <ArrowRight className="size-4" />
                 </Link>
               </Button>
-              <Button asChild size="lg" variant="outline" className="rounded-md">
+              <Button asChild size="lg" variant="outline" className="rounded-md sm:w-auto">
                 <Link href="/contact">Contact me</Link>
               </Button>
             </div>
@@ -108,7 +120,7 @@ export function Hero() {
           </Reveal>
         </div>
 
-        <Reveal delay={0.2}>
+        <Reveal className="min-w-0" delay={0.2}>
           <HeroVisual />
         </Reveal>
       </Container>

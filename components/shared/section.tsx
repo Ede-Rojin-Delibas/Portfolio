@@ -4,6 +4,7 @@ import { cn } from "@/lib/utils";
 
 type SectionProps = React.ComponentProps<"section"> & {
   eyebrow?: string;
+  chapter?: string;
   title?: string;
   description?: string;
   align?: "left" | "center";
@@ -14,13 +15,14 @@ export function Section({
   className,
   children,
   eyebrow,
+  chapter,
   title,
   description,
   align = "left",
   containerSize = "default",
   ...props
 }: SectionProps) {
-  const hasHeader = eyebrow || title || description;
+  const hasHeader = chapter || eyebrow || title || description;
 
   return (
     <section className={cn("py-16 md:py-24", className)} {...props}>
@@ -32,6 +34,9 @@ export function Section({
               align === "center" && "mx-auto text-center",
             )}
           >
+            {chapter ? (
+              <span className="section-chapter">{chapter}</span>
+            ) : null}
             {eyebrow ? (
               <p className="mb-3 text-xs font-semibold uppercase tracking-[0.24em] text-primary">
                 {eyebrow}

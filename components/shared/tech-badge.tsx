@@ -275,9 +275,9 @@ export function TechBadge({
     <Badge
       variant="outline"
       className={cn(
-        "h-7 rounded-full border px-2.5 text-[11px] font-semibold uppercase tracking-[0.16em] text-foreground/85 shadow-sm transition duration-200",
-        "dark:text-foreground/80",
+        "h-7 rounded-full border px-2.5 text-[11px] font-semibold uppercase tracking-[0.16em] shadow-sm transition duration-200",
         toneClass,
+        "text-foreground/85 dark:text-foreground/85",
         className,
       )}
       {...props}
