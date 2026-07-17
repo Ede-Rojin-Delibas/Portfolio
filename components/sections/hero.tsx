@@ -29,13 +29,13 @@ export function Hero() {
     <section className="hero-skin section-skin relative overflow-hidden pt-10 pb-16 md:pt-16 md:pb-24">
       <div aria-hidden="true" className="hero-wireframe" />
       <Image
-        src="/images/abstract-3d-object.png"
+        src="/images/hero-glass-crystal.png"
         alt=""
-        width={420}
-        height={420}
-        priority
+        width={900}
+        height={900}
+        preload
         aria-hidden="true"
-        className="hero-generated-object"
+        className="hero-glass-object"
       />
       <div
         aria-hidden="true"
