@@ -258,6 +258,32 @@
     opacity: 0.95;
   }
 
+  .site-background__texture {
+    position: absolute;
+    inset: 0;
+    background-image: url("/images/background-assets/abstract-data-and-ai-concept-background-texture-fo.png");
+    background-position: right -12vw top 9rem;
+    background-repeat: no-repeat;
+    background-size: min(54rem, 76vw) auto;
+    mask-image: linear-gradient(
+      120deg,
+      transparent 0%,
+      black 34%,
+      black 72%,
+      transparent 100%
+    );
+    mix-blend-mode: multiply;
+    opacity: 0.14;
+  }
+
+  .dark .site-background__texture {
+    background-image: url("/images/background-assets/abstract-data-and-ai-concept-background-texture-fo%20%282%29.png");
+    background-position: right -10vw top 13rem;
+    background-size: min(58rem, 78vw) auto;
+    mix-blend-mode: screen;
+    opacity: 0.2;
+  }
+
   .site-background__mouse {
     position: absolute;
     left: var(--mouse-x);
@@ -629,10 +655,17 @@
   .hero-skin::before {
     content: "";
     position: absolute;
-    inset: -24rem -10vw auto -10vw;
+    inset: 0;
     z-index: 0;
-    height: 34rem;
     background:
+      linear-gradient(
+        90deg,
+        color-mix(in oklch, var(--background) 94%, #f8fafc 6%) 0%,
+        color-mix(in oklch, var(--background) 78%, transparent) 42%,
+        transparent 78%
+      ),
+      url("/images/hero-assets/abstract-data-and-ai-concept-art-for-a-website-her.png")
+        right center / min(72rem, 86vw) auto no-repeat,
       radial-gradient(
         ellipse at 20% 22%,
         rgb(37 99 235 / 0.2),
@@ -648,13 +681,32 @@
         rgb(124 58 237 / 0.16),
         transparent 42%
       );
-    filter: blur(20px);
-    opacity: 0.44;
+    opacity: 0.46;
     animation: aurora-drift 16s ease-in-out infinite alternate;
   }
 
   .dark .hero-skin::before {
-    opacity: 0.82;
+    background:
+      linear-gradient(
+        90deg,
+        #050816 0%,
+        rgb(5 8 22 / 0.96) 36%,
+        rgb(5 8 22 / 0.48) 68%,
+        transparent 100%
+      ),
+      url("/images/hero-assets/abstract-data-and-ai-concept-art-for-a-website-her%20%282%29.png")
+        right center / min(72rem, 86vw) auto no-repeat,
+      radial-gradient(
+        ellipse at 20% 22%,
+        rgb(37 99 235 / 0.16),
+        transparent 42%
+      ),
+      radial-gradient(
+        ellipse at 86% 18%,
+        rgb(168 85 247 / 0.16),
+        transparent 42%
+      );
+    opacity: 0.68;
   }
 
   .hero-skin::after {
@@ -1639,6 +1691,43 @@
   }
 
   @media (max-width: 767px) {
+    .site-background__texture {
+      background-position: right -56vw top 8rem;
+      background-size: 136vw auto;
+      opacity: 0.1;
+    }
+
+    .dark .site-background__texture {
+      background-position: right -58vw top 10rem;
+      opacity: 0.16;
+    }
+
+    .hero-skin::before {
+      background:
+        linear-gradient(
+          180deg,
+          color-mix(in oklch, var(--background) 82%, transparent) 0%,
+          var(--background) 68%,
+          transparent 100%
+        ),
+        url("/images/hero-assets/abstract-data-and-ai-concept-art-for-a-website-her.png")
+          right -22rem top 2rem / 62rem auto no-repeat;
+      opacity: 0.32;
+    }
+
+    .dark .hero-skin::before {
+      background:
+        linear-gradient(
+          180deg,
+          rgb(5 8 22 / 0.94) 0%,
+          rgb(5 8 22 / 0.86) 54%,
+          transparent 100%
+        ),
+        url("/images/hero-assets/abstract-data-and-ai-concept-art-for-a-website-her%20%282%29.png")
+          right -22rem top 2rem / 62rem auto no-repeat;
+      opacity: 0.48;
+    }
+
     .project-gallery-shell {
       margin-inline: -1rem;
       padding-inline: 1rem;
@@ -1757,45 +1846,113 @@
 
   .contact-skin {
     background:
-      linear-gradient(
-        135deg,
-        color-mix(in oklch, var(--primary) 8%, transparent),
-        transparent 36%
+      radial-gradient(
+        ellipse at 82% 12%,
+        rgb(14 165 233 / 0.14),
+        transparent 34%
+      ),
+      radial-gradient(
+        ellipse at 8% 78%,
+        rgb(168 85 247 / 0.08),
+        transparent 38%
       ),
       linear-gradient(
-        315deg,
-        color-mix(in oklch, var(--accent) 8%, transparent),
-        transparent 44%
+        145deg,
+        #f8fafc 0%,
+        #eef6ff 34%,
+        #f6f3ff 68%,
+        #f8fafc 100%
       );
+  }
+
+  .dark .contact-skin {
+    background:
+      radial-gradient(
+        ellipse at 82% 12%,
+        rgb(34 211 238 / 0.2),
+        transparent 38%
+      ),
+      radial-gradient(
+        ellipse at 8% 78%,
+        rgb(96 165 250 / 0.16),
+        transparent 42%
+      ),
+      radial-gradient(
+        ellipse at 52% 100%,
+        rgb(168 85 247 / 0.14),
+        transparent 38%
+      ),
+      linear-gradient(145deg, #030712 0%, #071526 44%, #0c1024 72%, #050816 100%);
   }
 
   .contact-skin::before {
     content: "";
     position: absolute;
-    inset: 4rem 0 auto 0;
+    inset: 0;
     z-index: 0;
-    height: 28rem;
-    background:
-      linear-gradient(120deg, rgb(37 99 235 / 0.12), transparent 38%),
-      linear-gradient(260deg, rgb(6 182 212 / 0.12), transparent 42%),
-      linear-gradient(25deg, rgb(124 58 237 / 0.08), transparent 46%);
-    filter: blur(8px);
-    opacity: 0.72;
+    background-image:
+      radial-gradient(
+        circle at 1px 1px,
+        color-mix(in oklch, var(--primary) 28%, transparent) 1px,
+        transparent 1.7px
+      ),
+      radial-gradient(
+        circle at 1px 1px,
+        color-mix(in oklch, var(--accent) 22%, transparent) 0.85px,
+        transparent 1.5px
+      );
+    background-position:
+      0 0,
+      18px 20px;
+    background-size:
+      34px 34px,
+      76px 76px;
+    mask-image: linear-gradient(
+      125deg,
+      transparent 0%,
+      black 18%,
+      black 74%,
+      transparent 100%
+    );
+    opacity: 0.34;
+    animation: contact-particle-drift 16s ease-in-out infinite alternate;
+  }
+
+  .dark .contact-skin::before {
+    opacity: 0.3;
   }
 
   .contact-skin::after {
     content: "";
     position: absolute;
-    inset: 0;
+    inset: auto -10vw -12rem -10vw;
     z-index: 0;
-    background-image: radial-gradient(
-      circle at 1px 1px,
-      color-mix(in oklch, var(--primary) 12%, transparent) 1px,
-      transparent 1.6px
-    );
-    background-size: 32px 32px;
-    mask-image: linear-gradient(135deg, black 0%, transparent 66%);
-    opacity: 0.24;
+    height: 30rem;
+    background:
+      radial-gradient(ellipse at 28% 42%, rgb(14 165 233 / 0.22), transparent 48%),
+      radial-gradient(ellipse at 70% 44%, rgb(99 102 241 / 0.16), transparent 50%),
+      linear-gradient(
+        90deg,
+        transparent 8%,
+        rgb(255 255 255 / 0.46) 48%,
+        transparent 88%
+      );
+    filter: blur(18px);
+    opacity: 0.7;
+    transform: rotate(-2deg);
+  }
+
+  .dark .contact-skin::after {
+    background:
+      radial-gradient(ellipse at 28% 42%, rgb(34 211 238 / 0.24), transparent 48%),
+      radial-gradient(ellipse at 70% 44%, rgb(59 130 246 / 0.18), transparent 50%),
+      linear-gradient(
+        90deg,
+        transparent 8%,
+        rgb(148 163 184 / 0.18) 48%,
+        transparent 88%
+      );
+    opacity: 0.58;
   }
 
   .story-skin {
@@ -2741,6 +2898,19 @@
     }
   }
 
+  @keyframes contact-particle-drift {
+    0% {
+      background-position:
+        0 0,
+        18px 20px;
+    }
+    100% {
+      background-position:
+        18px -14px,
+        -10px 44px;
+    }
+  }
+
   @keyframes navbar-scan {
     0%,
     36% {
@@ -2856,6 +3026,7 @@
     .hero-abstract-object,
     .hero-glass-object,
     .hero-generated-object,
+    .contact-skin::before,
     .navbar-shell::before,
     .story-orbit::after,
     .story-orbit span,

@@ -27,6 +27,7 @@ export function SiteBackground() {
   return (
     <div ref={backgroundRef} aria-hidden="true" className="site-background">
       <div className="site-background__aurora" />
+      <div className="site-background__texture" />
       <div className="site-background__mouse" />
       <div className="site-background__grid" />
       <div className="site-background__beam site-background__beam--primary" />
