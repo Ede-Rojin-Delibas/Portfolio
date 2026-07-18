@@ -13,7 +13,7 @@ export function FeaturedProjects() {
     <Section
       id="featured-projects"
       className="projects-showcase-skin section-skin"
-      chapter="04"
+      chapter="05"
       eyebrow="Selected systems"
       title="Case studies in software, data and intelligent systems."
       description="Each card presents one practical engineering problem: what it solves, which tools it uses, and how the work connects to real-world value."

@@ -2,4 +2,11 @@
 > portfolio-site@0.1.0 dev
 > next dev --port 3000
 
-[?25h
+▲ Next.js 16.2.9 (Turbopack)
+- Local:         http://localhost:3000
+- Network:       http://192.168.56.1:3000
+✓ Ready in 416ms
+Creating turbopack project { dir: 'C:\\Users\\emreo\\portfolio-site', testMode: true }
+
+ GET / 200 in 804ms (next.js: 157ms, application-code: 647ms)
+ GET / 200 in 224ms (next.js: 6ms, application-code: 218ms)

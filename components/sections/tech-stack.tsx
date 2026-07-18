@@ -106,7 +106,7 @@ const progressItems = [
 export function TechStack() {
   return (
     <Section
-      chapter="02"
+      chapter="03"
       eyebrow="Engineering toolkit"
       title="A practical stack for software, data and intelligent systems."
       description="The technologies are grouped by engineering purpose: backend work, data analysis, machine learning, system fundamentals and user-facing delivery."

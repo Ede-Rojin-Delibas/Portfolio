@@ -39,7 +39,7 @@ export function EngineeringLayers() {
   return (
     <Section
       className="story-skin section-skin"
-      chapter="03"
+      chapter="04"
       eyebrow="Scroll story"
       title="Three layers turn technical work into a complete portfolio experience."
       description="This section breaks the page rhythm: instead of another card grid, it explains the engineering flow from software foundation to data signals and interface delivery."
