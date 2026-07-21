@@ -1,6 +1,14 @@
 "use client";
 
-import { BrainCircuit, Code2, Database, Layers3 } from "lucide-react";
+import {
+  Activity,
+  ArrowRight,
+  BrainCircuit,
+  Code2,
+  Database,
+  Gauge,
+  Layers3,
+} from "lucide-react";
 import { motion, useReducedMotion } from "motion/react";
 import { AuroraText } from "@/components/shared/animation-effects";
 import { Reveal } from "@/components/shared/reveal";
@@ -33,6 +41,8 @@ const stackLayers = [
   },
 ];
 
+const signalSteps = ["Input", "API", "EDA", "Model", "UI"];
+
 export function SystemStack() {
   const shouldReduceMotion = useReducedMotion();
 
@@ -42,10 +52,10 @@ export function SystemStack() {
       chapter="02"
       eyebrow="Signal layers"
       title="A portfolio built like a layered engineering system."
-      description="This middle section turns the moodboard idea into motion: separate software, data and AI layers assemble into one practical engineering point of view."
+      description="The visual shows how raw signals move through software, data analysis, model thinking and interface delivery instead of sitting as separate skills."
       containerSize="wide"
     >
-      <div className="grid gap-8 lg:grid-cols-[0.82fr_1.18fr] lg:items-center">
+      <div className="grid gap-8 lg:grid-cols-[0.74fr_1.26fr] lg:items-center">
         <Reveal direction="left">
           <div className="system-stack-copy glass-panel rounded-lg p-6 md:p-8">
             <p className="text-xs font-semibold uppercase tracking-[0.24em] text-primary">
@@ -72,62 +82,110 @@ export function SystemStack() {
           >
             <div className="system-stack-visual__halo" />
             <div className="system-stack-visual__mesh" />
-            <div className="system-stack-visual__core">
-              <Layers3 className="size-5" />
-              System
+
+            <div className="system-stack-visual__topbar">
+              <span>
+                <Activity className="size-4" />
+                Signal pipeline
+              </span>
+              <span>Live system view</span>
             </div>
 
-            {stackLayers.map((layer, index) => {
-              const Icon = layer.icon;
+            <div className="system-stack-visual__stage">
+              <div className="system-stack-side-card system-stack-side-card--input">
+                <Database className="size-4 text-primary" />
+                <span>
+                  <span className="block text-xs font-semibold uppercase tracking-[0.18em] text-primary">
+                    Data input
+                  </span>
+                  <span className="mt-1 block text-sm font-medium">
+                    Structured signals
+                  </span>
+                </span>
+              </div>
 
-              return (
-                <motion.div
-                  key={layer.label}
-                  className={`system-stack-layer ${layer.className}`}
-                  variants={{
-                    split: {
-                      opacity: 0.52,
-                      x: layer.split.x,
-                      y: layer.split.y,
-                      rotateZ: layer.split.rotate,
-                      rotateX: 62,
-                      scale: 0.96,
-                    },
-                    joined: {
-                      opacity: 1,
-                      x: 0,
-                      y: index * 58 - 58,
-                      rotateZ: 0,
-                      rotateX: 58,
-                      scale: 1,
-                    },
-                  }}
-                  transition={{
-                    duration: shouldReduceMotion ? 0 : 1.2,
-                    delay: shouldReduceMotion ? 0 : index * 0.18,
-                    ease: [0.22, 1, 0.36, 1],
-                  }}
-                >
-                  <div className="system-stack-layer__shine" />
-                  <div className="system-stack-layer__content">
-                    <span className="system-stack-layer__icon">
-                      <Icon className="size-4" />
-                    </span>
-                    <span>
-                      <span className="block text-xs font-semibold uppercase tracking-[0.22em] text-primary">
-                        {layer.label}
-                      </span>
-                      <span className="mt-1 block text-sm font-semibold text-foreground">
-                        {layer.title}
-                      </span>
-                      <span className="mt-1 block text-xs leading-5 text-muted-foreground">
-                        {layer.detail}
-                      </span>
-                    </span>
-                  </div>
-                </motion.div>
-              );
-            })}
+              <div className="system-stack-layer-deck">
+                <div className="system-stack-visual__core">
+                  <Layers3 className="size-5" />
+                  System
+                </div>
+
+                {stackLayers.map((layer, index) => {
+                  const Icon = layer.icon;
+
+                  return (
+                    <motion.div
+                      key={layer.label}
+                      className={`system-stack-layer ${layer.className}`}
+                      variants={{
+                        split: {
+                          opacity: 0.58,
+                          x: layer.split.x,
+                          y: layer.split.y,
+                          rotateZ: layer.split.rotate,
+                          rotateX: 0,
+                          scale: 0.98,
+                        },
+                        joined: {
+                          opacity: 1,
+                          x: 0,
+                          y: index * 84 - 84,
+                          rotateZ: 0,
+                          rotateX: 0,
+                          scale: 1,
+                        },
+                      }}
+                      transition={{
+                        duration: shouldReduceMotion ? 0 : 1.2,
+                        delay: shouldReduceMotion ? 0 : index * 0.18,
+                        ease: [0.22, 1, 0.36, 1],
+                      }}
+                    >
+                      <div className="system-stack-layer__shine" />
+                      <div className="system-stack-layer__content">
+                        <span className="system-stack-layer__icon">
+                          <Icon className="size-4" />
+                        </span>
+                        <span>
+                          <span className="block text-xs font-semibold uppercase tracking-[0.22em] text-primary">
+                            {layer.label}
+                          </span>
+                          <span className="mt-1 block text-sm font-semibold text-foreground">
+                            {layer.title}
+                          </span>
+                          <span className="mt-1 block text-xs leading-5 text-muted-foreground">
+                            {layer.detail}
+                          </span>
+                        </span>
+                      </div>
+                    </motion.div>
+                  );
+                })}
+              </div>
+
+              <div className="system-stack-side-card system-stack-side-card--output">
+                <Gauge className="size-4 text-accent" />
+                <span>
+                  <span className="block text-xs font-semibold uppercase tracking-[0.18em] text-accent">
+                    Output
+                  </span>
+                  <span className="mt-1 block text-sm font-medium">
+                    Useful interface
+                  </span>
+                </span>
+              </div>
+            </div>
+
+            <div className="system-stack-flow">
+              {signalSteps.map((step, index) => (
+                <span key={step}>
+                  {step}
+                  {index < signalSteps.length - 1 ? (
+                    <ArrowRight className="size-3.5" />
+                  ) : null}
+                </span>
+              ))}
+            </div>
           </motion.div>
         </Reveal>
       </div>

@@ -1,14 +1,18 @@
 import Link from "next/link";
 import {
   ArrowUpRight,
-  BriefcaseBusiness,
   Code2,
   Cpu,
+  Globe,
   Mail,
   MapPin,
   Sparkles,
 } from "lucide-react";
 import { Container } from "@/components/shared/container";
+import {
+  GithubBrandIcon,
+  LinkedinBrandIcon,
+} from "@/components/shared/brand-icons";
 
 const footerLinks = [
   { label: "Home", href: "/" },
@@ -22,19 +26,27 @@ const socialLinks = [
   {
     label: "GitHub",
     href: "https://github.com/Ede-Rojin-Delibas",
-    icon: Code2,
+    icon: GithubBrandIcon,
+    tone: "hover:border-[#181717]/40 hover:text-[#181717] dark:hover:text-white",
   },
   {
     label: "Old Portfolio",
     href: "https://ede-rojin-delibas.github.io/",
-    icon: BriefcaseBusiness,
+    icon: Globe,
+    tone: "hover:border-primary/45 hover:text-primary",
   },
   {
     label: "LinkedIn",
     href: "https://www.linkedin.com/in/ede-rojin-deliba%C5%9F/",
-    icon: BriefcaseBusiness,
+    icon: LinkedinBrandIcon,
+    tone: "hover:border-[#0A66C2]/45 hover:text-[#0A66C2]",
   },
-  { label: "Contact", href: "/contact", icon: Mail },
+  {
+    label: "Contact",
+    href: "/contact",
+    icon: Mail,
+    tone: "hover:border-cyan-500/45 hover:text-cyan-600 dark:hover:text-cyan-300",
+  },
 ];
 
 export function Footer() {
@@ -135,9 +147,9 @@ export function Footer() {
                   rel={
                     item.href.startsWith("http") ? "noopener noreferrer" : undefined
                   }
-                  className="group/social inline-flex h-10 items-center gap-2 rounded-md border border-border/70 bg-background/55 px-3 text-sm text-muted-foreground transition hover:-translate-y-0.5 hover:border-primary/45 hover:bg-primary/10 hover:text-primary"
+                  className={`group/social inline-flex h-10 items-center gap-2 rounded-md border border-border/70 bg-background/55 px-3 text-sm text-muted-foreground transition hover:-translate-y-0.5 hover:bg-background/80 ${item.tone}`}
                 >
-                  <Icon className="size-4 transition group-hover/social:text-primary" />
+                  <Icon className="size-4 transition" />
                   {item.label}
                   {item.href.startsWith("http") ? (
                     <ArrowUpRight className="size-3.5 transition group-hover/social:translate-x-0.5 group-hover/social:-translate-y-0.5" />

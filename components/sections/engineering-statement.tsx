@@ -1,5 +1,11 @@
-import Image from "next/image";
-import { ArrowDownRight, Cpu, Database, Network } from "lucide-react";
+import {
+  BrainCircuit,
+  Code2,
+  Cpu,
+  Database,
+  Layers3,
+  Network,
+} from "lucide-react";
 import { AuroraText } from "@/components/shared/animation-effects";
 import { Container } from "@/components/shared/container";
 import { Reveal } from "@/components/shared/reveal";
@@ -20,6 +26,35 @@ const statementPoints = [
     value: "Interfaces",
     icon: Network,
   },
+];
+
+const systemNodes = [
+  {
+    label: "Code",
+    value: "APIs",
+    icon: Code2,
+  },
+  {
+    label: "Data",
+    value: "EDA",
+    icon: Database,
+  },
+  {
+    label: "Model",
+    value: "ML",
+    icon: BrainCircuit,
+  },
+  {
+    label: "Delivery",
+    value: "UI",
+    icon: Network,
+  },
+];
+
+const consoleLines = [
+  "read_signal(dataset)",
+  "build_api(response)",
+  "evaluate_model(metric)",
 ];
 
 export function EngineeringStatement() {
@@ -43,18 +78,57 @@ export function EngineeringStatement() {
           </Reveal>
 
           <Reveal direction="right" delay={0.1}>
-            <div className="statement-visual" aria-label="Engineering preview">
-              <Image
-                src="/images/code-dashboard-mockup.png"
-                alt="Abstract dashboard and code interface preview"
-                fill
-                sizes="(min-width: 1024px) 38vw, 90vw"
-                className="object-cover"
-              />
-              <div className="statement-visual__wash" />
+            <div
+              className="statement-visual statement-system-visual"
+              aria-label="Engineering system visual"
+            >
+              <div className="statement-system-visual__glow" />
+              <div className="statement-system-visual__grid" />
+              <div className="statement-system-visual__ring" />
+
+              <div className="statement-system-visual__core">
+                <Layers3 className="size-5" />
+                <span>Systems</span>
+              </div>
+
+              <div className="statement-system-visual__nodes">
+                {systemNodes.map((node) => {
+                  const Icon = node.icon;
+
+                  return (
+                    <div
+                      className="statement-system-visual__node"
+                      key={node.label}
+                    >
+                      <Icon className="size-4" />
+                      <span>
+                        <span>{node.label}</span>
+                        <strong>{node.value}</strong>
+                      </span>
+                    </div>
+                  );
+                })}
+              </div>
+
+              <div className="statement-system-visual__console">
+                <div className="statement-system-visual__console-top">
+                  <span />
+                  <span />
+                  <span />
+                  <strong>engineering.flow</strong>
+                </div>
+                <div className="statement-system-visual__console-lines">
+                  {consoleLines.map((line) => (
+                    <p key={line}>
+                      <span>&gt;</span>
+                      {line}
+                    </p>
+                  ))}
+                </div>
+              </div>
+
               <div className="statement-visual__badge">
-                <ArrowDownRight className="size-4" />
-                Scroll story
+                Product-minded engineering
               </div>
             </div>
           </Reveal>

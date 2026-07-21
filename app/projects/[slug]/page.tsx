@@ -5,7 +5,6 @@ import { notFound } from "next/navigation";
 import {
   ArrowLeft,
   ArrowUpRight,
-  Code2,
   Lightbulb,
   Route,
   Target,
@@ -13,6 +12,8 @@ import {
 import { projects } from "@/data/projects";
 import { ParallaxCard } from "@/components/shared/parallax-card";
 import type { Project } from "@/data/projects";
+import { GithubBrandIcon } from "@/components/shared/brand-icons";
+import { IconTile } from "@/components/shared/icon-tile";
 import { Reveal } from "@/components/shared/reveal";
 import { Section } from "@/components/shared/section";
 import { StaggerItem, StaggerList } from "@/components/shared/stagger-list";
@@ -96,16 +97,19 @@ const caseStudySections = [
     label: "Problem",
     field: "problem",
     icon: Lightbulb,
+    tone: "amber" as const,
   },
   {
     label: "Approach",
     field: "approach",
     icon: Route,
+    tone: "cyan" as const,
   },
   {
     label: "Outcome",
     field: "outcome",
     icon: Target,
+    tone: "emerald" as const,
   },
 ] as const;
 
@@ -262,7 +266,7 @@ export default async function ProjectDetailPage({
                       target="_blank"
                       rel="noopener noreferrer"
                     >
-                      <Code2 className="size-4" />
+                      <GithubBrandIcon className="size-4" />
                       GitHub
                     </Link>
                   </Button>
@@ -295,9 +299,11 @@ export default async function ProjectDetailPage({
                   className="glass-panel rounded-lg p-5 transition duration-300 hover:-translate-y-1 hover:border-primary/40"
                 >
                   <div className="mb-5 flex items-center justify-between gap-4">
-                    <div className="grid size-10 place-items-center rounded-md border border-primary/25 bg-primary/10 text-primary">
-                      <Icon className="size-5" />
-                    </div>
+                    <IconTile
+                      icon={Icon}
+                      iconClassName="size-5"
+                      tone={section.tone}
+                    />
                     <span className="font-mono text-xs text-muted-foreground">
                       0{index + 1}
                     </span>

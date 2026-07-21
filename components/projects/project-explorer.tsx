@@ -5,6 +5,7 @@ import { Filter, Search } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
 import type { Project } from "@/data/projects";
 import { ProjectCard } from "@/components/projects/project-card";
+import { IconTile } from "@/components/shared/icon-tile";
 import { cn } from "@/lib/utils";
 
 type ProjectExplorerProps = {
@@ -50,13 +51,18 @@ export function ProjectExplorer({ projects }: ProjectExplorerProps) {
               </p>
             </div>
             <div className="inline-flex items-center gap-2 rounded-md border border-border/70 bg-background/60 px-3 py-2 text-xs font-medium text-muted-foreground">
-              <Filter className="size-3.5 text-primary" />
+              <IconTile
+                icon={Filter}
+                iconClassName="size-3.5"
+                size="sm"
+                tone="blue"
+              />
               {categoryCount} categories
             </div>
           </div>
 
           <label className="relative block">
-            <Search className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
+            <Search className="pointer-events-none absolute left-3.5 top-1/2 size-4 -translate-y-1/2 text-primary" />
             <span className="sr-only">Search projects</span>
             <input
               value={query}

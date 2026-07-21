@@ -33,7 +33,7 @@ export function Navbar() {
   return (
     <header className="sticky top-3 z-50 px-2">
       <Container size="wide">
-        <nav className="navbar-shell glass-panel flex h-16 items-center justify-between gap-4 rounded-lg px-3 shadow-[0_18px_70px_-44px_var(--primary)] md:px-4">
+        <nav className="navbar-shell glass-panel flex h-16 items-center justify-between gap-4 rounded-lg px-3 shadow-[0_18px_70px_-44px_var(--primary)] backdrop-saturate-150 md:px-4">
           <Link
             href="/"
             className="group flex min-w-0 items-center gap-3"
@@ -85,6 +85,10 @@ export function Navbar() {
           </div>
 
           <div className="flex items-center gap-2">
+            <div className="navbar-status hidden items-center gap-2 rounded-md border border-border/70 bg-background/45 px-3 py-2 text-xs font-medium text-muted-foreground lg:flex">
+              <span className="navbar-status__dot" />
+              Available
+            </div>
             <ThemeToggle />
             <Button
               asChild

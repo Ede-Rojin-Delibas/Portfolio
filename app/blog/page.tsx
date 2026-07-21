@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ArrowUpRight, BookOpenText, Clock3, FileText } from "lucide-react";
+import { ArrowUpRight, Clock3, FileText, Layers3 } from "lucide-react";
 import { blogPosts, featuredBlogPost } from "@/data/blog";
+import { BlogPostIcon } from "@/components/blog/blog-post-icon";
+import { IconTile } from "@/components/shared/icon-tile";
 import { Reveal } from "@/components/shared/reveal";
 import { Section } from "@/components/shared/section";
 import { TechBadge } from "@/components/shared/tech-badge";
@@ -19,7 +21,7 @@ export default function BlogPage() {
         className="blog-skin section-skin"
         eyebrow="Engineering notes"
         title="Writing about software, data, AI and the systems behind them."
-        description="This blog area is ready for your articles. For now it contains draft topics that match the portfolio direction and can be replaced with your real writing."
+        description="Short English articles about engineering growth, data analysis, machine learning, architecture, IT foundations and product-minded software work."
       >
         <div className="grid gap-6 lg:grid-cols-[1.15fr_0.85fr]">
           <Reveal direction="left">
@@ -31,9 +33,16 @@ export default function BlogPage() {
               <div className="absolute inset-0 bg-gradient-to-br from-primary/18 via-transparent to-accent/10" />
               <div className="relative flex h-full flex-col justify-between gap-10">
                 <div>
-                  <div className="mb-5 inline-flex items-center gap-2 rounded-md border border-primary/25 bg-primary/10 px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.18em] text-primary">
-                    <BookOpenText className="size-3.5" />
-                    Featured draft
+                  <div className="mb-5 flex items-center gap-3">
+                    <BlogPostIcon post={featuredBlogPost} />
+                    <div>
+                      <p className="text-xs font-semibold uppercase tracking-[0.18em] text-primary">
+                        Featured article
+                      </p>
+                      <p className="mt-1 text-sm text-muted-foreground">
+                        {featuredBlogPost.category}
+                      </p>
+                    </div>
                   </div>
                   <h2 className="text-balance text-3xl font-semibold tracking-tight md:text-5xl">
                     {featuredBlogPost.title}
@@ -68,23 +77,37 @@ export default function BlogPage() {
             <aside className="grid gap-4">
               {[
                 {
-                  label: "Draft posts",
+                  label: "Articles",
                   value: blogPosts.length,
-                  detail: "Ready to replace with your real articles.",
+                  detail: "English posts aligned with the portfolio identity.",
+                  tone: "blue" as const,
+                  icon: FileText,
                 },
                 {
                   label: "Main topics",
-                  value: "4",
-                  detail: "Software, AI, data and systems thinking.",
+                  value: "8",
+                  detail: "Career, data, AI, ML, systems, architecture and IT.",
+                  tone: "cyan" as const,
+                  icon: Layers3,
                 },
                 {
                   label: "Format",
                   value: "Static",
                   detail: "Fast, SEO-friendly and easy to maintain.",
+                  tone: "violet" as const,
+                  icon: FileText,
                 },
-              ].map((item) => (
+              ].map((item) => {
+                const Icon = item.icon;
+
+                return (
                 <div key={item.label} className="glass-panel rounded-lg p-5">
-                  <FileText className="mb-6 size-5 text-primary" />
+                  <IconTile
+                    className="mb-6"
+                    icon={Icon}
+                    iconClassName="size-5"
+                    tone={item.tone}
+                  />
                   <p className="text-3xl font-semibold tracking-tight">
                     {item.value}
                   </p>
@@ -95,7 +118,8 @@ export default function BlogPage() {
                     {item.detail}
                   </p>
                 </div>
-              ))}
+                );
+              })}
             </aside>
           </Reveal>
         </div>
@@ -108,13 +132,14 @@ export default function BlogPage() {
                 className="glass-panel group flex h-full flex-col rounded-lg p-5 transition duration-300 hover:-translate-y-1 hover:border-primary/40"
               >
                 <div className="mb-5 flex items-center justify-between gap-4">
-                  <span className="rounded-md border border-primary/25 bg-primary/10 px-2.5 py-1 text-xs font-semibold uppercase tracking-[0.16em] text-primary">
-                    {post.category}
-                  </span>
+                  <BlogPostIcon post={post} />
                   <span className="text-xs text-muted-foreground">
                     {post.readTime}
                   </span>
                 </div>
+                <p className="mb-3 text-xs font-semibold uppercase tracking-[0.18em] text-primary">
+                  {post.category}
+                </p>
                 <h2 className="text-xl font-semibold tracking-tight">
                   {post.title}
                 </h2>

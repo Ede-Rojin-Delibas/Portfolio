@@ -25,17 +25,22 @@ export function Section({
   const hasHeader = chapter || eyebrow || title || description;
 
   return (
-    <section className={cn("py-16 md:py-24", className)} {...props}>
+    <section
+      className={cn("scroll-mt-28 py-16 md:scroll-mt-32 md:py-24", className)}
+      {...props}
+    >
       <Container size={containerSize}>
         {hasHeader ? (
           <div
             className={cn(
-              "mb-10 max-w-3xl",
+              "section-heading mb-10 max-w-3xl",
               align === "center" && "mx-auto text-center",
             )}
           >
             {chapter ? (
-              <span className="section-chapter">{chapter}</span>
+              <span aria-hidden="true" className="section-chapter">
+                {chapter}
+              </span>
             ) : null}
             {eyebrow ? (
               <p className="mb-3 text-xs font-semibold uppercase tracking-[0.24em] text-primary">

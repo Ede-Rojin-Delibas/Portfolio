@@ -2,6 +2,7 @@
 
 import { CalendarDays } from "lucide-react";
 import { motion } from "motion/react";
+import { IconTile, type IconTileTone } from "@/components/shared/icon-tile";
 import { cn } from "@/lib/utils";
 
 type TimelineEntry = {
@@ -9,6 +10,7 @@ type TimelineEntry = {
   title: string;
   description: string;
   tags?: string[];
+  tone?: IconTileTone;
 };
 
 type TimelineProps = {
@@ -44,9 +46,13 @@ export function Timeline({ items, className }: TimelineProps) {
           transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
           className="relative grid grid-cols-[2rem_1fr] gap-4"
         >
-          <div className="relative z-10 grid size-8 place-items-center rounded-md border border-primary/30 bg-background text-primary shadow-lg shadow-primary/10">
-            <CalendarDays className="size-4" />
-          </div>
+          <IconTile
+            className="relative z-10"
+            icon={CalendarDays}
+            iconClassName="size-4"
+            size="sm"
+            tone={item.tone ?? "blue"}
+          />
 
           <article className="rounded-lg border border-border/70 bg-background/55 p-4 transition duration-300 hover:-translate-y-1 hover:border-primary/40">
             <p className="text-xs font-semibold uppercase tracking-[0.2em] text-primary">

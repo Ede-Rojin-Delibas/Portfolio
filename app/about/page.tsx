@@ -10,6 +10,7 @@ import {
   UsersRound,
 } from "lucide-react";
 import { Timeline } from "@/components/about/timeline";
+import { IconTile } from "@/components/shared/icon-tile";
 import { Reveal } from "@/components/shared/reveal";
 import { Section } from "@/components/shared/section";
 import { StaggerItem, StaggerList } from "@/components/shared/stagger-list";
@@ -25,16 +26,19 @@ const profileCards = [
   {
     title: "About me",
     icon: Sparkles,
+    tone: "cyan" as const,
     body: "I am a Computer Engineer with strong curiosity for technology, practical problem solving and continuous learning.",
   },
   {
     title: "Education",
     icon: GraduationCap,
+    tone: "blue" as const,
     body: "My academic foundation in Computer Engineering supports my work across software, data, artificial intelligence and system technologies.",
   },
   {
     title: "Experience",
     icon: BriefcaseBusiness,
+    tone: "violet" as const,
     body: "I have worked on backend applications, REST APIs, dataset analysis, machine learning models and personal engineering projects.",
   },
 ];
@@ -94,21 +98,25 @@ const focusAreas = [
   {
     title: "Software and backend",
     icon: Code2,
+    tone: "blue" as const,
     body: "Building practical applications with clean APIs, structured code and reliable development habits.",
   },
   {
     title: "AI and machine learning",
     icon: BrainCircuit,
+    tone: "violet" as const,
     body: "Exploring model workflows, prediction systems and intelligent features that turn data into useful output.",
   },
   {
     title: "Data thinking",
     icon: Database,
+    tone: "cyan" as const,
     body: "Analyzing datasets, preparing data, visualizing patterns and evaluating results with an engineering mindset.",
   },
   {
     title: "Systems foundation",
     icon: Network,
+    tone: "emerald" as const,
     body: "Strengthening fundamentals in networking, Linux, cloud concepts and the infrastructure behind modern software.",
   },
 ];
@@ -120,6 +128,7 @@ const timelineItems = [
     description:
       "Built an academic foundation across programming, algorithms, databases, networking and system-oriented thinking.",
     tags: ["Computer Engineering", "Systems Thinking"],
+    tone: "blue" as const,
   },
   {
     period: "Applied projects",
@@ -127,6 +136,7 @@ const timelineItems = [
     description:
       "Developed projects with Python, Flask, REST APIs, SQL, data analysis and machine learning workflows.",
     tags: ["Python", "Flask", "Machine Learning"],
+    tone: "violet" as const,
   },
   {
     period: "Engineering growth",
@@ -134,6 +144,7 @@ const timelineItems = [
     description:
       "Explored AI systems, code generation models, education ranking prediction, customer analytics and productivity concepts.",
     tags: ["AI & Data", "Research", "Analytics"],
+    tone: "cyan" as const,
   },
   {
     period: "Now",
@@ -141,6 +152,7 @@ const timelineItems = [
     description:
       "Presents a clearer engineering identity: reliable software, data-informed thinking and intelligent systems delivery.",
     tags: ["Software", "Data", "Systems"],
+    tone: "emerald" as const,
   },
 ];
 
@@ -164,9 +176,13 @@ export default function AboutPage() {
                 key={card.title}
               >
                 <article className="glass-panel h-full rounded-lg p-5 transition duration-300 hover:-translate-y-1 hover:border-primary/40">
-                  <div className="mb-5 grid size-11 place-items-center rounded-md border border-primary/25 bg-primary/10 text-primary">
-                    <Icon className="size-5" />
-                  </div>
+                  <IconTile
+                    className="mb-5"
+                    icon={Icon}
+                    iconClassName="size-5"
+                    size="xl"
+                    tone={card.tone}
+                  />
                   <h2 className="text-xl font-semibold tracking-tight">
                     {card.title}
                   </h2>
@@ -208,9 +224,13 @@ export default function AboutPage() {
             return (
               <Reveal delay={index * 0.06} key={area.title}>
                 <article className="glass-panel h-full rounded-lg p-5 transition duration-300 hover:-translate-y-1 hover:border-primary/40">
-                  <div className="mb-5 grid size-10 place-items-center rounded-md border border-primary/25 bg-primary/10 text-primary">
-                    <Icon className="size-5" />
-                  </div>
+                  <IconTile
+                    className="mb-5"
+                    icon={Icon}
+                    iconClassName="size-5"
+                    size="lg"
+                    tone={area.tone}
+                  />
                   <h2 className="text-base font-semibold tracking-tight">
                     {area.title}
                   </h2>
@@ -243,9 +263,7 @@ export default function AboutPage() {
             <div className="grid gap-8 lg:grid-cols-2">
               <div>
                 <div className="mb-5 flex items-center gap-3">
-                  <div className="grid size-10 place-items-center rounded-md border border-primary/25 bg-primary/10 text-primary">
-                    <Code2 className="size-5" />
-                  </div>
+                  <IconTile icon={Code2} iconClassName="size-5" tone="blue" />
                   <div>
                     <p className="text-xs font-semibold uppercase tracking-[0.24em] text-primary">
                       Hard skills
@@ -266,9 +284,11 @@ export default function AboutPage() {
 
               <div>
                 <div className="mb-5 flex items-center gap-3">
-                  <div className="grid size-10 place-items-center rounded-md border border-accent/25 bg-accent/10 text-accent">
-                    <UsersRound className="size-5" />
-                  </div>
+                  <IconTile
+                    icon={UsersRound}
+                    iconClassName="size-5"
+                    tone="pink"
+                  />
                   <div>
                     <p className="text-xs font-semibold uppercase tracking-[0.24em] text-accent">
                       Soft skills

@@ -164,6 +164,28 @@ type IconCloudProps = ClassNameProps & {
   items: string[];
 };
 
+function getBrandFallbackLabel(item: string) {
+  return item
+    .replace(/[+#.]/g, " ")
+    .split(/\s+/)
+    .filter(Boolean)
+    .slice(0, 2)
+    .map((part) => part[0])
+    .join("")
+    .toUpperCase();
+}
+
+function handleBrandIconError(event: React.SyntheticEvent<HTMLImageElement>) {
+  const image = event.currentTarget;
+
+  image.style.display = "none";
+  image.parentElement?.classList.add("brand-icon-fallback-visible");
+}
+
+function handleBrandIconLoad(event: React.SyntheticEvent<HTMLImageElement>) {
+  event.currentTarget.parentElement?.classList.add("brand-icon-loaded");
+}
+
 export function IconCloud({ items, className }: IconCloudProps) {
   return (
     <div className={cn("icon-cloud", className)}>
@@ -183,6 +205,7 @@ export function IconCloud({ items, className }: IconCloudProps) {
           <span
             key={item}
             className={cn("icon-cloud__item", toneClass)}
+            data-fallback={getBrandFallbackLabel(item)}
             title={item}
             style={
               {
@@ -194,7 +217,13 @@ export function IconCloud({ items, className }: IconCloudProps) {
               } as React.CSSProperties
             }
           >
-            <img src={img} alt={item} className="brand-icon-image" />
+            <img
+              src={img}
+              alt=""
+              className="brand-icon-image"
+              onLoad={handleBrandIconLoad}
+              onError={handleBrandIconError}
+            />
             <span className="sr-only">{item}</span>
           </span>
         );
@@ -225,9 +254,16 @@ export function TechMarquee({ items, className }: TechMarqueeProps) {
             <span
               key={`${item}-${index}`}
               className={cn("tech-marquee__item", toneClass)}
+              data-fallback={getBrandFallbackLabel(item)}
               title={item}
             >
-              <img src={img} alt={item} className="brand-icon-image" />
+              <img
+                src={img}
+                alt=""
+                className="brand-icon-image"
+                onLoad={handleBrandIconLoad}
+                onError={handleBrandIconError}
+              />
               <span className="sr-only">{item}</span>
             </span>
           );

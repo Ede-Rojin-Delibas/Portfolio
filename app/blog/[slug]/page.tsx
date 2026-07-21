@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ArrowLeft, Clock3, PenLine } from "lucide-react";
+import { ArrowLeft, CalendarDays, Clock3 } from "lucide-react";
 import { blogPosts } from "@/data/blog";
+import { BlogPostIcon } from "@/components/blog/blog-post-icon";
+import { IconTile } from "@/components/shared/icon-tile";
 import { Reveal } from "@/components/shared/reveal";
 import { Section } from "@/components/shared/section";
 import { TechBadge } from "@/components/shared/tech-badge";
@@ -73,9 +75,16 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                 <div className="absolute inset-0 technical-grid opacity-25" />
                 <div className="absolute inset-0 bg-gradient-to-br from-primary/18 via-transparent to-accent/10" />
                 <div className="relative">
-                  <div className="mb-8 inline-flex items-center gap-2 rounded-md border border-primary/25 bg-primary/10 px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.18em] text-primary">
-                    <PenLine className="size-3.5" />
-                    {post.hero.label}
+                  <div className="mb-8 flex items-center gap-3">
+                    <BlogPostIcon post={post} />
+                    <div>
+                      <p className="text-xs font-semibold uppercase tracking-[0.18em] text-primary">
+                        {post.hero.label}
+                      </p>
+                      <p className="mt-1 text-sm text-muted-foreground">
+                        {post.category}
+                      </p>
+                    </div>
                   </div>
                   <p className="max-w-2xl text-4xl font-semibold tracking-tight md:text-6xl">
                     {post.hero.metric}
@@ -94,8 +103,17 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
           <Reveal direction="right" delay={0.08}>
             <aside className="glass-panel h-fit rounded-lg p-5">
               <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                <Clock3 className="size-4 text-primary" />
+                <IconTile icon={Clock3} iconClassName="size-4" size="sm" tone={post.tone} />
                 {post.readTime}
+              </div>
+              <div className="mt-4 flex items-center gap-2 text-sm text-muted-foreground">
+                <IconTile
+                  icon={CalendarDays}
+                  iconClassName="size-4"
+                  size="sm"
+                  tone="slate"
+                />
+                {post.date}
               </div>
               <div className="mt-4 rounded-md border border-border/70 bg-background/60 px-3 py-2 text-sm">
                 {post.status}

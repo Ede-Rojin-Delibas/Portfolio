@@ -61,7 +61,7 @@ export function Hero() {
           <div>
             <AnimatedText
               text="Building practical technology from data, software and intelligent systems."
-              className="max-w-full text-balance font-heading text-4xl font-semibold leading-[1.06] tracking-tight text-foreground sm:text-5xl md:text-7xl"
+              className="max-w-full text-balance font-heading text-4xl font-semibold leading-[1.1] tracking-tight text-foreground sm:text-5xl md:text-7xl"
             />
             <Reveal delay={0.08}>
               <p className="mt-4 flex flex-wrap items-baseline gap-x-2 text-lg font-medium leading-8 text-muted-foreground md:text-2xl">

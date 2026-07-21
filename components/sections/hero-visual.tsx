@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { Braces, Code2, Sparkles } from "lucide-react";
+import { Braces, Code2, Database, Sparkles } from "lucide-react";
 import { ParallaxCard } from "@/components/shared/parallax-card";
 
 export function HeroVisual() {
@@ -11,16 +11,14 @@ export function HeroVisual() {
       <div className="technical-grid absolute inset-0 opacity-55" />
       <div className="absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-primary/20 to-transparent" />
 
-      <div className="relative rounded-md border border-border/70 bg-background/70 p-3 backdrop-blur-md">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <span className="size-2.5 rounded-full bg-red-400" />
-            <span className="size-2.5 rounded-full bg-amber-300" />
-            <span className="size-2.5 rounded-full bg-emerald-400" />
-          </div>
-          <div className="rounded-md border border-border/70 bg-background/70 px-2 py-1 font-mono text-[11px] text-muted-foreground">
-            systems/engineering.tsx
-          </div>
+      <div className="hero-visual-status">
+        <div className="flex min-w-0 items-center gap-2">
+          <Database className="size-4 text-primary" />
+          <span>System interface mockup</span>
+        </div>
+        <div className="hero-visual-status__pulse">
+          <span />
+          Active signal
         </div>
       </div>
 

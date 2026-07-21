@@ -10,7 +10,7 @@ import { Button } from "@/components/ui/button";
 export function CallToAction() {
   return (
     <Section
-      chapter="05"
+      chapter="06"
       className="cta-skin section-skin pb-24"
       containerSize="wide"
     >
@@ -19,7 +19,7 @@ export function CallToAction() {
         className="cta-panel relative overflow-hidden rounded-lg p-6 md:p-10"
       >
         <div className="technical-grid absolute inset-0 opacity-45" />
-        <div className="absolute inset-y-0 right-0 hidden w-1/2 overflow-hidden opacity-45 md:block">
+        <div className="absolute inset-y-0 right-0 hidden h-full min-h-72 w-1/2 overflow-hidden opacity-45 md:block">
           <Image
             src="/images/ai-data-pattern.png"
             alt=""

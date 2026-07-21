@@ -1,7 +1,12 @@
 import type { Metadata } from "next";
-import { Code2, ExternalLink, MessageCircle } from "lucide-react";
+import { ExternalLink, Globe2, MessageCircle } from "lucide-react";
 import { ContactMapCard } from "@/components/contact/contact-map-card";
 import { ContactForm } from "@/components/contact/contact-form";
+import {
+  GithubBrandIcon,
+  LinkedinBrandIcon,
+} from "@/components/shared/brand-icons";
+import { IconTile } from "@/components/shared/icon-tile";
 import { Reveal } from "@/components/shared/reveal";
 import { Section } from "@/components/shared/section";
 
@@ -16,25 +21,29 @@ const contactLinks = [
     label: "GitHub",
     value: "github.com/Ede-Rojin-Delibas",
     href: "https://github.com/Ede-Rojin-Delibas",
-    icon: Code2,
+    icon: GithubBrandIcon,
+    tone: "slate" as const,
   },
   {
     label: "Previous portfolio",
     value: "ede-rojin-delibas.github.io",
     href: "https://ede-rojin-delibas.github.io/",
-    icon: ExternalLink,
+    icon: Globe2,
+    tone: "blue" as const,
   },
   {
     label: "LinkedIn",
     value: "linkedin.com/in/ede-rojin-delibas",
     href: "https://www.linkedin.com/in/ede-rojin-deliba%C5%9F/",
-    icon: ExternalLink,
+    icon: LinkedinBrandIcon,
+    tone: "cyan" as const,
   },
   {
     label: "Availability",
     value: "Open to software, AI and data projects",
     href: "/projects",
     icon: MessageCircle,
+    tone: "emerald" as const,
   },
 ];
 
@@ -73,7 +82,11 @@ export default function ContactPage() {
                         className="rounded-md border border-border/70 bg-background/60 p-4 backdrop-blur-xl transition duration-300 hover:-translate-y-1 hover:border-primary/40 hover:bg-background/75"
                       >
                         <div className="mb-5 flex items-center justify-between gap-4">
-                          <Icon className="size-5 text-primary" />
+                          <IconTile
+                            icon={Icon}
+                            iconClassName="size-5"
+                            tone={item.tone}
+                          />
                           <ExternalLink className="size-4 text-muted-foreground" />
                         </div>
                         <p className="text-sm font-medium">{item.label}</p>
