@@ -1,3 +1,5 @@
+import { generatedAssets } from "@/data/generated-assets";
+
 export type Project = {
   slug: string;
   title: string;
@@ -49,10 +51,7 @@ export const projects: Project[] = [
     demo: "https://portfolio-tan-theta-86.vercel.app",
     featured: true,
     accent: "blue",
-    image: {
-      src: "/images/projects/ede-rojin-portfolio/hero.svg",
-      alt: "Preview of the personal portfolio experience with animated project cards and deep blue UI",
-    },
+    image: generatedAssets.projectShowcase,
     role: "Portfolio Developer",
     year: "2026",
     problem:
@@ -90,10 +89,7 @@ export const projects: Project[] = [
     demo: "https://ede-rojin-delibas.github.io/",
     featured: true,
     accent: "cyan",
-    image: {
-      src: "/images/projects/legacy-data-portfolio/hero.svg",
-      alt: "Preview of the legacy data portfolio landing page and project cards",
-    },
+    image: generatedAssets.saasDashboard,
     role: "Portfolio Designer",
     year: "2026",
     problem:
@@ -131,10 +127,7 @@ export const projects: Project[] = [
     demo: "https://ede-rojin-delibas.github.io/",
     featured: true,
     accent: "indigo",
-    image: {
-      src: "/images/projects/synthetic-data-generator/data1.jpg",
-      alt: "Preview of the synthetic data generator workflow dashboard",
-    },
+    image: generatedAssets.machineLearningPipeline,
     role: "Machine Learning Developer",
     year: "2025",
     problem:
@@ -178,10 +171,7 @@ export const projects: Project[] = [
     demo: "https://ede-rojin-delibas.github.io/",
     featured: false,
     accent: "blue",
-    image: {
-      src: "/images/projects/sentiment-analysis/sentiments.png",
-      alt: "Preview of the sentiment analysis project interface",
-    },
+    image: generatedAssets.machineLearningWorkflow,
     role: "AI & Data Developer",
     year: "2025",
     problem:
@@ -225,10 +215,7 @@ export const projects: Project[] = [
     demo: "https://ede-rojin-delibas.github.io/",
     featured: false,
     accent: "cyan",
-    image: {
-      src: "/images/projects/churn-prediction/churn.jpg",
-      alt: "Customer churn prediction dashboard preview",
-    },
+    image: generatedAssets.dataAnalysisCover,
     role: "Machine Learning Developer",
     year: "2025",
     problem:
@@ -272,10 +259,7 @@ export const projects: Project[] = [
     demo: "https://ede-rojin-delibas.github.io/",
     featured: true,
     accent: "indigo",
-    image: {
-      src: "/images/projects/e-commerce-platform/eda.jpg",
-      alt: "Preview of the e-commerce analytics platform dashboard concept",
-    },
+    image: generatedAssets.analyticsPanels,
     role: "Data Analyst",
     year: "2025",
     problem:
@@ -320,10 +304,7 @@ export const projects: Project[] = [
     demoLabel: "Project README",
     featured: false,
     accent: "blue",
-    image: {
-      src: "/images/projects/remote-work-calendar/calendar.jpg",
-      alt: "Preview of the remote work calendar assistant experience",
-    },
+    image: generatedAssets.developerWorkspace,
     role: "Product Developer",
     year: "2026",
     problem:
@@ -369,10 +350,7 @@ export const projects: Project[] = [
     demoLabel: "Project README",
     featured: true,
     accent: "cyan",
-    image: {
-      src: "/images/projects/code-generation-models/code.png",
-      alt: "Preview of the code generation models dataset and fine-tuning workflow",
-    },
+    image: generatedAssets.mlArticleVisual,
     role: "AI Developer",
     year: "2025",
     problem:
@@ -417,10 +395,7 @@ export const projects: Project[] = [
     demoLabel: "Project README",
     featured: false,
     accent: "indigo",
-    image: {
-      src: "/images/projects/yks-ranking-predictor/dash.png",
-      alt: "Preview of the YKS ranking predictor dashboard",
-    },
+    image: generatedAssets.lightDataVisualization,
     role: "Machine Learning Developer",
     year: "2025",
     problem:
@@ -465,10 +440,7 @@ export const projects: Project[] = [
     demoLabel: "Project README",
     featured: false,
     accent: "blue",
-    image: {
-      src: "/images/projects/onion-architecture/web-architecture.jpg",
-      alt: "Preview of the onion architecture backend project structure",
-    },
+    image: generatedAssets.backendSystems,
     role: "Backend Developer",
     year: "2025",
     problem:

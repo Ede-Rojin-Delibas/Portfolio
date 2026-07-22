@@ -10,7 +10,7 @@ type ThemeContextValue = {
 };
 
 const ThemeContext = React.createContext<ThemeContextValue | null>(null);
-const storageKey = "portfolio-theme";
+const storageKey = "portfolio-theme-v2";
 
 function applyTheme(theme: Theme) {
   const root = document.documentElement;

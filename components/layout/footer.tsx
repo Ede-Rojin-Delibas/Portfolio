@@ -13,16 +13,11 @@ import {
   GithubBrandIcon,
   LinkedinBrandIcon,
 } from "@/components/shared/brand-icons";
+import { getI18n, type Locale } from "@/data/i18n";
 
-const footerLinks = [
-  { label: "Home", href: "/" },
-  { label: "About", href: "/about" },
-  { label: "Projects", href: "/projects" },
-  { label: "Blog", href: "/blog" },
-  { label: "Contact", href: "/contact" },
-];
+const statIcons = [Code2, Cpu, Sparkles];
 
-const socialLinks = [
+const socialLinks = (copy: ReturnType<typeof getI18n>["footer"]) => [
   {
     label: "GitHub",
     href: "https://github.com/Ede-Rojin-Delibas",
@@ -30,7 +25,7 @@ const socialLinks = [
     tone: "hover:border-[#181717]/40 hover:text-[#181717] dark:hover:text-white",
   },
   {
-    label: "Old Portfolio",
+    label: copy.social.oldPortfolio,
     href: "https://ede-rojin-delibas.github.io/",
     icon: Globe,
     tone: "hover:border-primary/45 hover:text-primary",
@@ -42,14 +37,20 @@ const socialLinks = [
     tone: "hover:border-[#0A66C2]/45 hover:text-[#0A66C2]",
   },
   {
-    label: "Contact",
+    label: copy.social.contact,
     href: "/contact",
     icon: Mail,
     tone: "hover:border-cyan-500/45 hover:text-cyan-600 dark:hover:text-cyan-300",
   },
 ];
 
-export function Footer() {
+type FooterProps = {
+  locale: Locale;
+};
+
+export function Footer({ locale }: FooterProps) {
+  const copy = getI18n(locale).footer;
+
   return (
     <footer className="footer-skin relative overflow-hidden border-t border-border/70 bg-background/80 py-12 backdrop-blur-xl">
       <div className="technical-grid absolute inset-0 opacity-25" />
@@ -65,26 +66,20 @@ export function Footer() {
             </span>
             <span>
               <span className="block font-semibold tracking-tight">
-                Ede-Rojin Systems
+                {copy.brandTitle}
               </span>
               <span className="mt-1 block text-xs uppercase tracking-[0.2em] text-muted-foreground">
-                Computer engineering portfolio
+                {copy.brandSubtitle}
               </span>
             </span>
           </Link>
           <p className="mt-4 max-w-sm text-sm leading-6 text-muted-foreground">
-            Computer engineering portfolio for practical software, backend
-            systems, data analysis, machine learning and intelligent technology
-            solutions.
+            {copy.description}
           </p>
 
           <div className="mt-6 grid max-w-lg gap-2 sm:grid-cols-3">
-            {[
-              { label: "Case studies", value: "10", icon: Code2 },
-              { label: "Focus areas", value: "4", icon: Cpu },
-              { label: "Open to build", value: "Now", icon: Sparkles },
-            ].map((item) => {
-              const Icon = item.icon;
+            {copy.stats.map((item, index) => {
+              const Icon = statIcons[index] ?? Code2;
 
               return (
                 <div
@@ -106,9 +101,9 @@ export function Footer() {
 
         <nav className="grid gap-2 text-sm" aria-label="Footer navigation">
           <p className="mb-2 text-xs font-semibold uppercase tracking-[0.22em] text-primary">
-            Explore
+            {copy.explore}
           </p>
-          {footerLinks.map((item) => (
+          {copy.nav.map((item) => (
             <Link
               key={item.href}
               href={item.href}
@@ -126,17 +121,16 @@ export function Footer() {
                 <MapPin className="size-5" />
               </div>
               <div>
-                <p className="text-sm font-medium">Remote-friendly</p>
+                <p className="text-sm font-medium">{copy.locationTitle}</p>
                 <p className="mt-1 text-sm leading-6 text-muted-foreground">
-                  Based in Turkiye, open to software, AI and data-focused
-                  collaborations.
+                  {copy.locationBody}
                 </p>
               </div>
             </div>
           </div>
 
           <div className="flex flex-wrap gap-2 lg:justify-end">
-            {socialLinks.map((item) => {
+            {socialLinks(copy).map((item) => {
               const Icon = item.icon;
 
               return (
@@ -159,7 +153,7 @@ export function Footer() {
             })}
           </div>
           <p className="text-xs text-muted-foreground">
-            Built for clarity, continuous learning and practical impact.
+            {copy.closing}
           </p>
         </div>
       </Container>

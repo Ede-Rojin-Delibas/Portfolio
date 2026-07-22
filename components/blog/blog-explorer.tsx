@@ -1,20 +1,30 @@
 "use client";
 
 import * as React from "react";
-import { Filter, RotateCcw, Search, Sparkles } from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
+import {
+  ArrowUpRight,
+  Clock3,
+  Filter,
+  RotateCcw,
+  Search,
+  Sparkles,
+} from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
+import type { BlogPost } from "@/data/blog";
 import { defaultLocale, getI18n, type Locale } from "@/data/i18n";
-import type { Project } from "@/data/projects";
-import { ProjectCard } from "@/components/projects/project-card";
+import { BlogPostIcon } from "@/components/blog/blog-post-icon";
 import { IconTile } from "@/components/shared/icon-tile";
+import { TechBadge } from "@/components/shared/tech-badge";
 import { cn } from "@/lib/utils";
 
-type ProjectExplorerProps = {
-  projects: Project[];
+type BlogExplorerProps = {
+  posts: BlogPost[];
   locale?: Locale;
 };
 
-type ProjectExplorerCopy = {
+type BlogExplorerCopy = {
   searchLabel: string;
   resultsLabel: (shown: number, total: number) => string;
   categoriesLabel: (count: number) => string;
@@ -32,22 +42,22 @@ type ProjectExplorerCopy = {
   categoryAliases?: Record<string, string>;
 };
 
-const defaultCopy: ProjectExplorerCopy = {
-  searchLabel: "Search projects",
-  resultsLabel: (shown, total) => `${shown} of ${total} projects shown`,
+const defaultCopy: BlogExplorerCopy = {
+  searchLabel: "Search articles",
+  resultsLabel: (shown, total) => `${shown} of ${total} articles shown`,
   categoriesLabel: (count) => `${count} categories`,
   reset: "Reset",
-  searchPlaceholder: "Search projects...",
+  searchPlaceholder: "Search blog posts...",
   searchPrefix: "Search",
-  dynamicLabel: "Dynamic search lane",
+  dynamicLabel: "Dynamic reading lane",
   dynamicDescription:
-    "This temporary category is created from your current search and matches project titles, descriptions, outcomes and tech stacks.",
+    "This temporary category is created from your search and scans article titles, topics, summaries and content.",
   matches: "matches",
-  empty: "No projects matched that search. Try another keyword or category.",
+  empty: "No blog posts matched that search. Try another keyword or category.",
   recommendedEyebrow: "Recommended next",
-  recommendedTitle: "Related projects you may want to compare.",
+  recommendedTitle: "Related articles to keep the reading path alive.",
   recommendedDescription:
-    "These are selected from shared categories, similar technologies and the words in your current search.",
+    "These suggestions are selected from shared categories, overlapping topics and the words in your current search.",
 };
 
 function normalize(value: string) {
@@ -103,79 +113,125 @@ function getQueryScore(text: string, query: string) {
   }, 0);
 }
 
-function getProjectSearchText(
-  project: Project,
+function getPostSearchText(
+  post: BlogPost,
   categoryAliases: Record<string, string> = {},
 ) {
-  return `${project.title} ${project.category} ${project.description} ${project.problem} ${project.approach} ${project.outcome} ${project.role} ${project.tech.join(
+  return `${post.title} ${post.category} ${post.excerpt} ${post.hero.label} ${post.hero.metric} ${post.topics.join(
     " ",
-  )} ${categoryAliases[project.category] ?? ""}`.toLowerCase();
+  )} ${post.content.join(" ")} ${categoryAliases[post.category] ?? ""}`.toLowerCase();
 }
 
-function getRecommendedProjects({
+function getRecommendedPosts({
   activeCategory,
   categoryAliases,
-  filteredProjects,
-  projects,
+  filteredPosts,
+  posts,
   query,
 }: {
   activeCategory: string;
   categoryAliases?: Record<string, string>;
-  filteredProjects: Project[];
-  projects: Project[];
+  filteredPosts: BlogPost[];
+  posts: BlogPost[];
   query: string;
 }) {
-  const visibleSlugs = new Set(filteredProjects.map((project) => project.slug));
-  const seedCategories = new Set(
-    filteredProjects.map((project) => project.category),
-  );
-  const seedTech = new Set(filteredProjects.flatMap((project) => project.tech));
-  return projects
-    .filter((project) => !visibleSlugs.has(project.slug))
-    .map((project) => {
-      const text = getProjectSearchText(project, categoryAliases);
-      const sharedTechCount = project.tech.filter((tech) =>
-        seedTech.has(tech),
+  const visibleSlugs = new Set(filteredPosts.map((post) => post.slug));
+  const seedCategories = new Set(filteredPosts.map((post) => post.category));
+  const seedTopics = new Set(filteredPosts.flatMap((post) => post.topics));
+  return posts
+    .filter((post) => !visibleSlugs.has(post.slug))
+    .map((post) => {
+      const text = getPostSearchText(post, categoryAliases);
+      const sharedTopicCount = post.topics.filter((topic) =>
+        seedTopics.has(topic),
       ).length;
       const queryScore = getQueryScore(text, query);
       const relationScore =
-        (activeCategory !== "All" && project.category === activeCategory
-          ? 6
-          : 0) +
-        (seedCategories.has(project.category) ? 4 : 0) +
-        sharedTechCount * 1.6 +
+        (activeCategory !== "All" && post.category === activeCategory ? 6 : 0) +
+        (seedCategories.has(post.category) ? 4 : 0) +
+        sharedTopicCount * 1.8 +
         queryScore;
       const score =
-        relationScore > 0 && project.featured
+        relationScore > 0 && post.status === "Published"
           ? relationScore + 1
           : relationScore;
 
-      return { project, score };
+      return { post, score };
     })
     .filter((item) => item.score > 0)
     .sort((first, second) => second.score - first.score)
-    .map((item) => item.project)
+    .map((item) => item.post)
     .slice(0, 3);
 }
 
-export function ProjectExplorer({
-  projects,
+function BlogCard({ post, compact = false }: { post: BlogPost; compact?: boolean }) {
+  return (
+    <Link
+      href={`/blog/${post.slug}`}
+      className="glass-panel group flex h-full flex-col overflow-hidden rounded-lg transition duration-300 hover:-translate-y-1 hover:border-primary/40"
+    >
+      <div
+        className={cn(
+          "blog-card-image relative border-b border-border/70",
+          compact ? "aspect-[16/8]" : "aspect-[16/10]",
+        )}
+      >
+        <Image
+          src={post.image.src}
+          alt={post.image.alt}
+          fill
+          sizes="(min-width: 1024px) 29vw, (min-width: 768px) 44vw, 92vw"
+          className="object-cover transition duration-700 group-hover:scale-105"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-background via-background/18 to-transparent" />
+        <div className="absolute left-4 top-4">
+          <BlogPostIcon post={post} />
+        </div>
+      </div>
+      <div className="flex grow flex-col p-5">
+        <div className="mb-4 flex items-center justify-between gap-4">
+          <p className="text-xs font-semibold uppercase tracking-[0.18em] text-primary">
+            {post.category}
+          </p>
+          <span className="inline-flex items-center gap-1.5 text-xs text-muted-foreground">
+            <Clock3 className="size-3.5 text-primary" />
+            {post.readTime}
+          </span>
+        </div>
+        <h2 className={cn("font-semibold tracking-tight", compact ? "text-lg" : "text-xl")}>
+          {post.title}
+        </h2>
+        <p className="mt-3 grow text-sm leading-6 text-muted-foreground">
+          {post.excerpt}
+        </p>
+        <div className="mt-5 flex flex-wrap gap-2">
+          {post.topics.slice(0, compact ? 2 : 3).map((topic) => (
+            <TechBadge key={topic}>{topic}</TechBadge>
+          ))}
+        </div>
+        <div className="mt-6 flex items-center justify-between border-t border-border/70 pt-4 text-sm text-muted-foreground">
+          <span>{post.status}</span>
+          <ArrowUpRight className="size-4 transition group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-primary" />
+        </div>
+      </div>
+    </Link>
+  );
+}
+
+export function BlogExplorer({
+  posts,
   locale = defaultLocale,
-}: ProjectExplorerProps) {
+}: BlogExplorerProps) {
   const [activeCategory, setActiveCategory] = React.useState("All");
   const [query, setQuery] = React.useState("");
-
   const queryLabel = query.trim();
-  const copy = (getI18n(locale).projectExplorer ?? defaultCopy) as ProjectExplorerCopy;
+  const copy = (getI18n(locale).blogExplorer ?? defaultCopy) as BlogExplorerCopy;
   const categoryLabels = { ...(copy.categoryLabels ?? {}) };
   const categoryAliases = { ...(copy.categoryAliases ?? {}) };
 
   const categories = React.useMemo(
-    () => [
-      "All",
-      ...Array.from(new Set(projects.map((project) => project.category))),
-    ],
-    [projects],
+    () => ["All", ...Array.from(new Set(posts.map((post) => post.category)))],
+    [posts],
   );
 
   const hasDynamicSearchCategory =
@@ -203,27 +259,26 @@ export function ProjectExplorer({
         dynamic: false,
       }));
 
-  const categoryCount = Math.max(filterChips.length - 1, 0);
-  const isFiltering = queryLabel.length > 0 || activeCategory !== "All";
-
-  const filteredProjects = projects.filter((project) => {
+  const filteredPosts = posts.filter((post) => {
     const matchesCategory =
-      activeCategory === "All" || project.category === activeCategory;
+      activeCategory === "All" || post.category === activeCategory;
     const matchesQuery = matchesSearch(
-      getProjectSearchText(project, categoryAliases),
+      getPostSearchText(post, categoryAliases),
       query,
     );
 
     return matchesCategory && matchesQuery;
   });
 
-  const recommendedProjects = getRecommendedProjects({
+  const recommendedPosts = getRecommendedPosts({
     activeCategory,
     categoryAliases,
-    filteredProjects,
-    projects,
+    filteredPosts,
+    posts,
     query,
   });
+
+  const isFiltering = queryLabel.length > 0 || activeCategory !== "All";
 
   function resetFilters() {
     setActiveCategory("All");
@@ -231,7 +286,7 @@ export function ProjectExplorer({
   }
 
   return (
-    <div className="space-y-6">
+    <div className="mt-8 space-y-6">
       <div className="glass-panel grid gap-5 rounded-lg p-4 md:grid-cols-[1fr_auto] md:items-end">
         <div>
           <div className="mb-3 flex flex-wrap items-center justify-between gap-3">
@@ -240,7 +295,7 @@ export function ProjectExplorer({
                 {copy.searchLabel}
               </p>
               <p className="mt-1 text-sm text-muted-foreground">
-                {copy.resultsLabel(filteredProjects.length, projects.length)}
+                {copy.resultsLabel(filteredPosts.length, posts.length)}
               </p>
             </div>
             <div className="flex flex-wrap items-center gap-2">
@@ -255,13 +310,13 @@ export function ProjectExplorer({
                 </button>
               ) : null}
               <div className="inline-flex items-center gap-2 rounded-md border border-border/70 bg-background/60 px-3 py-2 text-xs font-medium text-muted-foreground">
-              <IconTile
-                icon={Filter}
-                iconClassName="size-3.5"
-                size="sm"
-                tone="blue"
-              />
-              {copy.categoriesLabel(categoryCount)}
+                <IconTile
+                  icon={Filter}
+                  iconClassName="size-3.5"
+                  size="sm"
+                  tone="violet"
+                />
+                {copy.categoriesLabel(Math.max(filterChips.length - 1, 0))}
               </div>
             </div>
           </div>
@@ -278,7 +333,7 @@ export function ProjectExplorer({
           </label>
         </div>
 
-        <div className="flex max-w-2xl flex-wrap gap-2 md:justify-end">
+        <div className="flex max-w-3xl flex-wrap gap-2 md:justify-end">
           {filterChips.map((category) => {
             const isDynamicSearchChip = category.dynamic;
             const active =
@@ -306,7 +361,7 @@ export function ProjectExplorer({
               >
                 {active && !isDynamicSearchChip ? (
                   <motion.span
-                    layoutId="project-filter-active"
+                    layoutId="blog-filter-active"
                     className="absolute inset-0 rounded-md bg-primary/10"
                     transition={{ type: "spring", stiffness: 420, damping: 34 }}
                   />
@@ -329,7 +384,7 @@ export function ProjectExplorer({
             className="glass-panel rounded-lg p-5"
           >
             <div className="grid gap-4 md:grid-cols-[auto_1fr_auto] md:items-center">
-              <IconTile icon={Sparkles} iconClassName="size-5" tone="cyan" />
+              <IconTile icon={Sparkles} iconClassName="size-5" tone="pink" />
               <div>
                 <p className="text-xs font-semibold uppercase tracking-[0.22em] text-primary">
                   {copy.dynamicLabel}
@@ -343,7 +398,7 @@ export function ProjectExplorer({
               </div>
               <div className="rounded-md border border-border/70 bg-background/60 px-4 py-3 text-sm text-muted-foreground">
                 <span className="font-semibold text-foreground">
-                  {filteredProjects.length}
+                  {filteredPosts.length}
                 </span>{" "}
                 {copy.matches}
               </div>
@@ -352,12 +407,12 @@ export function ProjectExplorer({
         ) : null}
       </AnimatePresence>
 
-      <motion.div layout className="grid gap-5 lg:grid-cols-3">
+      <motion.div layout className="grid gap-5 md:grid-cols-3">
         <AnimatePresence mode="popLayout">
-          {filteredProjects.map((project, index) => (
+          {filteredPosts.map((post, index) => (
             <motion.div
               layout
-              key={project.slug}
+              key={post.slug}
               initial={{ opacity: 0, y: 18, scale: 0.98 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: -12, scale: 0.98 }}
@@ -367,13 +422,13 @@ export function ProjectExplorer({
                 ease: [0.22, 1, 0.36, 1],
               }}
             >
-              <ProjectCard {...project} />
+              <BlogCard post={post} />
             </motion.div>
           ))}
         </AnimatePresence>
       </motion.div>
 
-      {filteredProjects.length === 0 ? (
+      {filteredPosts.length === 0 ? (
         <motion.div
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
@@ -383,31 +438,29 @@ export function ProjectExplorer({
         </motion.div>
       ) : null}
 
-      {isFiltering && recommendedProjects.length > 0 ? (
+      {isFiltering && recommendedPosts.length > 0 ? (
         <section className="glass-panel rounded-lg p-5">
-          <div className="mb-5 flex flex-wrap items-end justify-between gap-4">
-            <div>
-              <p className="text-xs font-semibold uppercase tracking-[0.22em] text-primary">
-                {copy.recommendedEyebrow}
-              </p>
-              <h2 className="mt-2 text-2xl font-semibold tracking-tight">
-                {copy.recommendedTitle}
-              </h2>
-              <p className="mt-2 max-w-2xl text-sm leading-6 text-muted-foreground">
-                {copy.recommendedDescription}
-              </p>
-            </div>
+          <div className="mb-5">
+            <p className="text-xs font-semibold uppercase tracking-[0.22em] text-primary">
+              {copy.recommendedEyebrow}
+            </p>
+            <h2 className="mt-2 text-2xl font-semibold tracking-tight">
+              {copy.recommendedTitle}
+            </h2>
+            <p className="mt-2 max-w-2xl text-sm leading-6 text-muted-foreground">
+              {copy.recommendedDescription}
+            </p>
           </div>
-          <div className="grid gap-5 lg:grid-cols-3">
-            {recommendedProjects.map((project, index) => (
+          <div className="grid gap-5 md:grid-cols-3">
+            {recommendedPosts.map((post, index) => (
               <motion.div
                 initial={{ opacity: 0, y: 16 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, amount: 0.25 }}
                 transition={{ delay: index * 0.06 }}
-                key={project.slug}
+                key={post.slug}
               >
-                <ProjectCard {...project} compactPreview />
+                <BlogCard post={post} compact />
               </motion.div>
             ))}
           </div>

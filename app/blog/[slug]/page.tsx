@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeft, CalendarDays, Clock3 } from "lucide-react";
@@ -72,6 +73,15 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
           <Reveal direction="left">
             <article className="glass-panel overflow-hidden rounded-lg">
               <div className="relative min-h-64 border-b border-border/70 p-6 md:p-8">
+                <Image
+                  src={post.image.src}
+                  alt={post.image.alt}
+                  fill
+                  sizes="(min-width: 1024px) 58vw, 92vw"
+                  className="object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-r from-background via-background/82 to-background/26" />
+                <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent" />
                 <div className="absolute inset-0 technical-grid opacity-25" />
                 <div className="absolute inset-0 bg-gradient-to-br from-primary/18 via-transparent to-accent/10" />
                 <div className="relative">

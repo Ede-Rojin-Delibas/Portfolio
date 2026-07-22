@@ -1,3 +1,5 @@
+import { generatedAssets, type GeneratedAsset } from "@/data/generated-assets";
+
 export type BlogPost = {
   slug: string;
   title: string;
@@ -12,6 +14,7 @@ export type BlogPost = {
     label: string;
     metric: string;
   };
+  image: GeneratedAsset;
   content: string[];
 };
 
@@ -31,6 +34,7 @@ export const blogPosts: BlogPost[] = [
       label: "Focus",
       metric: "Software + Data + AI",
     },
+    image: generatedAssets.mlArticleVisual,
     content: [
       "Practical intelligent systems are not created by adding an AI label to a project. They are built when software, data and user needs are connected with a clear engineering purpose.",
       "The software layer gives the system structure. It defines how data moves, how users interact with the product and how the application remains maintainable as new features are added.",
@@ -54,6 +58,7 @@ export const blogPosts: BlogPost[] = [
       label: "Data lens",
       metric: "Insight before output",
     },
+    image: generatedAssets.dataAnalysisCover,
     content: [
       "Data becomes valuable when it changes a decision. A chart is useful only if it helps a team understand what is happening and what should happen next.",
       "Exploratory data analysis is the first engineering step. It helps identify missing values, outliers, distributions, relationships and signals that may guide later modeling work.",
@@ -77,6 +82,7 @@ export const blogPosts: BlogPost[] = [
       label: "ML workflow",
       metric: "Readable models",
     },
+    image: generatedAssets.machineLearningWorkflow,
     content: [
       "A machine learning workflow should be understandable from input to result. If the steps are unclear, even a good score can be difficult to trust.",
       "Preprocessing is where many important decisions happen. Handling missing values, encoding categories, scaling features and splitting data correctly can change the quality of the final model.",
@@ -100,6 +106,7 @@ export const blogPosts: BlogPost[] = [
       label: "Foundation",
       metric: "Clean APIs",
     },
+    image: generatedAssets.backendSystems,
     content: [
       "Backend fundamentals help me understand how applications actually move data, handle rules and stay maintainable over time.",
       "Even small projects become clearer when responsibilities are separated and API behavior is predictable. A clean route, a clear service layer and consistent responses make the whole system easier to extend.",
@@ -123,6 +130,7 @@ export const blogPosts: BlogPost[] = [
       label: "Architecture",
       metric: "Structure creates clarity",
     },
+    image: generatedAssets.architectureCover,
     content: [
       "Architecture can sound like something only large teams need, but it is also a learning tool for individual projects.",
       "When code has structure, it becomes easier to understand where each responsibility belongs. Data access, business logic, validation and presentation should not all live in the same place.",
@@ -146,6 +154,7 @@ export const blogPosts: BlogPost[] = [
       label: "Career",
       metric: "Learn with direction",
     },
+    image: generatedAssets.careerGrowth,
     content: [
       "Career management starts with understanding what kind of engineer you are becoming. Without direction, learning can turn into collecting random tools.",
       "A strong portfolio should show a pattern. It should help someone understand your interests, your problem-solving style and the type of work you want to do next.",
@@ -169,6 +178,7 @@ export const blogPosts: BlogPost[] = [
       label: "Systems",
       metric: "Software needs infrastructure",
     },
+    image: generatedAssets.itSystems,
     content: [
       "Modern software does not run in isolation. It depends on networks, servers, operating systems, databases and deployment environments.",
       "Understanding IT foundations helps engineers ask better questions. Where is the application hosted? How does traffic reach it? What happens when a request fails?",
@@ -192,6 +202,7 @@ export const blogPosts: BlogPost[] = [
       label: "Product lens",
       metric: "Problem -> Process -> Outcome",
     },
+    image: generatedAssets.projectShowcase,
     content: [
       "A project becomes more impressive when it explains the problem it solves. The visitor should quickly understand why the project exists.",
       "The process matters too. What data was used? Which technologies were chosen? What tradeoffs appeared? These details make the project feel real.",

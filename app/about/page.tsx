@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import {
   BrainCircuit,
   BriefcaseBusiness,
@@ -9,6 +10,7 @@ import {
   Sparkles,
   UsersRound,
 } from "lucide-react";
+import { generatedAssets } from "@/data/generated-assets";
 import { Timeline } from "@/components/about/timeline";
 import { IconTile } from "@/components/shared/icon-tile";
 import { Reveal } from "@/components/shared/reveal";
@@ -194,6 +196,42 @@ export default function AboutPage() {
             );
           })}
         </div>
+
+        <Reveal delay={0.12}>
+          <div className="about-generated-visual glass-panel mt-8 overflow-hidden rounded-lg">
+            <div className="about-generated-visual__media">
+              <Image
+                src={generatedAssets.profilePremium.src}
+                alt={generatedAssets.profilePremium.alt}
+                fill
+                sizes="(min-width: 1024px) 56vw, 92vw"
+                className="object-cover"
+              />
+              <div className="about-generated-visual__overlay" />
+              <Image
+                src={generatedAssets.realisticGlassObject.src}
+                alt=""
+                width={320}
+                height={320}
+                aria-hidden="true"
+                className="about-generated-visual__object"
+              />
+            </div>
+            <div className="about-generated-visual__copy">
+              <p className="text-xs font-semibold uppercase tracking-[0.24em] text-primary">
+                Visual identity
+              </p>
+              <h2 className="mt-3 text-2xl font-semibold tracking-tight md:text-4xl">
+                Software, data and intelligent systems in one engineering view.
+              </h2>
+              <p className="mt-4 text-sm leading-7 text-muted-foreground md:text-base">
+                The new visual layer supports the portfolio message without
+                turning the page into only text: systems, dashboards, data
+                signals and glass objects now carry the same premium language.
+              </p>
+            </div>
+          </div>
+        </Reveal>
 
         <Reveal delay={0.16}>
           <div className="mt-8 glass-panel rounded-lg p-5 md:p-6">

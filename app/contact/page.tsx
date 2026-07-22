@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import { ExternalLink, Globe2, MessageCircle } from "lucide-react";
+import { generatedAssets } from "@/data/generated-assets";
 import { ContactMapCard } from "@/components/contact/contact-map-card";
 import { ContactForm } from "@/components/contact/contact-form";
 import {
@@ -59,6 +61,36 @@ export default function ContactPage() {
         <div className="grid gap-6 lg:grid-cols-[0.85fr_1.15fr]">
           <div className="grid gap-5">
             <Reveal direction="left">
+              <div className="contact-generated-visual glass-panel overflow-hidden rounded-lg">
+                <Image
+                  src={generatedAssets.contactPremium.src}
+                  alt={generatedAssets.contactPremium.alt}
+                  fill
+                  sizes="(min-width: 1024px) 34vw, 92vw"
+                  className="object-cover"
+                />
+                <div className="contact-generated-visual__overlay" />
+                <Image
+                  src={generatedAssets.realisticGlassObject.src}
+                  alt=""
+                  width={220}
+                  height={220}
+                  aria-hidden="true"
+                  className="contact-generated-visual__object"
+                />
+                <div className="contact-generated-visual__copy">
+                  <p className="text-xs font-semibold uppercase tracking-[0.2em] text-primary">
+                    Collaboration signal
+                  </p>
+                  <p className="mt-2 text-sm leading-6 text-muted-foreground">
+                    A softer visual layer for contact, separate from the hero
+                    but still connected to the portfolio palette.
+                  </p>
+                </div>
+              </div>
+            </Reveal>
+
+            <Reveal direction="left" delay={0.04}>
               <div>
                 <p className="mb-4 text-xs font-semibold uppercase tracking-[0.24em] text-primary">
                   Direct links
@@ -100,7 +132,7 @@ export default function ContactPage() {
               </div>
             </Reveal>
 
-            <Reveal direction="left" delay={0.08}>
+            <Reveal direction="left" delay={0.1}>
               <ContactMapCard />
             </Reveal>
           </div>

@@ -6,6 +6,7 @@ import { ThemeProvider } from "@/components/theme-provider";
 import Navbar from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
 import { SiteBackground } from "@/components/layout/site-background";
+import { getServerLocale } from "@/lib/server-locale";
 
 const geistSans = localFont({
   src: "./fonts/geist-latin.woff2",
@@ -63,14 +64,16 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const locale = await getServerLocale();
+
   return (
     <html
-      lang="en"
+      lang={locale}
       data-scroll-behavior="smooth"
       suppressHydrationWarning
       className={cn(
@@ -83,9 +86,9 @@ export default function RootLayout({
         <ThemeProvider>
           <SiteBackground />
           <div className="relative z-10 flex min-h-screen flex-col">
-            <Navbar />
+            <Navbar locale={locale} />
             <div className="flex-1">{children}</div>
-            <Footer />
+            <Footer locale={locale} />
           </div>
         </ThemeProvider>
       </body>

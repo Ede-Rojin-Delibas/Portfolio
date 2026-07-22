@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, MessageCircle } from "lucide-react";
+import { generatedAssets } from "@/data/generated-assets";
 import { AuroraText } from "@/components/shared/animation-effects";
 import { ParallaxCard } from "@/components/shared/parallax-card";
 import { Reveal } from "@/components/shared/reveal";
@@ -21,7 +22,7 @@ export function CallToAction() {
         <div className="technical-grid absolute inset-0 opacity-45" />
         <div className="absolute inset-y-0 right-0 hidden h-full min-h-72 w-1/2 overflow-hidden opacity-45 md:block">
           <Image
-            src="/images/ai-data-pattern.png"
+            src={generatedAssets.engineeringWorkspace.src}
             alt=""
             fill
             sizes="50vw"

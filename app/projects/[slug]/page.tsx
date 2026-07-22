@@ -9,6 +9,7 @@ import {
   Route,
   Target,
 } from "lucide-react";
+import { generatedAssets, type GeneratedAsset } from "@/data/generated-assets";
 import { projects } from "@/data/projects";
 import { ParallaxCard } from "@/components/shared/parallax-card";
 import type { Project } from "@/data/projects";
@@ -112,6 +113,40 @@ const caseStudySections = [
     tone: "emerald" as const,
   },
 ] as const;
+
+function getProjectScreenshotImage(
+  project: Project,
+  index: number,
+): GeneratedAsset | undefined {
+  const categoryImages: Record<string, GeneratedAsset[]> = {
+    "AI & Data": [
+      project.image ?? generatedAssets.machineLearningPipeline,
+      generatedAssets.dataAnalysisCover,
+      generatedAssets.machineLearningWorkflow,
+    ],
+    "Backend Systems": [
+      project.image ?? generatedAssets.backendSystems,
+      generatedAssets.architectureCover,
+      generatedAssets.caseStudyHero,
+    ],
+    Portfolio: [
+      project.image ?? generatedAssets.projectShowcase,
+      generatedAssets.caseStudyHero,
+      generatedAssets.engineeringWorkspace,
+    ],
+    "Productivity Systems": [
+      project.image ?? generatedAssets.developerWorkspace,
+      generatedAssets.careerGrowth,
+      generatedAssets.engineeringIdentity,
+    ],
+  };
+
+  const images = (
+    categoryImages[project.category] ?? [project.image, generatedAssets.caseStudyHero]
+  ).filter((image): image is GeneratedAsset => Boolean(image));
+
+  return images[index % images.length];
+}
 
 export function generateStaticParams() {
   return projects.map((project) => ({
@@ -221,10 +256,15 @@ export default async function ProjectDetailPage({
               </div>
 
               <div className="relative mt-5 grid gap-4 md:grid-cols-2">
-                {project.screenshots.map((screenshot) => (
+                {project.screenshots.map((screenshot, index) => (
                   <ScreenshotCard
                     key={screenshot.title}
-                    screenshot={screenshot}
+                    screenshot={{
+                      ...screenshot,
+                      image:
+                        screenshot.image ??
+                        getProjectScreenshotImage(project, index),
+                    }}
                     accent={project.accent}
                   />
                 ))}
