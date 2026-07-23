@@ -84,10 +84,6 @@ export function Navbar({ locale }: NavbarProps) {
           </div>
 
           <div className="flex items-center gap-2">
-            <div className="navbar-status hidden items-center gap-2 rounded-md border border-border/70 bg-background/45 px-3 py-2 text-xs font-medium text-muted-foreground lg:flex">
-              <span className="navbar-status__dot" />
-              {copy.status}
-            </div>
             <LanguageToggle locale={locale} />
             <ThemeToggle />
             <Button

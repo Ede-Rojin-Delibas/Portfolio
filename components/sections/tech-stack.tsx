@@ -6,6 +6,7 @@ import {
   Gauge,
   Network,
 } from "lucide-react";
+import { defaultLocale, type Locale } from "@/data/i18n";
 import {
   AnimatedCircularProgress,
   AuroraText,
@@ -103,13 +104,78 @@ const progressItems = [
   },
 ];
 
-export function TechStack() {
+const techStackCopy = {
+  en: {
+    eyebrow: "Engineering toolkit",
+    title: "A practical stack for software, data and intelligent systems.",
+    description:
+      "The technologies are grouped by engineering purpose: backend work, data analysis, machine learning, system fundamentals and user-facing delivery.",
+    brandEyebrow: "Brand icon map",
+    brandTitlePrefix: "Real tool logos for",
+    brandTitleAccent: "software, AI and data",
+    brandTitleSuffix: ".",
+    brandDescription:
+      "This area now uses recognizable technology logos instead of generic line icons, closer to the GitHub profile style.",
+    progressEyebrow: "Circular progress",
+    progressTitle: "Focus distribution",
+    groups: techGroups,
+    progress: progressItems,
+  },
+  tr: {
+    eyebrow: "Mühendislik araç seti",
+    title: "Yazılım, veri ve akıllı sistemler için pratik bir stack.",
+    description:
+      "Teknolojiler mühendislik amacına göre gruplandı: backend çalışma, veri analizi, makine öğrenmesi, sistem temelleri ve kullanıcıya dönük teslim.",
+    brandEyebrow: "Brand icon haritası",
+    brandTitlePrefix: "Gerçek araç logoları",
+    brandTitleAccent: "yazılım, yapay zeka ve veri",
+    brandTitleSuffix: "için kullanılıyor.",
+    brandDescription:
+      "Bu alan artık generic çizgi ikonlar yerine GitHub profilindeki stile daha yakın, tanınabilir teknoloji logoları kullanıyor.",
+    progressEyebrow: "Dairesel ilerleme",
+    progressTitle: "Odak dağılımı",
+    groups: [
+      { ...techGroups[0], title: "Yazılım Mühendisliği" },
+      { ...techGroups[1], title: "Backend & API’ler" },
+      { ...techGroups[2], title: "Yapay Zeka & Makine Öğrenmesi" },
+      { ...techGroups[3], title: "Veri Analizi" },
+      { ...techGroups[4], title: "Sistem Temelleri" },
+      { ...techGroups[5], title: "Arayüz Teslimi" },
+    ],
+    progress: [
+      {
+        ...progressItems[0],
+        label: "Backend sistemleri",
+        detail: "API’ler, veri akışı ve yapılandırılmış uygulama mantığı.",
+      },
+      {
+        ...progressItems[1],
+        label: "Yapay zeka & veri",
+        detail: "ML akışları, EDA ve model değerlendirme pratiği.",
+      },
+      {
+        ...progressItems[2],
+        label: "Arayüz teslimi",
+        detail:
+          "Responsive UI, etkileşim durumları ve motion detayları.",
+      },
+    ],
+  },
+} as const;
+
+type TechStackProps = {
+  locale?: Locale;
+};
+
+export function TechStack({ locale = defaultLocale }: TechStackProps) {
+  const copy = techStackCopy[locale] ?? techStackCopy[defaultLocale];
+
   return (
     <Section
       chapter="03"
-      eyebrow="Engineering toolkit"
-      title="A practical stack for software, data and intelligent systems."
-      description="The technologies are grouped by engineering purpose: backend work, data analysis, machine learning, system fundamentals and user-facing delivery."
+      eyebrow={copy.eyebrow}
+      title={copy.title}
+      description={copy.description}
       className="tech-skin section-skin"
     >
       <div className="mb-6 grid gap-5 md:mb-8 lg:grid-cols-[1.2fr_0.8fr]">
@@ -120,15 +186,15 @@ export function TechStack() {
             <div className="relative grid gap-6 md:grid-cols-[0.8fr_1.2fr] md:items-center">
               <div>
                 <p className="text-xs font-semibold uppercase tracking-[0.22em] text-primary">
-                  Brand icon map
+                  {copy.brandEyebrow}
                 </p>
                 <h3 className="mt-3 text-2xl font-semibold tracking-tight">
-                  Real tool logos for{" "}
-                  <AuroraText>software, AI and data</AuroraText>.
+                  {copy.brandTitlePrefix}{" "}
+                  <AuroraText>{copy.brandTitleAccent}</AuroraText>{" "}
+                  {copy.brandTitleSuffix}
                 </h3>
                 <p className="mt-3 text-sm leading-7 text-muted-foreground">
-                  This area now uses recognizable technology logos instead of
-                  generic line icons, closer to the GitHub profile style.
+                  {copy.brandDescription}
                 </p>
               </div>
               <IconCloud items={iconCloudItems} />
@@ -140,14 +206,14 @@ export function TechStack() {
           <div className="glass-panel grid h-full gap-4 rounded-lg p-5 md:p-6">
             <div>
               <p className="text-xs font-semibold uppercase tracking-[0.22em] text-primary">
-                Circular progress
+                {copy.progressEyebrow}
               </p>
               <h3 className="mt-3 text-2xl font-semibold tracking-tight">
-                Focus distribution
+                {copy.progressTitle}
               </h3>
             </div>
             <div className="grid gap-4">
-              {progressItems.map((item) => (
+              {copy.progress.map((item) => (
                 <AnimatedCircularProgress key={item.label} {...item} />
               ))}
             </div>
@@ -162,7 +228,7 @@ export function TechStack() {
       </Reveal>
 
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-        {techGroups.map((group, index) => {
+        {copy.groups.map((group, index) => {
           const Icon = group.icon;
 
           return (

@@ -6,16 +6,19 @@ import { Hero } from "@/components/sections/hero";
 import { SystemStack } from "@/components/sections/system-stack";
 import { TechStack } from "@/components/sections/tech-stack";
 import { ShaderFlow } from "@/components/shared/shader-flow";
+import { getServerLocale } from "@/lib/server-locale";
 
-export default function Home() {
+export default async function Home() {
+  const locale = await getServerLocale();
+
   return (
     <main>
       <Hero />
-      <EngineeringStatement />
-      <SystemStack />
-      <TechStack />
+      <EngineeringStatement locale={locale} />
+      <SystemStack locale={locale} />
+      <TechStack locale={locale} />
       <ShaderFlow />
-      <EngineeringLayers />
+      <EngineeringLayers locale={locale} />
       <FeaturedProjects />
       <CallToAction />
     </main>

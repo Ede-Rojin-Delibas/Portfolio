@@ -9,13 +9,13 @@ import { SiteBackground } from "@/components/layout/site-background";
 import { getServerLocale } from "@/lib/server-locale";
 
 const geistSans = localFont({
-  src: "./fonts/geist-latin.woff2",
+  src: "./fonts/geist-latin-ext.woff2",
   variable: "--font-geist-sans",
   display: "swap",
 });
 
 const geistMono = localFont({
-  src: "./fonts/geist-mono-latin.woff2",
+  src: "./fonts/geist-mono-latin-ext.woff2",
   variable: "--font-geist-mono",
   display: "swap",
 });

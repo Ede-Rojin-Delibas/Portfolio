@@ -2,8 +2,11 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowUpRight, Clock3, FileText, Layers3 } from "lucide-react";
-import { blogPosts, featuredBlogPost } from "@/data/blog";
 import { getI18n } from "@/data/i18n";
+import {
+  getLocalizedBlogPosts,
+  getLocalizedFeaturedBlogPost,
+} from "@/data/localized-content";
 import { BlogExplorer } from "@/components/blog/blog-explorer";
 import { BlogPostIcon } from "@/components/blog/blog-post-icon";
 import { IconTile } from "@/components/shared/icon-tile";
@@ -24,6 +27,18 @@ const sideCardTones = ["blue", "cyan", "violet"] as const;
 export default async function BlogPage() {
   const locale = await getServerLocale();
   const copy = getI18n(locale).blogPage;
+  const explorerCopy = getI18n(locale).blogExplorer;
+  const localizedPosts = getLocalizedBlogPosts(locale);
+  const featuredPost = getLocalizedFeaturedBlogPost(locale);
+  const blogCategoryLabels = explorerCopy.categoryLabels as
+    | Record<string, string>
+    | undefined;
+  const featuredCategoryLabel =
+    blogCategoryLabels?.[featuredPost.category] ?? featuredPost.category;
+  const featuredStatus =
+    locale === "tr" && featuredPost.status === "Published"
+      ? "Yayında"
+      : featuredPost.status;
 
   return (
     <main>
@@ -36,12 +51,12 @@ export default async function BlogPage() {
         <div className="grid gap-6 lg:grid-cols-[1.15fr_0.85fr]">
           <Reveal direction="left">
             <Link
-              href={`/blog/${featuredBlogPost.slug}`}
+              href={`/blog/${featuredPost.slug}`}
               className="blog-feature-card glass-panel group relative block min-h-[28rem] overflow-hidden rounded-lg p-6 transition duration-300 hover:-translate-y-1 hover:border-primary/40 md:p-8"
             >
               <Image
-                src={featuredBlogPost.image.src}
-                alt={featuredBlogPost.image.alt}
+                src={featuredPost.image.src}
+                alt={featuredPost.image.alt}
                 fill
                 sizes="(min-width: 1024px) 56vw, 92vw"
                 className="blog-feature-card__image object-cover"
@@ -53,37 +68,37 @@ export default async function BlogPage() {
               <div className="relative flex h-full flex-col justify-between gap-10">
                 <div>
                   <div className="mb-5 flex items-center gap-3">
-                    <BlogPostIcon post={featuredBlogPost} />
+                    <BlogPostIcon post={featuredPost} />
                     <div>
                       <p className="text-xs font-semibold uppercase tracking-[0.18em] text-primary">
                         {copy.featuredArticle}
                       </p>
                       <p className="mt-1 text-sm text-muted-foreground">
-                        {featuredBlogPost.category}
+                        {featuredCategoryLabel}
                       </p>
                     </div>
                   </div>
                   <h2 className="text-balance text-3xl font-semibold tracking-tight md:text-5xl">
-                    {featuredBlogPost.title}
+                    {featuredPost.title}
                   </h2>
                   <p className="mt-4 max-w-2xl text-base leading-7 text-muted-foreground md:text-lg">
-                    {featuredBlogPost.excerpt}
+                    {featuredPost.excerpt}
                   </p>
                 </div>
 
                 <div>
                   <div className="mb-5 flex flex-wrap gap-2">
-                    {featuredBlogPost.topics.map((topic) => (
+                    {featuredPost.topics.map((topic) => (
                       <TechBadge key={topic}>{topic}</TechBadge>
                     ))}
                   </div>
                   <div className="flex flex-wrap items-center gap-3 text-sm text-muted-foreground">
                     <span className="inline-flex items-center gap-2">
                       <Clock3 className="size-4 text-primary" />
-                      {featuredBlogPost.readTime}
+                      {featuredPost.readTime}
                     </span>
                     <span className="rounded-md border border-border/70 bg-background/60 px-2.5 py-1 text-xs font-medium text-primary">
-                      {featuredBlogPost.status}
+                      {featuredStatus}
                     </span>
                     <ArrowUpRight className="ml-auto size-5 transition group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-primary" />
                   </div>
@@ -122,7 +137,7 @@ export default async function BlogPage() {
           </Reveal>
         </div>
 
-        <BlogExplorer locale={locale} posts={blogPosts} />
+        <BlogExplorer locale={locale} posts={localizedPosts} />
       </Section>
     </main>
   );

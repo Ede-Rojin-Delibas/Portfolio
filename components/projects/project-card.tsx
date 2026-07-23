@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowUpRight, Target } from "lucide-react";
 import { motion } from "motion/react";
+import { defaultLocale, getI18n, type Locale } from "@/data/i18n";
 import type { Project } from "@/data/projects";
 import { BorderBeam } from "@/components/shared/animation-effects";
 import { GithubBrandIcon } from "@/components/shared/brand-icons";
@@ -44,6 +45,7 @@ type ProjectCardProps = Pick<
   | "outcome"
 > & {
   compactPreview?: boolean;
+  locale?: Locale;
 };
 
 export function ProjectCard({
@@ -59,7 +61,28 @@ export function ProjectCard({
   image,
   outcome,
   compactPreview = false,
+  locale = defaultLocale,
 }: ProjectCardProps) {
+  const copy = getI18n(locale).projectExplorer;
+  const categoryLabels = copy.categoryLabels as
+    | Record<string, string>
+    | undefined;
+  const categoryLabel = categoryLabels?.[category] ?? category;
+  const fixedCopy =
+    locale === "tr"
+      ? {
+          casePreview: "Vaka önizlemesi",
+          viewCase: "Vakayı gör",
+          outcome: "Sonuç",
+          liveDemo: "Canlı Demo",
+        }
+      : {
+          casePreview: "Case preview",
+          viewCase: "View case",
+          outcome: "Outcome",
+          liveDemo: "Live Demo",
+        };
+
   return (
     <motion.article
       whileHover={{ y: -10, scale: 1.012 }}
@@ -101,7 +124,7 @@ export function ProjectCard({
               {compactPreview ? null : (
                 <div className="absolute left-4 right-4 top-4 rounded-lg border border-border/70 bg-background/78 p-3 backdrop-blur-xl">
                   <p className="text-xs font-semibold uppercase tracking-[0.2em] text-primary">
-                    Case preview
+                    {fixedCopy.casePreview}
                   </p>
                   <h3 className="mt-1 text-sm font-semibold tracking-tight">
                     {title}
@@ -122,7 +145,7 @@ export function ProjectCard({
               <div className="project-abstract-surface absolute inset-4 transition duration-300 group-hover:-translate-y-1 group-hover:border-primary/35">
                 <div className="project-abstract-surface__glow" />
                 <div className="project-abstract-surface__header">
-                  <span>{category}</span>
+                  <span>{categoryLabel}</span>
                   <span>{tech[0]}</span>
                 </div>
 
@@ -160,7 +183,7 @@ export function ProjectCard({
               {tech[0]}
             </div>
             <div className="rounded-md border border-primary/25 bg-primary/10 px-2.5 py-1.5 text-[11px] font-medium text-primary backdrop-blur-md">
-              View case
+              {fixedCopy.viewCase}
             </div>
           </div>
         </div>
@@ -170,11 +193,22 @@ export function ProjectCard({
         <div className="flex items-start justify-between gap-4">
           <div>
             <p className="mb-2 text-xs font-semibold uppercase tracking-[0.22em] text-primary">
-              {category}
+              {categoryLabel}
             </p>
-            <h3 className="text-xl font-semibold tracking-tight">{title}</h3>
+            <Link
+              href={`/projects/${slug}`}
+              className="inline-flex text-left transition hover:text-primary"
+            >
+              <h3 className="text-xl font-semibold tracking-tight">{title}</h3>
+            </Link>
           </div>
-          <ArrowUpRight className="mt-1 size-5 text-muted-foreground transition group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-primary" />
+          <Link
+            href={`/projects/${slug}`}
+            aria-label={`${title} case study`}
+            className="mt-1 text-muted-foreground transition hover:-translate-y-0.5 hover:translate-x-0.5 hover:text-primary"
+          >
+            <ArrowUpRight className="size-5" />
+          </Link>
         </div>
 
         <p className="text-sm leading-6 text-muted-foreground">{description}</p>
@@ -187,7 +221,7 @@ export function ProjectCard({
               size="sm"
               tone={accent === "cyan" ? "cyan" : accent === "indigo" ? "violet" : "blue"}
             />
-            Outcome
+            {fixedCopy.outcome}
           </div>
           <p className="text-sm leading-6 text-muted-foreground">{outcome}</p>
         </div>
@@ -217,7 +251,7 @@ export function ProjectCard({
               rel="noopener noreferrer"
               className="inline-flex h-9 items-center gap-2 rounded-md bg-primary px-3 text-sm font-medium text-primary-foreground transition hover:bg-primary/90"
             >
-              {demoLabel ?? "Live Demo"}
+              {demoLabel ?? fixedCopy.liveDemo}
               <ArrowUpRight className="size-4" />
             </Link>
           ) : null}

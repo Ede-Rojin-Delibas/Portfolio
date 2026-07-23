@@ -11,12 +11,14 @@ import {
   UsersRound,
 } from "lucide-react";
 import { generatedAssets } from "@/data/generated-assets";
+import { defaultLocale, type Locale } from "@/data/i18n";
 import { Timeline } from "@/components/about/timeline";
 import { IconTile } from "@/components/shared/icon-tile";
 import { Reveal } from "@/components/shared/reveal";
 import { Section } from "@/components/shared/section";
 import { StaggerItem, StaggerList } from "@/components/shared/stagger-list";
 import { TechBadge } from "@/components/shared/tech-badge";
+import { getServerLocale } from "@/lib/server-locale";
 
 export const metadata: Metadata = {
   title: "About",
@@ -96,6 +98,25 @@ const softSkills = [
   "Persistence",
 ];
 
+const trSoftSkills = [
+  "Analitik Düşünme",
+  "Sürekli Öğrenme",
+  "Problem Çözme",
+  "Merak",
+  "Uyum Sağlama",
+  "Gelişim Zihniyeti",
+  "Detaylara Dikkat",
+  "Takım Çalışması",
+  "İletişim",
+  "Zaman Yönetimi",
+  "Kendi Kendine Öğrenme",
+  "Araştırma Becerisi",
+  "Eleştirel Düşünme",
+  "Sorumluluk",
+  "İnisiyatif",
+  "Israr ve Dayanıklılık",
+];
+
 const focusAreas = [
   {
     title: "Software and backend",
@@ -158,17 +179,165 @@ const timelineItems = [
   },
 ];
 
-export default function AboutPage() {
+const trProfileCards = [
+  {
+    title: "Hakkımda",
+    body: "Teknolojiye güçlü merakı, pratik problem çözmeyi ve sürekli öğrenmeyi seven bir Bilgisayar Mühendisiyim.",
+  },
+  {
+    title: "Eğitim",
+    body: "Bilgisayar Mühendisliği temelim; yazılım, veri, yapay zeka ve sistem teknolojileri arasındaki çalışmalarımı destekliyor.",
+  },
+  {
+    title: "Deneyim",
+    body: "Backend uygulamaları, REST API’ler, veri seti analizi, makine öğrenmesi modelleri ve kişisel mühendislik projeleri üzerinde çalıştım.",
+  },
+];
+
+const trProfessionalSummary = [
+  "Teknoloji benim için yalnızca kod yazmak değil; sistemlerin nasıl çalıştığını anlamak, anlamlı problemleri çözmek ve sürekli gelişmektir.",
+  "Ana ilgi alanlarım yazılım mühendisliği, veri bilimi, yapay zeka, makine öğrenmesi, backend geliştirme, ağ teknolojileri ve bulut kavramlarını kapsar.",
+  "Veriyi içgörüye dönüştürmeyi, ölçeklenebilir uygulamalar geliştirmeyi ve karmaşık sistemlerin arka planda nasıl çalıştığını anlamayı seviyorum.",
+  "Uzun vadeli hedefim; akıllı sistemler tasarlayabilen, güvenilir yazılım geliştirebilen ve gerçek değer üreten projelere katkı sağlayan çok yönlü bir mühendis olmak.",
+];
+
+const trFocusAreas = [
+  {
+    title: "Yazılım ve backend",
+    body: "Temiz API’ler, düzenli kod yapısı ve güvenilir geliştirme alışkanlıklarıyla pratik uygulamalar geliştirmek.",
+  },
+  {
+    title: "Yapay zeka ve makine öğrenmesi",
+    body: "Veriyi yararlı çıktıya dönüştüren model akışlarını, tahmin sistemlerini ve akıllı özellikleri keşfetmek.",
+  },
+  {
+    title: "Veri düşüncesi",
+    body: "Veri setlerini analiz etmek, veriyi hazırlamak, desenleri görselleştirmek ve sonuçları mühendislik bakışıyla değerlendirmek.",
+  },
+  {
+    title: "Sistem temeli",
+    body: "Ağ, Linux, bulut kavramları ve modern yazılımın arkasındaki altyapı temellerini güçlendirmek.",
+  },
+];
+
+const trTimelineItems = [
+  {
+    period: "Eğitim",
+    title: "Bilgisayar Mühendisliği temeli",
+    description:
+      "Programlama, algoritmalar, veritabanları, ağ teknolojileri ve sistem odaklı düşünme üzerinde akademik temel oluşturuldu.",
+    tags: ["Bilgisayar Mühendisliği", "Sistem Düşüncesi"],
+  },
+  {
+    period: "Uygulamalı projeler",
+    title: "Yazılım, veri ve makine öğrenmesi pratiği",
+    description:
+      "Python, Flask, REST API, SQL, veri analizi ve makine öğrenmesi akışlarıyla projeler geliştirildi.",
+    tags: ["Python", "Flask", "Makine Öğrenmesi"],
+  },
+  {
+    period: "Mühendislik gelişimi",
+    title: "Araştırma, analiz ve sürekli öğrenme",
+    description:
+      "Yapay zeka sistemleri, kod üretim modelleri, eğitim sıralama tahmini, müşteri analitiği ve üretkenlik konseptleri keşfedildi.",
+    tags: ["Yapay Zeka & Veri", "Araştırma", "Analitik"],
+  },
+  {
+    period: "Şimdi",
+    title: "Akıllı sistemler portfolyosu",
+    description:
+      "Daha net bir mühendislik kimliği sunar: güvenilir yazılım, veriyle beslenen düşünme ve akıllı sistem geliştirme.",
+    tags: ["Yazılım", "Veri", "Sistemler"],
+  },
+];
+
+const aboutPageCopy = {
+  en: {
+    eyebrow: "Engineering profile",
+    title: "A Computer Engineer focused on practical, intelligent technology.",
+    description:
+      "This page frames the portfolio as one path: engineering foundations, backend and API work, data analysis, machine learning and system-level curiosity.",
+    visualEyebrow: "Visual identity",
+    visualTitle:
+      "Software, data and intelligent systems in one engineering view.",
+    visualDescription:
+      "The new visual layer supports the portfolio message without turning the page into only text: systems, dashboards, data signals and glass objects now carry the same premium language.",
+    summaryEyebrow: "Professional summary",
+    summaryTitle:
+      "More than writing code: understanding systems and creating value.",
+    timelineEyebrow: "Timeline",
+    timelineTitle:
+      "A clear path from engineering foundations to AI-focused product work.",
+    hardSkillsEyebrow: "Hard skills",
+    hardSkillsTitle: "Technical tools and engineering practice.",
+    softSkillsEyebrow: "Soft skills",
+    softSkillsTitle: "Working habits that support growth.",
+  },
+  tr: {
+    eyebrow: "Mühendislik profili",
+    title: "Pratik ve akıllı teknolojiye odaklanan bir Bilgisayar Mühendisi.",
+    description:
+      "Bu sayfa portfolyoyu tek bir yol olarak çerçeveler: mühendislik temeli, backend ve API çalışmaları, veri analizi, makine öğrenmesi ve sistem merakı.",
+    visualEyebrow: "Görsel kimlik",
+    visualTitle:
+      "Yazılım, veri ve akıllı sistemler tek bir mühendislik bakışında.",
+    visualDescription:
+      "Yeni görsel katman sayfayı yalnızca metinden ibaret bırakmadan portfolyo mesajını destekler: sistemler, dashboard’lar, veri sinyalleri ve glass objeler aynı premium dili taşır.",
+    summaryEyebrow: "Profesyonel özet",
+    summaryTitle:
+      "Kod yazmanın ötesinde: sistemleri anlamak ve değer üretmek.",
+    timelineEyebrow: "Zaman çizelgesi",
+    timelineTitle:
+      "Mühendislik temelinden yapay zeka odaklı ürün çalışmasına uzanan net bir yol.",
+    hardSkillsEyebrow: "Teknik yetkinlikler",
+    hardSkillsTitle: "Teknik araçlar ve mühendislik pratiği.",
+    softSkillsEyebrow: "Kişisel yetkinlikler",
+    softSkillsTitle: "Gelişimi destekleyen çalışma alışkanlıkları.",
+  },
+} as const;
+
+function getMergedCopyItems<T extends Record<string, unknown>>(
+  items: T[],
+  translations: Partial<T>[],
+  locale: Locale,
+) {
+  return locale === "tr"
+    ? items.map((item, index) => ({ ...item, ...translations[index] }))
+    : items;
+}
+
+export default async function AboutPage() {
+  const locale = await getServerLocale();
+  const copy = aboutPageCopy[locale] ?? aboutPageCopy[defaultLocale];
+  const localizedProfileCards = getMergedCopyItems(
+    profileCards,
+    trProfileCards,
+    locale,
+  );
+  const localizedFocusAreas = getMergedCopyItems(
+    focusAreas,
+    trFocusAreas,
+    locale,
+  );
+  const localizedTimelineItems = getMergedCopyItems(
+    timelineItems,
+    trTimelineItems,
+    locale,
+  );
+  const localizedProfessionalSummary =
+    locale === "tr" ? trProfessionalSummary : professionalSummary;
+  const localizedSoftSkills = locale === "tr" ? trSoftSkills : softSkills;
+
   return (
     <main>
       <Section
         className="about-skin section-skin"
-        eyebrow="Engineering profile"
-        title="A Computer Engineer focused on practical, intelligent technology."
-        description="This page frames the portfolio as one path: engineering foundations, backend and API work, data analysis, machine learning and system-level curiosity."
+        eyebrow={copy.eyebrow}
+        title={copy.title}
+        description={copy.description}
       >
         <div className="grid gap-5 lg:grid-cols-3">
-          {profileCards.map((card, index) => {
+          {localizedProfileCards.map((card, index) => {
             const Icon = card.icon;
 
             return (
@@ -219,15 +388,13 @@ export default function AboutPage() {
             </div>
             <div className="about-generated-visual__copy">
               <p className="text-xs font-semibold uppercase tracking-[0.24em] text-primary">
-                Visual identity
+                {copy.visualEyebrow}
               </p>
               <h2 className="mt-3 text-2xl font-semibold tracking-tight md:text-4xl">
-                Software, data and intelligent systems in one engineering view.
+                {copy.visualTitle}
               </h2>
               <p className="mt-4 text-sm leading-7 text-muted-foreground md:text-base">
-                The new visual layer supports the portfolio message without
-                turning the page into only text: systems, dashboards, data
-                signals and glass objects now carry the same premium language.
+                {copy.visualDescription}
               </p>
             </div>
           </div>
@@ -238,16 +405,15 @@ export default function AboutPage() {
             <div className="grid gap-8 lg:grid-cols-[0.75fr_1.25fr]">
               <div>
                 <p className="text-xs font-semibold uppercase tracking-[0.24em] text-primary">
-                  Professional summary
+                  {copy.summaryEyebrow}
                 </p>
                 <h2 className="mt-3 text-2xl font-semibold tracking-tight">
-                  More than writing code: understanding systems and creating
-                  value.
+                  {copy.summaryTitle}
                 </h2>
               </div>
 
               <div className="space-y-4 text-sm leading-7 text-muted-foreground md:text-base">
-                {professionalSummary.map((paragraph) => (
+                {localizedProfessionalSummary.map((paragraph) => (
                   <p key={paragraph}>{paragraph}</p>
                 ))}
               </div>
@@ -256,7 +422,7 @@ export default function AboutPage() {
         </Reveal>
 
         <div className="mt-8 grid gap-5 lg:grid-cols-4">
-          {focusAreas.map((area, index) => {
+          {localizedFocusAreas.map((area, index) => {
             const Icon = area.icon;
 
             return (
@@ -285,14 +451,13 @@ export default function AboutPage() {
           <div className="mt-8 glass-panel rounded-lg p-5 md:p-6">
             <div className="mb-6">
               <p className="text-xs font-semibold uppercase tracking-[0.24em] text-primary">
-                Timeline
+                {copy.timelineEyebrow}
               </p>
               <h2 className="mt-3 text-2xl font-semibold tracking-tight">
-                A clear path from engineering foundations to AI-focused product
-                work.
+                {copy.timelineTitle}
               </h2>
             </div>
-            <Timeline items={timelineItems} />
+            <Timeline items={localizedTimelineItems} />
           </div>
         </Reveal>
 
@@ -304,10 +469,10 @@ export default function AboutPage() {
                   <IconTile icon={Code2} iconClassName="size-5" tone="blue" />
                   <div>
                     <p className="text-xs font-semibold uppercase tracking-[0.24em] text-primary">
-                      Hard skills
+                      {copy.hardSkillsEyebrow}
                     </p>
                     <h2 className="mt-1 text-2xl font-semibold tracking-tight">
-                      Technical tools and engineering practice.
+                      {copy.hardSkillsTitle}
                     </h2>
                   </div>
                 </div>
@@ -329,15 +494,15 @@ export default function AboutPage() {
                   />
                   <div>
                     <p className="text-xs font-semibold uppercase tracking-[0.24em] text-accent">
-                      Soft skills
+                      {copy.softSkillsEyebrow}
                     </p>
                     <h2 className="mt-1 text-2xl font-semibold tracking-tight">
-                      Working habits that support growth.
+                      {copy.softSkillsTitle}
                     </h2>
                   </div>
                 </div>
                 <StaggerList className="flex flex-wrap gap-2">
-                  {softSkills.map((skill) => (
+                  {localizedSoftSkills.map((skill) => (
                     <StaggerItem key={skill}>
                       <TechBadge className="border-accent/25 bg-accent/5 dark:border-accent/30 dark:bg-accent/10">
                         {skill}

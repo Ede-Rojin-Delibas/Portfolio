@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import { generatedAssets } from "@/data/generated-assets";
 import { getI18n } from "@/data/i18n";
-import { projects } from "@/data/projects";
+import { getLocalizedProjects } from "@/data/localized-content";
 import { ProjectExplorer } from "@/components/projects/project-explorer";
 import { Reveal } from "@/components/shared/reveal";
 import { Section } from "@/components/shared/section";
@@ -17,6 +17,7 @@ export const metadata: Metadata = {
 export default async function ProjectsPage() {
   const locale = await getServerLocale();
   const copy = getI18n(locale).projectsPage;
+  const localizedProjects = getLocalizedProjects(locale);
 
   return (
     <main>
@@ -52,7 +53,7 @@ export default async function ProjectsPage() {
             </div>
           </div>
         </Reveal>
-        <ProjectExplorer locale={locale} projects={projects} />
+        <ProjectExplorer locale={locale} projects={localizedProjects} />
       </Section>
     </main>
   );

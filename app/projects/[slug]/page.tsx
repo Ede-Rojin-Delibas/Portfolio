@@ -10,6 +10,8 @@ import {
   Target,
 } from "lucide-react";
 import { generatedAssets, type GeneratedAsset } from "@/data/generated-assets";
+import { getI18n } from "@/data/i18n";
+import { getLocalizedProject } from "@/data/localized-content";
 import { projects } from "@/data/projects";
 import { ParallaxCard } from "@/components/shared/parallax-card";
 import type { Project } from "@/data/projects";
@@ -21,6 +23,7 @@ import { StaggerItem, StaggerList } from "@/components/shared/stagger-list";
 import { TechBadge } from "@/components/shared/tech-badge";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { getServerLocale } from "@/lib/server-locale";
 
 type ProjectDetailPageProps = {
   params: Promise<{ slug: string }>;
@@ -95,19 +98,28 @@ function ScreenshotCard({ screenshot, accent }: ScreenshotCardProps) {
 
 const caseStudySections = [
   {
-    label: "Problem",
+    label: {
+      en: "Problem",
+      tr: "Problem",
+    },
     field: "problem",
     icon: Lightbulb,
     tone: "amber" as const,
   },
   {
-    label: "Approach",
+    label: {
+      en: "Approach",
+      tr: "Yaklaşım",
+    },
     field: "approach",
     icon: Route,
     tone: "cyan" as const,
   },
   {
-    label: "Outcome",
+    label: {
+      en: "Outcome",
+      tr: "Sonuç",
+    },
     field: "outcome",
     icon: Target,
     tone: "emerald" as const,
@@ -158,7 +170,11 @@ export async function generateMetadata({
   params,
 }: ProjectDetailPageProps): Promise<Metadata> {
   const { slug } = await params;
-  const project = projects.find((item) => item.slug === slug);
+  const locale = await getServerLocale();
+  const baseProject = projects.find((item) => item.slug === slug);
+  const project = baseProject
+    ? getLocalizedProject(baseProject, locale)
+    : undefined;
 
   if (!project) {
     return {
@@ -181,16 +197,47 @@ export default async function ProjectDetailPage({
   params,
 }: ProjectDetailPageProps) {
   const { slug } = await params;
-  const project = projects.find((item) => item.slug === slug);
+  const locale = await getServerLocale();
+  const baseProject = projects.find((item) => item.slug === slug);
+  const project = baseProject
+    ? getLocalizedProject(baseProject, locale)
+    : undefined;
 
   if (!project) {
     notFound();
   }
 
+  const projectCopy = getI18n(locale).projectExplorer;
+  const projectCategoryLabels = projectCopy.categoryLabels as
+    | Record<string, string>
+    | undefined;
+  const categoryLabel =
+    projectCategoryLabels?.[project.category] ?? project.category;
+  const detailCopy =
+    locale === "tr"
+      ? {
+          back: "Projelere dön",
+          role: "Rol",
+          year: "Yıl",
+          stack: "Teknolojiler",
+          motion: "scroll reveal, hover, parallax",
+          highlights: "Öne çıkanlar",
+          liveDemo: "Canlı Demo",
+        }
+      : {
+          back: "Back to projects",
+          role: "Role",
+          year: "Year",
+          stack: "Stack",
+          motion: "scroll reveal, hover, parallax",
+          highlights: "Highlights",
+          liveDemo: "Live Demo",
+        };
+
   return (
     <main>
       <Section
-        eyebrow={project.category}
+        eyebrow={categoryLabel}
         title={project.title}
         description={project.description}
       >
@@ -198,7 +245,7 @@ export default async function ProjectDetailPage({
           <Button asChild variant="ghost" className="rounded-md">
             <Link href="/projects">
               <ArrowLeft className="size-4" />
-              Back to projects
+              {detailCopy.back}
             </Link>
           </Button>
         </div>
@@ -246,8 +293,8 @@ export default async function ProjectDetailPage({
                   {project.year}&quot;
                 </p>
                 <p className="mt-2">
-                  <span className="text-primary">motion</span>: &quot;scroll
-                  reveal, hover, parallax&quot;
+                  <span className="text-primary">motion</span>: &quot;
+                  {detailCopy.motion}&quot;
                 </p>
                 <p className="mt-2">
                   <span className="text-primary">outcome</span>: &quot;
@@ -277,20 +324,20 @@ export default async function ProjectDetailPage({
               <div className="grid grid-cols-2 gap-4 border-b border-border/70 pb-5">
                 <div>
                   <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground">
-                    Role
+                    {detailCopy.role}
                   </p>
                   <p className="mt-2 font-medium">{project.role}</p>
                 </div>
                 <div>
                   <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground">
-                    Year
+                    {detailCopy.year}
                   </p>
                   <p className="mt-2 font-medium">{project.year}</p>
                 </div>
               </div>
 
               <h2 className="mt-6 text-lg font-semibold tracking-tight">
-                Stack
+                {detailCopy.stack}
               </h2>
               <div className="mt-4 flex flex-wrap gap-2">
                 {project.tech.map((item) => (
@@ -318,7 +365,7 @@ export default async function ProjectDetailPage({
                       target="_blank"
                       rel="noopener noreferrer"
                     >
-                      {project.demoLabel ?? "Live Demo"}
+                      {project.demoLabel ?? detailCopy.liveDemo}
                       <ArrowUpRight className="size-4" />
                     </Link>
                   </Button>
@@ -335,7 +382,7 @@ export default async function ProjectDetailPage({
 
               return (
                 <article
-                  key={section.label}
+                  key={section.field}
                   className="glass-panel rounded-lg p-5 transition duration-300 hover:-translate-y-1 hover:border-primary/40"
                 >
                   <div className="mb-5 flex items-center justify-between gap-4">
@@ -349,7 +396,7 @@ export default async function ProjectDetailPage({
                     </span>
                   </div>
                   <p className="text-xs font-semibold uppercase tracking-[0.22em] text-primary">
-                    {section.label}
+                    {section.label[locale]}
                   </p>
                   <p className="mt-3 text-sm leading-7 text-muted-foreground">
                     {project[section.field]}
@@ -363,7 +410,7 @@ export default async function ProjectDetailPage({
         <Reveal delay={0.18}>
           <div className="mt-8 glass-panel rounded-lg p-6">
             <p className="text-xs font-semibold uppercase tracking-[0.24em] text-primary">
-              Highlights
+              {detailCopy.highlights}
             </p>
             <StaggerList className="mt-5 grid gap-3 md:grid-cols-3">
               {project.highlights.map((highlight) => (

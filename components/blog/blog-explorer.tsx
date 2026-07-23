@@ -164,7 +164,17 @@ function getRecommendedPosts({
     .slice(0, 3);
 }
 
-function BlogCard({ post, compact = false }: { post: BlogPost; compact?: boolean }) {
+function BlogCard({
+  post,
+  categoryLabel,
+  compact = false,
+  statusLabel,
+}: {
+  post: BlogPost;
+  categoryLabel: string;
+  compact?: boolean;
+  statusLabel: string;
+}) {
   return (
     <Link
       href={`/blog/${post.slug}`}
@@ -191,7 +201,7 @@ function BlogCard({ post, compact = false }: { post: BlogPost; compact?: boolean
       <div className="flex grow flex-col p-5">
         <div className="mb-4 flex items-center justify-between gap-4">
           <p className="text-xs font-semibold uppercase tracking-[0.18em] text-primary">
-            {post.category}
+            {categoryLabel}
           </p>
           <span className="inline-flex items-center gap-1.5 text-xs text-muted-foreground">
             <Clock3 className="size-3.5 text-primary" />
@@ -210,7 +220,7 @@ function BlogCard({ post, compact = false }: { post: BlogPost; compact?: boolean
           ))}
         </div>
         <div className="mt-6 flex items-center justify-between border-t border-border/70 pt-4 text-sm text-muted-foreground">
-          <span>{post.status}</span>
+          <span>{statusLabel}</span>
           <ArrowUpRight className="size-4 transition group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-primary" />
         </div>
       </div>
@@ -228,6 +238,10 @@ export function BlogExplorer({
   const copy = (getI18n(locale).blogExplorer ?? defaultCopy) as BlogExplorerCopy;
   const categoryLabels = { ...(copy.categoryLabels ?? {}) };
   const categoryAliases = { ...(copy.categoryAliases ?? {}) };
+  const getCategoryLabel = (category: string) =>
+    categoryLabels[category] ?? category;
+  const getStatusLabel = (status: BlogPost["status"]) =>
+    locale === "tr" && status === "Published" ? "Yayında" : status;
 
   const categories = React.useMemo(
     () => ["All", ...Array.from(new Set(posts.map((post) => post.category)))],
@@ -422,7 +436,11 @@ export function BlogExplorer({
                 ease: [0.22, 1, 0.36, 1],
               }}
             >
-              <BlogCard post={post} />
+              <BlogCard
+                post={post}
+                categoryLabel={getCategoryLabel(post.category)}
+                statusLabel={getStatusLabel(post.status)}
+              />
             </motion.div>
           ))}
         </AnimatePresence>
@@ -460,7 +478,12 @@ export function BlogExplorer({
                 transition={{ delay: index * 0.06 }}
                 key={post.slug}
               >
-                <BlogCard post={post} compact />
+                <BlogCard
+                  post={post}
+                  categoryLabel={getCategoryLabel(post.category)}
+                  compact
+                  statusLabel={getStatusLabel(post.status)}
+                />
               </motion.div>
             ))}
           </div>

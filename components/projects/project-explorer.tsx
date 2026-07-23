@@ -367,7 +367,7 @@ export function ProjectExplorer({
                 ease: [0.22, 1, 0.36, 1],
               }}
             >
-              <ProjectCard {...project} />
+              <ProjectCard {...project} locale={locale} />
             </motion.div>
           ))}
         </AnimatePresence>
@@ -407,7 +407,7 @@ export function ProjectExplorer({
                 transition={{ delay: index * 0.06 }}
                 key={project.slug}
               >
-                <ProjectCard {...project} compactPreview />
+                <ProjectCard {...project} compactPreview locale={locale} />
               </motion.div>
             ))}
           </div>

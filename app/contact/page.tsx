@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import { ExternalLink, Globe2, MessageCircle } from "lucide-react";
 import { generatedAssets } from "@/data/generated-assets";
+import { defaultLocale, type Locale } from "@/data/i18n";
 import { ContactMapCard } from "@/components/contact/contact-map-card";
 import { ContactForm } from "@/components/contact/contact-form";
 import {
@@ -11,6 +12,7 @@ import {
 import { IconTile } from "@/components/shared/icon-tile";
 import { Reveal } from "@/components/shared/reveal";
 import { Section } from "@/components/shared/section";
+import { getServerLocale } from "@/lib/server-locale";
 
 export const metadata: Metadata = {
   title: "Contact",
@@ -42,21 +44,59 @@ const contactLinks = [
   },
   {
     label: "Availability",
-    value: "Open to software, AI and data projects",
+    value: {
+      en: "Open to software, AI and data projects",
+      tr: "Yazılım, yapay zeka ve veri projelerine açık",
+    },
     href: "/projects",
     icon: MessageCircle,
     tone: "emerald" as const,
   },
 ];
 
-export default function ContactPage() {
+const contactPageCopy = {
+  en: {
+    eyebrow: "Collaboration",
+    title: "Let's talk about practical technology solutions.",
+    description:
+      "Use this page for project ideas, collaboration opportunities, feedback or engineering conversations around software, AI and data.",
+    visualEyebrow: "Collaboration signal",
+    visualDescription:
+      "A softer visual layer for contact, separate from the hero but still connected to the portfolio palette.",
+    directLinks: "Direct links",
+  },
+  tr: {
+    eyebrow: "İş birliği",
+    title: "Pratik teknoloji çözümleri üzerine konuşalım.",
+    description:
+      "Bu sayfayı proje fikirleri, iş birliği fırsatları, geri bildirim veya yazılım, yapay zeka ve veri odaklı mühendislik konuşmaları için kullanabilirsin.",
+    visualEyebrow: "İş birliği sinyali",
+    visualDescription:
+      "Hero’dan farklı ama portfolyo paletiyle bağlantılı, iletişim sayfasına özel daha yumuşak bir görsel katman.",
+    directLinks: "Doğrudan linkler",
+  },
+} as const;
+
+function getLocalizedLinkValue(
+  value: string | Record<Locale, string>,
+  locale: Locale,
+) {
+  return typeof value === "string"
+    ? value
+    : value[locale] ?? value[defaultLocale];
+}
+
+export default async function ContactPage() {
+  const locale = await getServerLocale();
+  const copy = contactPageCopy[locale] ?? contactPageCopy[defaultLocale];
+
   return (
     <main>
       <Section
         className="contact-skin section-skin"
-        eyebrow="Collaboration"
-        title="Let's talk about practical technology solutions."
-        description="Use this page for project ideas, collaboration opportunities, feedback or engineering conversations around software, AI and data."
+        eyebrow={copy.eyebrow}
+        title={copy.title}
+        description={copy.description}
       >
         <div className="grid gap-6 lg:grid-cols-[0.85fr_1.15fr]">
           <div className="grid gap-5">
@@ -80,11 +120,10 @@ export default function ContactPage() {
                 />
                 <div className="contact-generated-visual__copy">
                   <p className="text-xs font-semibold uppercase tracking-[0.2em] text-primary">
-                    Collaboration signal
+                    {copy.visualEyebrow}
                   </p>
                   <p className="mt-2 text-sm leading-6 text-muted-foreground">
-                    A softer visual layer for contact, separate from the hero
-                    but still connected to the portfolio palette.
+                    {copy.visualDescription}
                   </p>
                 </div>
               </div>
@@ -93,7 +132,7 @@ export default function ContactPage() {
             <Reveal direction="left" delay={0.04}>
               <div>
                 <p className="mb-4 text-xs font-semibold uppercase tracking-[0.24em] text-primary">
-                  Direct links
+                  {copy.directLinks}
                 </p>
                 <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-1">
                   {contactLinks.map((item) => {
@@ -123,7 +162,7 @@ export default function ContactPage() {
                         </div>
                         <p className="text-sm font-medium">{item.label}</p>
                         <p className="mt-1 break-words text-sm text-muted-foreground">
-                          {item.value}
+                          {getLocalizedLinkValue(item.value, locale)}
                         </p>
                       </a>
                     );
@@ -133,11 +172,11 @@ export default function ContactPage() {
             </Reveal>
 
             <Reveal direction="left" delay={0.1}>
-              <ContactMapCard />
+              <ContactMapCard locale={locale} />
             </Reveal>
           </div>
 
-          <ContactForm />
+          <ContactForm locale={locale} />
         </div>
       </Section>
     </main>

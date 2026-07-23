@@ -1,4 +1,5 @@
 import { ArrowRight, Braces, Database, Sparkles } from "lucide-react";
+import { defaultLocale, type Locale } from "@/data/i18n";
 import { AuroraText } from "@/components/shared/animation-effects";
 import { Reveal } from "@/components/shared/reveal";
 import { Section } from "@/components/shared/section";
@@ -35,42 +36,111 @@ const layers = [
   },
 ];
 
-export function EngineeringLayers() {
+const engineeringLayersCopy = {
+  en: {
+    eyebrow: "Scroll story",
+    title:
+      "Three layers turn technical work into a complete portfolio experience.",
+    description:
+      "This section breaks the page rhythm: instead of another card grid, it explains the engineering flow from software foundation to data signals and interface delivery.",
+    panelEyebrow: "Portfolio architecture",
+    panelTitlePrefix: "Not just pages. A small",
+    panelTitleAccent: "engineering narrative",
+    panelTitleSuffix: ".",
+    panelDescription:
+      "The site works better when every section has a distinct purpose: introduction, stack, story, projects, writing and contact.",
+    orbit: ["Code", "Data", "AI", "UI"],
+    layers,
+    nextStop:
+      "Next stop: project cards show how these layers become concrete case studies.",
+    jump: "Jump to projects",
+  },
+  tr: {
+    eyebrow: "Scroll hikayesi",
+    title:
+      "Üç katman teknik çalışmayı tamamlanmış bir portfolyo deneyimine dönüştürür.",
+    description:
+      "Bu bölüm sayfa ritmini kırar: başka bir kart grid’i yerine yazılım temelinden veri sinyallerine ve arayüz teslimine giden mühendislik akışını açıklar.",
+    panelEyebrow: "Portfolyo mimarisi",
+    panelTitlePrefix: "Sadece sayfalar değil. Küçük bir",
+    panelTitleAccent: "mühendislik anlatısı",
+    panelTitleSuffix: ".",
+    panelDescription:
+      "Her bölümün net bir amacı olduğunda site daha güçlü çalışır: tanıtım, stack, hikaye, projeler, yazılar ve iletişim.",
+    orbit: ["Kod", "Veri", "YZ", "UI"],
+    layers: [
+      {
+        ...layers[0],
+        eyebrow: "Geliştir",
+        title: "Güvenilir yazılım katmanı",
+        description:
+          "Backend mantığı, API’ler ve düzenli kod bir fikri çalışan ürün temeline dönüştürür.",
+      },
+      {
+        ...layers[1],
+        eyebrow: "Analiz et",
+        title: "Veri ve model katmanı",
+        description:
+          "Keşif, ön işleme ve model değerlendirme ham veriyi yararlı sinyallere dönüştürür.",
+      },
+      {
+        ...layers[2],
+        eyebrow: "Sun",
+        title: "Arayüz ve teslim katmanı",
+        description:
+          "Temiz arayüzler, responsive layout’lar ve motion detayları teknik çalışmayı daha anlaşılır hale getirir.",
+      },
+    ],
+    nextStop:
+      "Sıradaki durak: proje kartları bu katmanların somut vaka çalışmalarına nasıl dönüştüğünü gösterir.",
+    jump: "Projelere git",
+  },
+} as const;
+
+type EngineeringLayersProps = {
+  locale?: Locale;
+};
+
+export function EngineeringLayers({
+  locale = defaultLocale,
+}: EngineeringLayersProps) {
+  const copy =
+    engineeringLayersCopy[locale] ?? engineeringLayersCopy[defaultLocale];
+
   return (
     <Section
       className="story-skin section-skin"
       chapter="04"
-      eyebrow="Scroll story"
-      title="Three layers turn technical work into a complete portfolio experience."
-      description="This section breaks the page rhythm: instead of another card grid, it explains the engineering flow from software foundation to data signals and interface delivery."
+      eyebrow={copy.eyebrow}
+      title={copy.title}
+      description={copy.description}
       containerSize="wide"
     >
       <div className="grid gap-6 lg:grid-cols-[0.8fr_1.2fr] lg:items-start">
         <Reveal direction="left">
           <div className="story-sticky-panel glass-panel rounded-lg p-6 md:p-8">
             <p className="mb-4 text-xs font-semibold uppercase tracking-[0.24em] text-primary">
-              Portfolio architecture
+              {copy.panelEyebrow}
             </p>
             <h2 className="text-balance text-3xl font-semibold tracking-tight md:text-5xl">
-              Not just pages. A small{" "}
-              <AuroraText>engineering narrative</AuroraText>.
+              {copy.panelTitlePrefix}{" "}
+              <AuroraText>{copy.panelTitleAccent}</AuroraText>
+              {copy.panelTitleSuffix}
             </h2>
             <p className="mt-4 text-sm leading-7 text-muted-foreground md:text-base">
-              The site works better when every section has a distinct purpose:
-              introduction, stack, story, projects, writing and contact.
+              {copy.panelDescription}
             </p>
 
             <div className="story-orbit mt-8" aria-hidden="true">
-              <span>Code</span>
-              <span>Data</span>
-              <span>AI</span>
-              <span>UI</span>
+              {copy.orbit.map((item) => (
+                <span key={item}>{item}</span>
+              ))}
             </div>
           </div>
         </Reveal>
 
         <StaggerList className="grid gap-4" staggerDelay={0.11}>
-          {layers.map((layer) => {
+          {copy.layers.map((layer) => {
             const Icon = layer.icon;
 
             return (
@@ -111,14 +181,13 @@ export function EngineeringLayers() {
           <StaggerItem className="story-link-card rounded-lg border border-border/70 p-5">
             <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
               <p className="text-sm leading-6 text-muted-foreground">
-                Next stop: project cards show how these layers become concrete
-                case studies.
+                {copy.nextStop}
               </p>
               <a
                 href="#featured-projects"
                 className="inline-flex items-center gap-2 text-sm font-semibold text-primary"
               >
-                Jump to projects
+                {copy.jump}
                 <ArrowRight className="size-4" />
               </a>
             </div>

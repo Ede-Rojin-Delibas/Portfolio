@@ -4,12 +4,15 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeft, CalendarDays, Clock3 } from "lucide-react";
 import { blogPosts } from "@/data/blog";
+import { getI18n } from "@/data/i18n";
+import { getLocalizedBlogPost } from "@/data/localized-content";
 import { BlogPostIcon } from "@/components/blog/blog-post-icon";
 import { IconTile } from "@/components/shared/icon-tile";
 import { Reveal } from "@/components/shared/reveal";
 import { Section } from "@/components/shared/section";
 import { TechBadge } from "@/components/shared/tech-badge";
 import { Button } from "@/components/ui/button";
+import { getServerLocale } from "@/lib/server-locale";
 
 type BlogPostPageProps = {
   params: Promise<{ slug: string }>;
@@ -25,7 +28,9 @@ export async function generateMetadata({
   params,
 }: BlogPostPageProps): Promise<Metadata> {
   const { slug } = await params;
-  const post = blogPosts.find((item) => item.slug === slug);
+  const locale = await getServerLocale();
+  const basePost = blogPosts.find((item) => item.slug === slug);
+  const post = basePost ? getLocalizedBlogPost(basePost, locale) : undefined;
 
   if (!post) {
     return {
@@ -46,17 +51,36 @@ export async function generateMetadata({
 
 export default async function BlogPostPage({ params }: BlogPostPageProps) {
   const { slug } = await params;
-  const post = blogPosts.find((item) => item.slug === slug);
+  const locale = await getServerLocale();
+  const basePost = blogPosts.find((item) => item.slug === slug);
+  const post = basePost ? getLocalizedBlogPost(basePost, locale) : undefined;
 
   if (!post) {
     notFound();
   }
 
+  const explorerCopy = getI18n(locale).blogExplorer;
+  const blogCategoryLabels = explorerCopy.categoryLabels as
+    | Record<string, string>
+    | undefined;
+  const categoryLabel =
+    blogCategoryLabels?.[post.category] ?? post.category;
+  const detailCopy =
+    locale === "tr"
+      ? {
+          back: "Bloga dön",
+          status: post.status === "Published" ? "Yayında" : post.status,
+        }
+      : {
+          back: "Back to blog",
+          status: post.status,
+        };
+
   return (
     <main>
       <Section
         className="blog-skin section-skin"
-        eyebrow={post.category}
+        eyebrow={categoryLabel}
         title={post.title}
         description={post.excerpt}
       >
@@ -64,7 +88,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
           <Button asChild variant="ghost" className="rounded-md">
             <Link href="/blog">
               <ArrowLeft className="size-4" />
-              Back to blog
+              {detailCopy.back}
             </Link>
           </Button>
         </div>
@@ -92,7 +116,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                         {post.hero.label}
                       </p>
                       <p className="mt-1 text-sm text-muted-foreground">
-                        {post.category}
+                        {categoryLabel}
                       </p>
                     </div>
                   </div>
@@ -126,7 +150,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                 {post.date}
               </div>
               <div className="mt-4 rounded-md border border-border/70 bg-background/60 px-3 py-2 text-sm">
-                {post.status}
+                {detailCopy.status}
               </div>
               <div className="mt-5 flex flex-wrap gap-2">
                 {post.topics.map((topic) => (

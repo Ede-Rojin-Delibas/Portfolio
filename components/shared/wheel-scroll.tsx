@@ -32,14 +32,20 @@ export function WheelScroll({
 }: WheelScrollProps) {
   const scrollRef = React.useRef<HTMLDivElement>(null);
   const dragState = React.useRef<{
+    isPointerDown: boolean;
     isDragging: boolean;
+    hasDragged: boolean;
     pointerId: number | null;
     startX: number;
+    startY: number;
     scrollLeft: number;
   }>({
+    isPointerDown: false,
     isDragging: false,
+    hasDragged: false,
     pointerId: null,
     startX: 0,
+    startY: 0,
     scrollLeft: 0,
   });
 
@@ -126,36 +132,57 @@ export function WheelScroll({
   function handlePointerDown(event: React.PointerEvent<HTMLDivElement>) {
     const element = scrollRef.current;
 
-    if (!element || element.scrollWidth <= element.clientWidth) {
+    if (
+      !element ||
+      element.scrollWidth <= element.clientWidth ||
+      event.button !== 0
+    ) {
       return;
     }
 
     dragState.current = {
-      isDragging: true,
+      isPointerDown: true,
+      isDragging: false,
+      hasDragged: false,
       pointerId: event.pointerId,
       startX: event.clientX,
+      startY: event.clientY,
       scrollLeft: element.scrollLeft,
     };
-
-    element.setPointerCapture(event.pointerId);
-    element.dataset.dragging = "true";
   }
 
   function handlePointerMove(event: React.PointerEvent<HTMLDivElement>) {
     const element = scrollRef.current;
     const state = dragState.current;
 
-    if (!element || !state.isDragging) {
+    if (!element || !state.isPointerDown) {
       return;
     }
 
     const dragDistance = event.clientX - state.startX;
+    const verticalDistance = event.clientY - state.startY;
+
+    if (
+      !state.isDragging &&
+      Math.hypot(dragDistance, verticalDistance) < 8
+    ) {
+      return;
+    }
+
+    if (!state.isDragging) {
+      state.isDragging = true;
+      state.hasDragged = true;
+      element.setPointerCapture(event.pointerId);
+      element.dataset.dragging = "true";
+    }
+
     element.scrollLeft = state.scrollLeft - dragDistance;
   }
 
   function stopDragging() {
     const element = scrollRef.current;
 
+    dragState.current.isPointerDown = false;
     dragState.current.isDragging = false;
     dragState.current.pointerId = null;
 
@@ -166,12 +193,33 @@ export function WheelScroll({
 
   function handlePointerUp(event: React.PointerEvent<HTMLDivElement>) {
     const element = scrollRef.current;
+    const wasDragged = dragState.current.hasDragged;
 
-    if (element && dragState.current.pointerId === event.pointerId) {
+    if (
+      element &&
+      dragState.current.pointerId === event.pointerId &&
+      element.hasPointerCapture(event.pointerId)
+    ) {
       element.releasePointerCapture(event.pointerId);
     }
 
     stopDragging();
+
+    if (wasDragged) {
+      window.setTimeout(() => {
+        dragState.current.hasDragged = false;
+      }, 0);
+    }
+  }
+
+  function handleClickCapture(event: React.MouseEvent<HTMLDivElement>) {
+    if (!dragState.current.hasDragged) {
+      return;
+    }
+
+    event.preventDefault();
+    event.stopPropagation();
+    dragState.current.hasDragged = false;
   }
 
   function scrollByDirection(direction: "left" | "right") {
@@ -203,6 +251,7 @@ export function WheelScroll({
       <div
         {...props}
         onKeyDown={handleKeyDown}
+        onClickCapture={handleClickCapture}
         onPointerCancel={stopDragging}
         onPointerDown={handlePointerDown}
         onPointerLeave={stopDragging}
