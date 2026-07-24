@@ -52,7 +52,7 @@ export function Footer({ locale }: FooterProps) {
   const copy = getI18n(locale).footer;
 
   return (
-    <footer className="footer-skin relative overflow-hidden border-t border-border/70 bg-background/80 py-12 backdrop-blur-xl">
+    <footer className="footer-skin relative py-12">
       <div className="technical-grid absolute inset-0 opacity-25" />
       <Container
         size="wide"

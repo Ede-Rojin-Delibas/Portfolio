@@ -546,6 +546,43 @@
       color-mix(in oklch, var(--primary) 85%, transparent);
   }
 
+  .lanyard-wrapper {
+    position: relative;
+    z-index: 0;
+    display: flex;
+    width: 100%;
+    height: 100vh;
+    transform: scale(1);
+    transform-origin: center;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .lanyard-wrapper canvas {
+    display: block;
+    touch-action: pan-y;
+  }
+
+  .lanyard-loading {
+    width: min(16rem, 72vw);
+    aspect-ratio: 0.72;
+    border: 1px solid color-mix(in oklch, var(--primary) 22%, transparent);
+    border-radius: 1rem;
+    background:
+      linear-gradient(
+        135deg,
+        color-mix(in oklch, var(--card) 72%, transparent),
+        color-mix(in oklch, var(--background) 54%, transparent)
+      ),
+      radial-gradient(
+        ellipse at 30% 20%,
+        color-mix(in oklch, var(--primary) 18%, transparent),
+        transparent 44%
+      );
+    box-shadow: 0 30px 90px
+      color-mix(in oklch, var(--primary) 14%, transparent);
+  }
+
   .project-card-shell {
     isolation: isolate;
     transition:
@@ -961,6 +998,7 @@
   }
 
   .technical-grid {
+    pointer-events: none;
     background-image:
       linear-gradient(var(--technical-grid-line) 1px, transparent 1px),
       linear-gradient(90deg, var(--technical-grid-line) 1px, transparent 1px),
@@ -996,7 +1034,12 @@
 
   .section-skin > * {
     position: relative;
-    z-index: 1;
+    z-index: 2;
+  }
+
+  .section-skin::before,
+  .section-skin::after {
+    pointer-events: none;
   }
 
   .section-heading {
@@ -1032,6 +1075,7 @@
   }
 
   .hero-skin {
+    min-height: calc(100svh - 1.5rem);
     background:
       radial-gradient(
         ellipse at 16% 0%,
@@ -1084,7 +1128,8 @@
     content: "";
     position: absolute;
     inset: -5rem -10vw -7rem -10vw;
-    z-index: 3;
+    z-index: 0;
+    pointer-events: none;
     background:
       linear-gradient(
         180deg,
@@ -1157,6 +1202,7 @@
     position: absolute;
     inset: 0;
     z-index: 0;
+    pointer-events: none;
     background-image:
       radial-gradient(
         circle at 1px 1px,
@@ -1193,6 +1239,7 @@
     right: max(1rem, 6vw);
     top: 8rem;
     z-index: 0;
+    pointer-events: none;
     width: min(30rem, 70vw);
     aspect-ratio: 1.45;
     border: 1px solid color-mix(in oklch, var(--primary) 16%, transparent);
@@ -1221,11 +1268,12 @@
 
   .hero-glass-object {
     position: absolute;
-    right: clamp(-9rem, -4vw, -1rem);
-    top: clamp(6.5rem, 10vw, 10rem);
+    right: clamp(-11rem, -6vw, -3rem);
+    top: auto;
+    bottom: clamp(-8.5rem, -7vw, -4rem);
     z-index: 0;
     pointer-events: none;
-    width: min(31rem, 40vw);
+    width: min(39rem, 46vw);
     height: auto;
     opacity: 0.32;
     filter:
@@ -1265,7 +1313,8 @@
 
   .hero-abstract-object {
     position: absolute;
-    z-index: 3;
+    z-index: 0;
+    pointer-events: none;
     display: block;
     aspect-ratio: 1;
     border: 1px solid rgb(156 161 180 / 0.62);
@@ -2289,6 +2338,7 @@
   }
 
   .tech-skin {
+    padding-bottom: clamp(8rem, 12vw, 12rem);
     background:
       radial-gradient(
         ellipse at 12% 82%,
@@ -2403,6 +2453,8 @@
   }
 
   .tech-pattern-visual {
+    z-index: 0;
+    pointer-events: none;
     background-image:
       linear-gradient(
         90deg,
@@ -3219,6 +3271,11 @@
   }
 
   .about-skin {
+    margin-top: -5rem;
+    padding-top: clamp(9.5rem, 13vw, 12rem);
+    padding-bottom: clamp(7rem, 10vw, 10rem);
+    box-shadow: inset 0 -1px 0
+      color-mix(in oklch, var(--foreground) 3%, transparent);
     background:
       radial-gradient(
         ellipse at 12% 12%,
@@ -3235,19 +3292,45 @@
         color-mix(in oklch, var(--section-haze) 16%, transparent),
         transparent 42%
       ),
+      radial-gradient(
+        ellipse at 50% -4rem,
+        color-mix(in oklch, var(--primary) 12%, transparent),
+        transparent 34%
+      ),
       linear-gradient(
         180deg,
-        color-mix(in oklch, var(--background) 82%, white 18%) 0%,
+        color-mix(in oklch, var(--background) 74%, var(--section-stygian) 26%) 0%,
+        color-mix(in oklch, var(--background) 82%, var(--section-blue-zephyr) 18%) 32%,
         color-mix(in oklch, var(--background) 70%, var(--section-spindrift) 30%) 100%
+      );
+  }
+
+  .dark .about-skin {
+    background:
+      radial-gradient(ellipse at 14% 14%, rgb(59 130 246 / 0.18), transparent 36%),
+      radial-gradient(ellipse at 84% 18%, rgb(34 211 238 / 0.12), transparent 34%),
+      radial-gradient(ellipse at 50% 100%, rgb(168 85 247 / 0.1), transparent 46%),
+      linear-gradient(
+        180deg,
+        #102340 0%,
+        #0b1628 34%,
+        #050816 100%
       );
   }
 
   .about-skin::before {
     content: "";
     position: absolute;
-    inset: 0;
+    inset: -5rem 0 -4rem;
     z-index: 0;
-    background-image:
+    background:
+      linear-gradient(
+        to bottom,
+        color-mix(in oklch, var(--background) 34%, transparent) 0%,
+        transparent 16%,
+        transparent 78%,
+        color-mix(in oklch, var(--background) 18%, transparent) 100%
+      ),
       linear-gradient(var(--page-grid-line) 1px, transparent 1px),
       linear-gradient(90deg, var(--page-grid-line) 1px, transparent 1px),
       radial-gradient(
@@ -3256,6 +3339,7 @@
         transparent 1.7px
       );
     background-size:
+      100% 100%,
       64px 64px,
       64px 64px,
       128px 128px;
@@ -3266,7 +3350,7 @@
       black 80%,
       transparent 100%
     );
-    opacity: 0.54;
+    opacity: 0.48;
   }
 
   .about-skin::after {
@@ -3334,6 +3418,47 @@
     animation: floating-cube 9s ease-in-out infinite;
   }
 
+  .about-hero-lanyard {
+    position: absolute;
+    isolation: isolate;
+    top: clamp(-13rem, -12vw, -9rem);
+    right: clamp(-8rem, -4vw, -2rem);
+    z-index: 1;
+    width: min(29rem, 34vw);
+    height: clamp(29rem, 38vw, 37rem);
+    pointer-events: none;
+    opacity: 0.96;
+    filter:
+      drop-shadow(0 34px 80px color-mix(in oklch, var(--primary) 22%, transparent))
+      saturate(1.04);
+  }
+
+  .about-hero-lanyard::before {
+    content: "Drag It!";
+    position: absolute;
+    left: 50%;
+    top: 52%;
+    z-index: 0;
+    transform: translate(-50%, -50%);
+    color: color-mix(in oklch, var(--foreground) 8%, transparent);
+    font-size: clamp(4.5rem, 6vw, 6.2rem);
+    font-weight: 900;
+    letter-spacing: 0;
+    line-height: 1;
+    white-space: nowrap;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  .dark .about-hero-lanyard::before {
+    color: rgb(255 255 255 / 0.055);
+  }
+
+  .about-hero-lanyard canvas {
+    position: relative;
+    z-index: 1;
+  }
+
   .about-generated-visual__copy {
     position: relative;
     z-index: 1;
@@ -3354,6 +3479,26 @@
 
     .about-generated-visual__copy {
       padding: 2rem;
+    }
+  }
+
+  @media (max-width: 767px) {
+    .about-skin {
+      margin-top: -5rem;
+      padding-top: 9rem;
+    }
+
+    .about-hero-lanyard {
+      top: 1rem;
+      right: -9.5rem;
+      width: 16rem;
+      height: 20rem;
+      opacity: 0.28;
+      pointer-events: none;
+    }
+
+    .about-hero-lanyard::before {
+      display: none;
     }
   }
 
@@ -3523,6 +3668,8 @@
   }
 
   .story-skin {
+    margin-top: clamp(-6rem, -7vw, -3.5rem);
+    padding-top: clamp(9rem, 13vw, 13rem);
     background:
       radial-gradient(
         ellipse at 16% 18%,
@@ -3565,7 +3712,7 @@
   .story-skin::before {
     content: "";
     position: absolute;
-    inset: 0;
+    inset: -5rem 0 0;
     z-index: 0;
     background-image:
       linear-gradient(var(--page-grid-line) 1px, transparent 1px),
@@ -3585,7 +3732,7 @@
     content: "";
     position: absolute;
     inset-inline: 8vw;
-    top: 4.25rem;
+    top: 6.25rem;
     z-index: 0;
     height: 1px;
     background: linear-gradient(
@@ -3861,6 +4008,79 @@
     pointer-events: none;
   }
 
+  .admin-skin {
+    background:
+      radial-gradient(
+        ellipse at 12% 14%,
+        color-mix(in oklch, var(--primary) 16%, transparent),
+        transparent 36%
+      ),
+      radial-gradient(
+        ellipse at 86% 24%,
+        color-mix(in oklch, var(--accent) 13%, transparent),
+        transparent 34%
+      ),
+      linear-gradient(
+        135deg,
+        color-mix(in oklch, var(--background) 88%, #e2e8f0 12%) 0%,
+        color-mix(in oklch, var(--background) 76%, #dbeafe 24%) 52%,
+        color-mix(in oklch, var(--background) 88%, #f8fafc 12%) 100%
+      );
+  }
+
+  .dark .admin-skin {
+    background:
+      radial-gradient(ellipse at 12% 14%, rgb(37 99 235 / 0.18), transparent 36%),
+      radial-gradient(ellipse at 86% 24%, rgb(34 211 238 / 0.14), transparent 34%),
+      linear-gradient(135deg, #050816 0%, #07111f 52%, #020617 100%);
+  }
+
+  .admin-skin::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    background-image:
+      linear-gradient(var(--technical-grid-line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--technical-grid-line) 1px, transparent 1px),
+      radial-gradient(
+        circle at 1px 1px,
+        color-mix(in oklch, var(--primary) 12%, transparent) 1px,
+        transparent 1.6px
+      );
+    background-size:
+      54px 54px,
+      54px 54px,
+      108px 108px;
+    mask-image: linear-gradient(
+      120deg,
+      transparent 0%,
+      black 12%,
+      black 82%,
+      transparent 100%
+    );
+    opacity: 0.28;
+  }
+
+  .admin-skin::after {
+    content: "";
+    position: absolute;
+    inset-inline: 8vw;
+    top: 7rem;
+    z-index: 0;
+    height: 1px;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      color-mix(in oklch, var(--primary) 42%, transparent),
+      color-mix(in oklch, var(--accent) 36%, transparent),
+      transparent
+    );
+    box-shadow:
+      0 10rem 0 color-mix(in oklch, var(--primary) 12%, transparent),
+      0 22rem 0 color-mix(in oklch, var(--accent) 10%, transparent);
+  }
+
   .cta-skin {
     background:
       linear-gradient(
@@ -3976,21 +4196,26 @@
   }
 
   .footer-skin {
+    margin-top: clamp(-7rem, -7vw, -4rem);
+    padding-top: clamp(8rem, 10vw, 10rem);
+    background-color: transparent;
     background:
       radial-gradient(
-        ellipse at 16% 0%,
+        ellipse at 16% 24%,
         rgb(37 99 235 / 0.08),
         transparent 36%
       ),
       radial-gradient(
-        ellipse at 82% 12%,
+        ellipse at 82% 26%,
         rgb(6 182 212 / 0.07),
         transparent 34%
       ),
       linear-gradient(
         180deg,
-        color-mix(in oklch, var(--background) 92%, #e2e8f0 8%) 0%,
-        color-mix(in oklch, var(--background) 82%, #dbeafe 18%) 58%,
+        transparent 0%,
+        transparent 18%,
+        color-mix(in oklch, var(--background) 68%, #e2e8f0 32%) 48%,
+        color-mix(in oklch, var(--background) 82%, #dbeafe 18%) 66%,
         color-mix(in oklch, var(--background) 90%, #e2e8f0 10%) 125%
       );
   }
@@ -3998,22 +4223,28 @@
   .dark .footer-skin {
     background:
       radial-gradient(
-        ellipse at 16% 0%,
+        ellipse at 16% 24%,
         rgb(37 99 235 / 0.18),
         transparent 36%
       ),
       radial-gradient(
-        ellipse at 82% 12%,
+        ellipse at 82% 28%,
         rgb(168 85 247 / 0.14),
         transparent 34%
       ),
-      linear-gradient(180deg, rgb(5 8 22 / 0.68) 0%, #020617 100%);
+      linear-gradient(
+        180deg,
+        transparent 0%,
+        transparent 16%,
+        rgb(5 8 22 / 0.56) 48%,
+        #020617 100%
+      );
   }
 
   .footer-skin::before {
     content: "";
     position: absolute;
-    inset: 0;
+    inset: -7rem 0 0;
     z-index: 0;
     background-image:
       linear-gradient(
@@ -4026,7 +4257,13 @@
         transparent 1px
       );
     background-size: 48px 48px;
-    mask-image: linear-gradient(to bottom, black 0%, transparent 88%);
+    mask-image: linear-gradient(
+      to bottom,
+      transparent 0%,
+      black 26%,
+      black 82%,
+      transparent 96%
+    );
     opacity: 0.34;
   }
 
@@ -4034,15 +4271,29 @@
     content: "";
     position: absolute;
     inset-inline: 0;
-    top: 0;
+    top: -10rem;
     z-index: 0;
-    height: 7rem;
+    height: 24rem;
     background: linear-gradient(
       to bottom,
-      color-mix(in oklch, var(--background) 62%, transparent),
-      transparent
+      transparent 0%,
+      color-mix(in oklch, var(--background) 42%, transparent) 30%,
+      color-mix(in oklch, var(--background) 76%, transparent) 50%,
+      color-mix(in oklch, var(--background) 34%, transparent) 72%,
+      transparent 100%
     );
     pointer-events: none;
+  }
+
+  .dark .footer-skin::after {
+    background: linear-gradient(
+      to bottom,
+      transparent 0%,
+      rgb(5 8 22 / 0.42) 30%,
+      rgb(5 8 22 / 0.82) 50%,
+      rgb(2 6 23 / 0.38) 72%,
+      transparent 100%
+    );
   }
 
   .footer-skin > * {
@@ -4475,6 +4726,7 @@
     .hero-glass-object {
       right: -8.4rem;
       top: 13rem;
+      bottom: auto;
       width: 17rem;
       opacity: 0.22;
     }

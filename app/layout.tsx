@@ -3,9 +3,7 @@ import localFont from "next/font/local";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 import { ThemeProvider } from "@/components/theme-provider";
-import Navbar from "@/components/layout/navbar";
-import { Footer } from "@/components/layout/footer";
-import { SiteBackground } from "@/components/layout/site-background";
+import { SiteChrome } from "@/components/layout/site-chrome";
 import { getServerLocale } from "@/lib/server-locale";
 
 const geistSans = localFont({
@@ -84,12 +82,7 @@ export default async function RootLayout({
     >
       <body className="min-h-full">
         <ThemeProvider>
-          <SiteBackground />
-          <div className="relative z-10 flex min-h-screen flex-col">
-            <Navbar locale={locale} />
-            <div className="flex-1">{children}</div>
-            <Footer locale={locale} />
-          </div>
+          <SiteChrome locale={locale}>{children}</SiteChrome>
         </ThemeProvider>
       </body>
     </html>

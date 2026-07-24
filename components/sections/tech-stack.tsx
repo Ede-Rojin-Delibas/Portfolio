@@ -183,7 +183,7 @@ export function TechStack({ locale = defaultLocale }: TechStackProps) {
           <div className="glass-panel relative min-h-[34rem] overflow-hidden rounded-lg p-5 md:min-h-[30rem] md:p-6">
             <div className="tech-pattern-visual absolute inset-0" />
             <div className="technical-grid absolute inset-0 opacity-25" />
-            <div className="relative grid gap-6 md:grid-cols-[0.8fr_1.2fr] md:items-center">
+            <div className="relative z-10 grid gap-6 md:grid-cols-[0.8fr_1.2fr] md:items-center">
               <div>
                 <p className="text-xs font-semibold uppercase tracking-[0.22em] text-primary">
                   {copy.brandEyebrow}

@@ -14,6 +14,7 @@ import { generatedAssets } from "@/data/generated-assets";
 import { defaultLocale, type Locale } from "@/data/i18n";
 import { Timeline } from "@/components/about/timeline";
 import { IconTile } from "@/components/shared/icon-tile";
+import { Lanyard } from "@/components/shared/lanyard";
 import { Reveal } from "@/components/shared/reveal";
 import { Section } from "@/components/shared/section";
 import { StaggerItem, StaggerList } from "@/components/shared/stagger-list";
@@ -336,7 +337,14 @@ export default async function AboutPage() {
         title={copy.title}
         description={copy.description}
       >
-        <div className="grid gap-5 lg:grid-cols-3">
+        <Lanyard
+          className="about-hero-lanyard"
+          position={[0, 0, 18]}
+          gravity={[0, -40, 0]}
+          lanyardWidth={0.82}
+        />
+
+        <div className="relative z-10 grid gap-5 lg:grid-cols-3">
           {localizedProfileCards.map((card, index) => {
             const Icon = card.icon;
 
@@ -378,7 +386,7 @@ export default async function AboutPage() {
               />
               <div className="about-generated-visual__overlay" />
               <Image
-                src={generatedAssets.realisticGlassObject.src}
+                src="/images/hero-glass-crystal.png"
                 alt=""
                 width={320}
                 height={320}

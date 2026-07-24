@@ -72,7 +72,7 @@ export async function Hero() {
   const copy = heroCopy[locale] ?? heroCopy[defaultLocale];
 
   return (
-    <section className="hero-skin section-skin relative overflow-hidden pt-10 pb-16 md:pt-16 md:pb-24">
+    <section className="hero-skin section-skin relative -mt-20 overflow-hidden pt-28 pb-16 md:pt-32 md:pb-24">
       <div aria-hidden="true" className="hero-wireframe" />
       <Image
         src="/images/hero-glass-crystal.png"
