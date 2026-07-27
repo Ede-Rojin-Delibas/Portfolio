@@ -1,0 +1,216 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum AdminRole {
+  SUPER_ADMIN
+  ADMIN
+  EDITOR
+  VIEWER
+}
+
+enum AccountStatus {
+  PENDING
+  ACTIVE
+  REJECTED
+  SUSPENDED
+}
+
+enum PublishStatus {
+  DRAFT
+  PUBLISHED
+  ARCHIVED
+}
+
+enum TranslationStatus {
+  SOURCE
+  MACHINE_DRAFT
+  NEEDS_REVIEW
+  REVIEWED
+}
+
+enum ContactStatus {
+  UNREAD
+  READ
+  REPLIED
+  ARCHIVED
+}
+
+model AdminUser {
+  id              String        @id @default(cuid())
+  name            String
+  email           String        @unique
+  passwordHash    String
+  requestedRole   AdminRole     @default(EDITOR)
+  role            AdminRole?
+  status          AccountStatus @default(PENDING)
+  accessReason    String?
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+  approvedAt      DateTime?
+  lastLoginAt     DateTime?
+  approvedById    String?
+  approvedBy      AdminUser?    @relation("AdminApprovals", fields: [approvedById], references: [id])
+  approvedUsers   AdminUser[]   @relation("AdminApprovals")
+  sessions        AdminSession[]
+  projects        Project[]
+  blogPosts       BlogPost[]
+  auditLogs       AuditLog[]
+}
+
+model AdminSession {
+  id        String    @id @default(cuid())
+  tokenHash String    @unique
+  userId    String
+  user      AdminUser @relation(fields: [userId], references: [id], onDelete: Cascade)
+  expiresAt DateTime
+  createdAt DateTime  @default(now())
+}
+
+model Project {
+  id           String             @id @default(cuid())
+  slug         String             @unique
+  title        String
+  category     String
+  description  String
+  role         String
+  year         String
+  problem      String
+  approach     String
+  outcome      String
+  accent       String             @default("blue")
+  featured     Boolean            @default(false)
+  github       String?
+  demo         String?
+  demoLabel    String?
+  imageSrc     String?
+  imageAlt     String?
+  status       PublishStatus      @default(DRAFT)
+  publishedAt  DateTime?
+  createdAt    DateTime           @default(now())
+  updatedAt    DateTime           @updatedAt
+  authorId     String?
+  author       AdminUser?         @relation(fields: [authorId], references: [id], onDelete: SetNull)
+  technologies ProjectTechnology[]
+  screenshots  ProjectScreenshot[]
+  translations ProjectTranslation[]
+}
+
+model ProjectTechnology {
+  id        String  @id @default(cuid())
+  label     String
+  sortOrder Int     @default(0)
+  projectId String
+  project   Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@unique([projectId, label])
+}
+
+model ProjectScreenshot {
+  id          String  @id @default(cuid())
+  title       String
+  description String
+  imageSrc    String?
+  imageAlt    String?
+  sortOrder   Int     @default(0)
+  projectId   String
+  project     Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+}
+
+model ProjectTranslation {
+  id          String            @id @default(cuid())
+  locale      String
+  title       String
+  description String
+  problem     String
+  approach    String
+  outcome     String
+  status      TranslationStatus @default(MACHINE_DRAFT)
+  projectId   String
+  project     Project           @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  createdAt   DateTime          @default(now())
+  updatedAt   DateTime          @updatedAt
+
+  @@unique([projectId, locale])
+}
+
+model BlogPost {
+  id           String            @id @default(cuid())
+  slug         String            @unique
+  title        String
+  excerpt      String
+  content      Json
+  category     String
+  topics       String[]
+  readTime     String
+  tone         String            @default("blue")
+  heroLabel    String
+  heroMetric   String
+  imageSrc     String?
+  imageAlt     String?
+  status       PublishStatus     @default(DRAFT)
+  publishedAt  DateTime?
+  createdAt    DateTime          @default(now())
+  updatedAt    DateTime          @updatedAt
+  authorId     String?
+  author       AdminUser?        @relation(fields: [authorId], references: [id], onDelete: SetNull)
+  translations BlogTranslation[]
+}
+
+model BlogTranslation {
+  id        String            @id @default(cuid())
+  locale    String
+  title     String
+  excerpt   String
+  content   Json
+  status    TranslationStatus @default(MACHINE_DRAFT)
+  blogPostId String
+  blogPost   BlogPost         @relation(fields: [blogPostId], references: [id], onDelete: Cascade)
+  createdAt  DateTime         @default(now())
+  updatedAt  DateTime         @updatedAt
+
+  @@unique([blogPostId, locale])
+}
+
+model ContactMessage {
+  id        String        @id @default(cuid())
+  name      String
+  email     String
+  subject   String?
+  message   String
+  status    ContactStatus @default(UNREAD)
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
+}
+
+model MediaAsset {
+  id        String   @id @default(cuid())
+  filename  String
+  url       String
+  alt       String?
+  mimeType  String
+  sizeBytes Int?
+  createdAt DateTime @default(now())
+}
+
+model SiteSetting {
+  id        String   @id @default(cuid())
+  key       String   @unique
+  value     Json
+  updatedAt DateTime @updatedAt
+}
+
+model AuditLog {
+  id        String     @id @default(cuid())
+  actorId   String?
+  actor     AdminUser? @relation(fields: [actorId], references: [id], onDelete: SetNull)
+  action    String
+  entity    String
+  entityId  String?
+  metadata  Json?
+  createdAt DateTime   @default(now())
+}
