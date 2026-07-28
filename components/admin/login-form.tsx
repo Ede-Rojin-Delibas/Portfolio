@@ -2,8 +2,9 @@
 
 import * as React from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { ArrowRight, CheckCircle2, LockKeyhole } from "lucide-react";
+import { AlertCircle, ArrowRight, CheckCircle2, LockKeyhole } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import {
@@ -27,7 +28,11 @@ const loginSchema = z.object({
 type LoginFormValues = z.infer<typeof loginSchema>;
 
 export function LoginForm() {
-  const [submitted, setSubmitted] = React.useState(false);
+  const router = useRouter();
+  const [serverMessage, setServerMessage] = React.useState<{
+    type: "success" | "error";
+    text: string;
+  } | null>(null);
   const form = useForm<LoginFormValues>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
@@ -37,8 +42,35 @@ export function LoginForm() {
     },
   });
 
-  function onSubmit() {
-    setSubmitted(true);
+  async function onSubmit(values: LoginFormValues) {
+    setServerMessage(null);
+
+    const response = await fetch("/api/admin/auth/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(values),
+    });
+
+    const data = (await response.json().catch(() => null)) as {
+      message?: string;
+    } | null;
+
+    if (!response.ok) {
+      setServerMessage({
+        type: "error",
+        text: data?.message ?? "Login failed. Please try again.",
+      });
+      return;
+    }
+
+    setServerMessage({
+      type: "success",
+      text: data?.message ?? "Signed in successfully.",
+    });
+    router.push("/admin");
+    router.refresh();
   }
 
   return (
@@ -108,20 +140,31 @@ export function LoginForm() {
           )}
         />
 
-        {submitted ? (
-          <div className="rounded-md border border-emerald-500/30 bg-emerald-500/10 p-3 text-sm text-emerald-700 dark:text-emerald-200">
+        {serverMessage ? (
+          <div
+            className={
+              serverMessage.type === "success"
+                ? "rounded-md border border-emerald-500/30 bg-emerald-500/10 p-3 text-sm text-emerald-700 dark:text-emerald-200"
+                : "rounded-md border border-rose-500/30 bg-rose-500/10 p-3 text-sm text-rose-700 dark:text-rose-200"
+            }
+          >
             <div className="flex items-start gap-2">
-              <CheckCircle2 className="mt-0.5 size-4" />
-              <p>
-                Form validation works. The next implementation step is checking
-                this account against a server-side auth provider.
-              </p>
+              {serverMessage.type === "success" ? (
+                <CheckCircle2 className="mt-0.5 size-4" />
+              ) : (
+                <AlertCircle className="mt-0.5 size-4" />
+              )}
+              <p>{serverMessage.text}</p>
             </div>
           </div>
         ) : null}
 
-        <Button className="h-11 w-full" type="submit">
-          Sign in
+        <Button
+          className="h-11 w-full"
+          disabled={form.formState.isSubmitting}
+          type="submit"
+        >
+          {form.formState.isSubmitting ? "Signing in..." : "Sign in"}
           <ArrowRight className="size-4" />
         </Button>
 

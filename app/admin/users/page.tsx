@@ -37,6 +37,7 @@ export default function AdminUsersPage() {
   return (
     <AdminShell
       activePath="/admin/users"
+      requiredPermission="users.manage"
       title="Users, roles and approval queue."
       description="This is where the Super Admin will approve new accounts, assign roles and control who can access CMS features."
     >

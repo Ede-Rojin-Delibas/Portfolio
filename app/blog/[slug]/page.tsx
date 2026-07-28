@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ArrowLeft, CalendarDays, Clock3 } from "lucide-react";
+import { ArrowLeft, ArrowUpRight, CalendarDays, Clock3 } from "lucide-react";
 import { blogPosts } from "@/data/blog";
 import { getI18n } from "@/data/i18n";
 import { getLocalizedBlogPost } from "@/data/localized-content";
@@ -12,6 +12,7 @@ import { Reveal } from "@/components/shared/reveal";
 import { Section } from "@/components/shared/section";
 import { TechBadge } from "@/components/shared/tech-badge";
 import { Button } from "@/components/ui/button";
+import { getRelatedBlogPosts } from "@/lib/blog-recommendations";
 import { getServerLocale } from "@/lib/server-locale";
 
 type BlogPostPageProps = {
@@ -55,7 +56,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
   const basePost = blogPosts.find((item) => item.slug === slug);
   const post = basePost ? getLocalizedBlogPost(basePost, locale) : undefined;
 
-  if (!post) {
+  if (!basePost || !post) {
     notFound();
   }
 
@@ -69,12 +70,24 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
     locale === "tr"
       ? {
           back: "Bloga dön",
+          relatedDescription:
+            "Bu öneriler kategori, konu etiketleri ve metin benzerliğine göre seçildi.",
+          relatedEyebrow: "Sıradaki okuma",
+          relatedTitle: "Bu yazıya bağlı önerilen yazılar",
           status: post.status === "Published" ? "Yayında" : post.status,
         }
       : {
           back: "Back to blog",
+          relatedDescription:
+            "These suggestions are selected from category, topic and content similarity. If there is no close match, the newest useful articles are shown.",
+          relatedEyebrow: "Recommended next",
+          relatedTitle: "Related articles for this reading path",
           status: post.status,
         };
+  const relatedPosts = getRelatedBlogPosts({
+    post: basePost,
+    posts: blogPosts,
+  }).map((item) => getLocalizedBlogPost(item, locale));
 
   return (
     <main>
@@ -160,6 +173,67 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
             </aside>
           </Reveal>
         </div>
+
+        {relatedPosts.length > 0 ? (
+          <section className="mt-8 glass-panel rounded-lg p-5 md:p-6">
+            <div className="mb-5">
+              <p className="text-xs font-semibold uppercase tracking-[0.22em] text-primary">
+                {detailCopy.relatedEyebrow}
+              </p>
+              <h2 className="mt-2 text-2xl font-semibold tracking-tight md:text-3xl">
+                {detailCopy.relatedTitle}
+              </h2>
+              <p className="mt-2 max-w-2xl text-sm leading-6 text-muted-foreground">
+                {detailCopy.relatedDescription}
+              </p>
+            </div>
+
+            <div className="grid gap-5 md:grid-cols-3">
+              {relatedPosts.map((relatedPost) => {
+                const relatedCategoryLabel =
+                  blogCategoryLabels?.[relatedPost.category] ??
+                  relatedPost.category;
+
+                return (
+                  <Link
+                    href={`/blog/${relatedPost.slug}`}
+                    key={relatedPost.slug}
+                    className="group overflow-hidden rounded-lg border border-border/70 bg-background/55 transition duration-300 hover:-translate-y-1 hover:border-primary/40"
+                  >
+                    <div className="relative aspect-[16/9] border-b border-border/70">
+                      <Image
+                        src={relatedPost.image.src}
+                        alt={relatedPost.image.alt}
+                        fill
+                        sizes="(min-width: 1024px) 28vw, 92vw"
+                        className="object-cover transition duration-700 group-hover:scale-105"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-background via-background/20 to-transparent" />
+                      <div className="absolute left-4 top-4">
+                        <BlogPostIcon post={relatedPost} />
+                      </div>
+                    </div>
+                    <div className="p-4">
+                      <p className="text-xs font-semibold uppercase tracking-[0.18em] text-primary">
+                        {relatedCategoryLabel}
+                      </p>
+                      <h3 className="mt-2 text-lg font-semibold tracking-tight">
+                        {relatedPost.title}
+                      </h3>
+                      <p className="mt-2 line-clamp-3 text-sm leading-6 text-muted-foreground">
+                        {relatedPost.excerpt}
+                      </p>
+                      <div className="mt-4 flex items-center justify-between text-sm text-muted-foreground">
+                        <span>{relatedPost.readTime}</span>
+                        <ArrowUpRight className="size-4 transition group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-primary" />
+                      </div>
+                    </div>
+                  </Link>
+                );
+              })}
+            </div>
+          </section>
+        ) : null}
       </Section>
     </main>
   );

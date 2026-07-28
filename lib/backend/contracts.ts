@@ -62,6 +62,12 @@ export const adminApiEndpoints = [
   },
   {
     method: "GET",
+    path: "/api/admin/session",
+    permission: "authenticated",
+    purpose: "Returns the current approved admin user from the session cookie.",
+  },
+  {
+    method: "GET",
     path: "/api/admin/users",
     permission: "users.manage",
     purpose: "Lists users and pending approval requests.",
@@ -121,6 +127,6 @@ export function getBackendHealthSnapshot() {
     },
     decision: backendDecision,
     nextStep:
-      "Install Prisma packages, generate Prisma Client and create the first migration.",
+      "Connect a real PostgreSQL DATABASE_URL, apply migrations and add admin approval routes.",
   };
 }

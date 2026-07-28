@@ -5,8 +5,9 @@
 ▲ Next.js 16.2.9 (Turbopack)
 - Local:         http://localhost:3000
 - Network:       http://192.168.56.1:3000
-✓ Ready in 426ms
+- Environments: .env
+✓ Ready in 489ms
 Creating turbopack project { dir: 'C:\\Users\\emreo\\portfolio-site', testMode: true }
 
- GET /about 200 in 907ms (next.js: 300ms, application-code: 607ms)
- GET /about 200 in 90ms (next.js: 4ms, application-code: 86ms)
+ GET /admin/register 200 in 1133ms (next.js: 806ms, application-code: 327ms)
+[?25h

@@ -74,11 +74,11 @@ Admin workflow:
 
 1. Add database schema and backend contracts. Done.
 2. Install Prisma and create the first migration. Done.
-3. Add auth/session helpers.
-4. Connect register/login forms to API routes.
-5. Protect admin routes with server-side role checks.
+3. Add auth/session helpers. Done.
+4. Connect register/login forms to API routes. Done.
+5. Protect admin routes with server-side role checks. Done.
 6. Move projects and blog posts from `data/*.ts` to database records.
-7. Add CRUD screens for projects and blog posts.
+7. Add CRUD screens for projects and blog posts. Started with projects.
 8. Add translation draft workflow.
 9. Add contact message storage.
 10. Add audit logs for admin actions.
@@ -89,5 +89,15 @@ Admin workflow:
 - `prisma.config.ts`: Prisma 7 config, migration path and datasource URL.
 - `prisma/migrations/20260727152000_init/migration.sql`: First SQL migration generated from the schema.
 - `lib/backend/prisma.ts`: Shared Prisma Client helper for future API routes.
+- `lib/backend/password.ts`: Password hashing and verification.
+- `lib/backend/session.ts`: Database-backed session cookie helpers.
+- `lib/backend/permissions.ts`: Role-to-permission mapping, admin page guards and future API permission guard.
 - `lib/backend/contracts.ts`: API endpoint contracts and backend decision snapshot.
 - `app/api/health/route.ts`: First backend route.
+- `app/api/admin/auth/register/route.ts`: Creates pending access requests and bootstraps the configured Super Admin.
+- `app/api/admin/auth/login/route.ts`: Validates credentials and creates a session cookie.
+- `app/api/admin/auth/logout/route.ts`: Deletes the current session.
+- `app/api/admin/session/route.ts`: Reads the current session user.
+- `app/api/admin/projects/route.ts`: Lists and creates project records with permission checks.
+- `app/api/admin/projects/[id]/route.ts`: Updates and deletes one project with permission checks.
+- `app/admin/projects/page.tsx`: First PostgreSQL-backed admin project management page.

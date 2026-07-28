@@ -1,24 +1,35 @@
 import * as React from "react";
 import Link from "next/link";
 import { ArrowLeft, ArrowUpRight, LockKeyhole, Sparkles } from "lucide-react";
-import { adminNavItems, adminUsers } from "@/data/admin-access";
+import { adminNavItems, type AdminPermission } from "@/data/admin-access";
+import { LogoutButton } from "@/components/admin/logout-button";
 import { Button } from "@/components/ui/button";
+import {
+  formatAdminRole,
+  hasAdminPermission,
+  requireAdminPagePermission,
+} from "@/lib/backend/permissions";
 import { cn } from "@/lib/utils";
 
 type AdminShellProps = {
   activePath: string;
   children: React.ReactNode;
   description: string;
+  requiredPermission?: AdminPermission;
   title: string;
 };
 
-export function AdminShell({
+export async function AdminShell({
   activePath,
   children,
   description,
+  requiredPermission = "dashboard.read",
   title,
 }: AdminShellProps) {
-  const activeAdmin = adminUsers.find((user) => user.status === "active");
+  const activeAdmin = await requireAdminPagePermission(requiredPermission);
+  const visibleNavItems = adminNavItems.filter((item) =>
+    hasAdminPermission(activeAdmin, item.permission),
+  );
 
   return (
     <main className="admin-skin section-skin relative min-h-screen overflow-hidden px-3 py-5 md:px-6 md:py-8">
@@ -45,12 +56,12 @@ export function AdminShell({
             </p>
             <p className="mt-2 text-sm font-medium">{activeAdmin?.name}</p>
             <p className="mt-1 text-xs text-muted-foreground">
-              Super Admin approval model
+              {formatAdminRole(activeAdmin.role)}
             </p>
           </div>
 
           <nav className="grid gap-1" aria-label="Admin navigation">
-            {adminNavItems.map((item) => {
+            {visibleNavItems.map((item) => {
               const Icon = item.icon;
               const active =
                 activePath === item.href ||
@@ -85,6 +96,7 @@ export function AdminShell({
                 <ArrowUpRight className="size-4" />
               </Link>
             </Button>
+            <LogoutButton />
           </div>
         </aside>
 

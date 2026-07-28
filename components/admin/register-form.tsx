@@ -3,7 +3,7 @@
 import * as React from "react";
 import Link from "next/link";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { ArrowRight, CheckCircle2, ShieldCheck } from "lucide-react";
+import { AlertCircle, ArrowRight, CheckCircle2, ShieldCheck } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import {
@@ -37,7 +37,10 @@ const registerSchema = z
 type RegisterFormValues = z.infer<typeof registerSchema>;
 
 export function RegisterForm() {
-  const [submitted, setSubmitted] = React.useState(false);
+  const [serverMessage, setServerMessage] = React.useState<{
+    type: "success" | "error";
+    text: string;
+  } | null>(null);
   const form = useForm<RegisterFormValues>({
     resolver: zodResolver(registerSchema),
     defaultValues: {
@@ -50,8 +53,36 @@ export function RegisterForm() {
     },
   });
 
-  function onSubmit() {
-    setSubmitted(true);
+  async function onSubmit(values: RegisterFormValues) {
+    setServerMessage(null);
+
+    const response = await fetch("/api/admin/auth/register", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(values),
+    });
+
+    const data = (await response.json().catch(() => null)) as {
+      message?: string;
+    } | null;
+
+    if (!response.ok) {
+      setServerMessage({
+        type: "error",
+        text: data?.message ?? "Registration failed. Please try again.",
+      });
+      return;
+    }
+
+    setServerMessage({
+      type: "success",
+      text:
+        data?.message ??
+        "Access request created. A Super Admin must approve it before login.",
+    });
+    form.reset();
   }
 
   return (
@@ -174,20 +205,41 @@ export function RegisterForm() {
           )}
         />
 
-        {submitted ? (
-          <div className="rounded-md border border-cyan-500/30 bg-cyan-500/10 p-3 text-sm text-cyan-800 dark:text-cyan-100">
+        {serverMessage ? (
+          <div
+            className={
+              serverMessage.type === "success"
+                ? "rounded-md border border-cyan-500/30 bg-cyan-500/10 p-3 text-sm text-cyan-800 dark:text-cyan-100"
+                : "rounded-md border border-rose-500/30 bg-rose-500/10 p-3 text-sm text-rose-700 dark:text-rose-200"
+            }
+          >
             <div className="flex items-start gap-2">
-              <CheckCircle2 className="mt-0.5 size-4" />
-              <p>
-                Access request validated. In the real backend this account will
-                be saved as pending until a Super Admin approves it.
-              </p>
+              {serverMessage.type === "success" ? (
+                <CheckCircle2 className="mt-0.5 size-4" />
+              ) : (
+                <AlertCircle className="mt-0.5 size-4" />
+              )}
+              <p>{serverMessage.text}</p>
             </div>
+            {serverMessage.type === "success" ? (
+              <Button asChild className="mt-3 h-10" variant="outline">
+                <Link href="/admin/login">
+                  Continue to login
+                  <ArrowRight className="size-4" />
+                </Link>
+              </Button>
+            ) : null}
           </div>
         ) : null}
 
-        <Button className="h-11 w-full" type="submit">
-          Create access request
+        <Button
+          className="h-11 w-full"
+          disabled={form.formState.isSubmitting}
+          type="submit"
+        >
+          {form.formState.isSubmitting
+            ? "Creating request..."
+            : "Create access request"}
           <ArrowRight className="size-4" />
         </Button>
 

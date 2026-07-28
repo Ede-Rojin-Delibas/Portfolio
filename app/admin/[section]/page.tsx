@@ -164,6 +164,7 @@ export default async function AdminSectionPage({
   return (
     <AdminShell
       activePath={`/admin/${section}`}
+      requiredPermission={navItem?.permission}
       title={plan.title}
       description={plan.description}
     >

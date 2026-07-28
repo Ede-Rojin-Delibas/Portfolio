@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import {
   AlertTriangle,
   ArrowRight,
@@ -7,7 +8,9 @@ import {
   Database,
   FileCode2,
   Languages,
+  LockKeyhole,
   ShieldCheck,
+  UserPlus,
   Workflow,
 } from "lucide-react";
 import {
@@ -21,6 +24,8 @@ import { AdminShell } from "@/components/admin/admin-shell";
 import { IconTile } from "@/components/shared/icon-tile";
 import { Reveal } from "@/components/shared/reveal";
 import { TechBadge } from "@/components/shared/tech-badge";
+import { Button } from "@/components/ui/button";
+import { getCurrentAdminUser } from "@/lib/backend/session";
 
 export const metadata: Metadata = {
   title: "Admin Studio",
@@ -97,10 +102,108 @@ function FieldList({
   );
 }
 
-export default function AdminStudioPage() {
+function AdminAccessGateway() {
+  return (
+    <main className="admin-skin section-skin relative grid min-h-screen overflow-hidden px-4 py-6">
+      <div className="mx-auto grid w-full max-w-6xl gap-6 self-center lg:grid-cols-[0.95fr_1.05fr] lg:items-center">
+        <section className="max-w-2xl">
+          <p className="mb-3 flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.22em] text-primary">
+            <LockKeyhole className="size-4" />
+            Protected CMS
+          </p>
+          <h1 className="text-balance text-4xl font-semibold tracking-tight md:text-6xl">
+            Manage the portfolio after signing in.
+          </h1>
+          <p className="mt-5 text-base leading-7 text-muted-foreground md:text-lg">
+            This admin area controls projects, blog posts, page content, media,
+            user approvals and translation workflow. Sign in if you already have
+            access, or request an account if this is your first time.
+          </p>
+          <div className="mt-7 flex flex-wrap gap-3">
+            <Button asChild className="h-11">
+              <Link href="/admin/login">
+                Sign in
+                <ArrowRight className="size-4" />
+              </Link>
+            </Button>
+            <Button asChild className="h-11" variant="outline">
+              <Link href="/admin/register">
+                Request access
+                <UserPlus className="size-4" />
+              </Link>
+            </Button>
+          </div>
+        </section>
+
+        <section className="glass-panel rounded-lg p-5 md:p-6">
+          <div className="mb-6">
+            <p className="text-xs font-semibold uppercase tracking-[0.22em] text-primary">
+              Access flow
+            </p>
+            <h2 className="mt-2 text-2xl font-semibold tracking-tight">
+              Login or registration
+            </h2>
+          </div>
+          <div className="grid gap-3">
+            {[
+              {
+                title: "Already approved",
+                description:
+                  "Use the login page. The backend checks your session, role and permissions before opening CMS pages.",
+                icon: LockKeyhole,
+              },
+              {
+                title: "First time here",
+                description:
+                  "Create an access request. The configured Super Admin email is activated automatically; other users wait for approval.",
+                icon: UserPlus,
+              },
+              {
+                title: "Protected after entry",
+                description:
+                  "The sidebar only shows allowed modules, and protected pages check permissions on the server.",
+                icon: ShieldCheck,
+              },
+            ].map((item) => {
+              const Icon = item.icon;
+
+              return (
+                <article
+                  className="rounded-md border border-border/70 bg-background/55 p-4"
+                  key={item.title}
+                >
+                  <div className="flex gap-3">
+                    <IconTile icon={Icon} iconClassName="size-5" tone="cyan" />
+                    <div>
+                      <h3 className="font-semibold tracking-tight">
+                        {item.title}
+                      </h3>
+                      <p className="mt-2 text-sm leading-6 text-muted-foreground">
+                        {item.description}
+                      </p>
+                    </div>
+                  </div>
+                </article>
+              );
+            })}
+          </div>
+        </section>
+      </div>
+    </main>
+  );
+}
+
+export default async function AdminStudioPage() {
+  const activeAdmin = await getCurrentAdminUser();
+
+  if (!activeAdmin) {
+    return <AdminAccessGateway />;
+  }
+
   return (
     <AdminShell
       activePath="/admin"
+      requiredPermission="dashboard.read"
       title="Content Studio for projects, blog posts and translation workflow."
       description="This is the first safe admin step: no public write actions yet, but the content model, approval model and translation rules are now visible and ready to connect to storage."
     >
