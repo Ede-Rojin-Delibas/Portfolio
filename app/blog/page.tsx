@@ -3,16 +3,13 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowUpRight, Clock3, FileText, Layers3 } from "lucide-react";
 import { getI18n } from "@/data/i18n";
-import {
-  getLocalizedBlogPosts,
-  getLocalizedFeaturedBlogPost,
-} from "@/data/localized-content";
 import { BlogExplorer } from "@/components/blog/blog-explorer";
 import { BlogPostIcon } from "@/components/blog/blog-post-icon";
 import { IconTile } from "@/components/shared/icon-tile";
 import { Reveal } from "@/components/shared/reveal";
 import { Section } from "@/components/shared/section";
 import { TechBadge } from "@/components/shared/tech-badge";
+import { getBlogPosts, getFeaturedBlogPost } from "@/lib/content/blog";
 import { getServerLocale } from "@/lib/server-locale";
 
 export const metadata: Metadata = {
@@ -28,8 +25,8 @@ export default async function BlogPage() {
   const locale = await getServerLocale();
   const copy = getI18n(locale).blogPage;
   const explorerCopy = getI18n(locale).blogExplorer;
-  const localizedPosts = getLocalizedBlogPosts(locale);
-  const featuredPost = getLocalizedFeaturedBlogPost(locale);
+  const localizedPosts = await getBlogPosts(locale);
+  const featuredPost = await getFeaturedBlogPost(locale);
   const blogCategoryLabels = explorerCopy.categoryLabels as
     | Record<string, string>
     | undefined;

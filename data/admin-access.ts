@@ -6,7 +6,9 @@ import {
   FolderKanban,
   Image,
   Inbox,
+  Languages,
   LayoutDashboard,
+  ScrollText,
   Settings,
   ShieldCheck,
   Trash2,
@@ -28,16 +30,21 @@ export type AdminPermission =
   | "projects.create"
   | "projects.update"
   | "projects.delete"
+  | "projects.publish"
   | "posts.read"
   | "posts.create"
   | "posts.update"
   | "posts.delete"
+  | "posts.publish"
+  | "translations.manage"
   | "pages.update"
   | "messages.read"
+  | "messages.update"
   | "media.manage"
   | "settings.update"
   | "users.manage"
   | "roles.manage"
+  | "audit.read"
   | "trash.manage";
 
 export type AdminRoleDefinition = {
@@ -75,9 +82,12 @@ const contentPermissions: AdminPermission[] = [
   "posts.create",
   "posts.update",
   "posts.delete",
+  "translations.manage",
   "pages.update",
   "messages.read",
+  "messages.update",
   "media.manage",
+  "audit.read",
   "trash.manage",
 ];
 
@@ -90,6 +100,8 @@ export const adminRoles: AdminRoleDefinition[] = [
     permissions: [
       "dashboard.read",
       ...contentPermissions,
+      "projects.publish",
+      "posts.publish",
       "settings.update",
       "users.manage",
       "roles.manage",
@@ -99,19 +111,18 @@ export const adminRoles: AdminRoleDefinition[] = [
     role: "admin",
     label: "Admin",
     description:
-      "Can manage content, messages, media and most site settings, but cannot edit roles.",
+      "Can manage content, messages, media and most site settings, but publishing and role changes stay with Super Admin.",
     permissions: [
       "dashboard.read",
       ...contentPermissions,
       "settings.update",
-      "users.manage",
     ],
   },
   {
     role: "editor",
     label: "Editor",
     description:
-      "Can create and edit projects or blog posts, but cannot manage users or global settings.",
+      "Can create and edit project or blog drafts, but cannot publish, delete, manage users or change settings.",
     permissions: [
       "dashboard.read",
       "projects.read",
@@ -120,6 +131,7 @@ export const adminRoles: AdminRoleDefinition[] = [
       "posts.read",
       "posts.create",
       "posts.update",
+      "translations.manage",
       "media.manage",
     ],
   },
@@ -133,37 +145,8 @@ export const adminRoles: AdminRoleDefinition[] = [
       "projects.read",
       "posts.read",
       "messages.read",
+      "audit.read",
     ],
-  },
-];
-
-export const adminUsers: AdminUser[] = [
-  {
-    id: "usr_super_admin",
-    name: "Ede Rojin Delibas",
-    email: "ederojind@gmail.com",
-    requestedRole: "super_admin",
-    assignedRole: "super_admin",
-    status: "active",
-    createdAt: "2026-07-20",
-    approvedAt: "2026-07-20",
-    lastLoginAt: "2026-07-24",
-  },
-  {
-    id: "usr_pending_editor",
-    name: "Content Reviewer",
-    email: "reviewer@example.com",
-    requestedRole: "editor",
-    status: "pending",
-    createdAt: "2026-07-24",
-  },
-  {
-    id: "usr_pending_viewer",
-    name: "Portfolio Viewer",
-    email: "viewer@example.com",
-    requestedRole: "viewer",
-    status: "pending",
-    createdAt: "2026-07-24",
   },
 ];
 
@@ -187,6 +170,12 @@ export const adminNavItems: AdminNavItem[] = [
     permission: "posts.read",
   },
   {
+    label: "Translations",
+    href: "/admin/translations",
+    icon: Languages,
+    permission: "translations.manage",
+  },
+  {
     label: "Pages",
     href: "/admin/pages",
     icon: FileText,
@@ -197,6 +186,12 @@ export const adminNavItems: AdminNavItem[] = [
     href: "/admin/messages",
     icon: Inbox,
     permission: "messages.read",
+  },
+  {
+    label: "Audit",
+    href: "/admin/audit-logs",
+    icon: ScrollText,
+    permission: "audit.read",
   },
   {
     label: "Media",
@@ -253,8 +248,4 @@ export const adminSecuritySteps = [
 
 export function getRoleDefinition(role: AdminRole) {
   return adminRoles.find((item) => item.role === role);
-}
-
-export function getPendingUsers() {
-  return adminUsers.filter((user) => user.status === "pending");
 }

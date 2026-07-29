@@ -1,22 +1,19 @@
 import type { Metadata } from "next";
-import {
-  CheckCircle2,
-  Clock3,
-  ShieldCheck,
-  UserRoundCheck,
-  XCircle,
-} from "lucide-react";
-import {
-  adminRoles,
-  adminSecuritySteps,
-  adminUsers,
-  getPendingUsers,
-  getRoleDefinition,
-} from "@/data/admin-access";
+import type { AccountStatus, AdminRole } from "@prisma/client";
+import { Clock3, ShieldCheck, UserRoundCheck } from "lucide-react";
+import { adminRoles, adminSecuritySteps } from "@/data/admin-access";
 import { AdminShell } from "@/components/admin/admin-shell";
+import {
+  UserApprovalControls,
+  UserRoleControls,
+} from "@/components/admin/user-action-controls";
 import { IconTile } from "@/components/shared/icon-tile";
 import { TechBadge } from "@/components/shared/tech-badge";
-import { Button } from "@/components/ui/button";
+import { getPrisma } from "@/lib/backend/prisma";
+import {
+  formatAdminRole,
+  requireAdminPagePermission,
+} from "@/lib/backend/permissions";
 
 export const metadata: Metadata = {
   title: "Admin Users",
@@ -24,22 +21,59 @@ export const metadata: Metadata = {
     "User approval, role assignment and permission planning for the portfolio CMS.",
 };
 
-const statusTone = {
-  active: "border-emerald-500/30 bg-emerald-500/10 text-emerald-700 dark:text-emerald-200",
-  pending: "border-amber-500/30 bg-amber-500/10 text-amber-700 dark:text-amber-200",
-  rejected: "border-rose-500/30 bg-rose-500/10 text-rose-700 dark:text-rose-200",
-  suspended: "border-slate-500/30 bg-slate-500/10 text-slate-700 dark:text-slate-200",
+const statusTone: Record<AccountStatus, string> = {
+  ACTIVE:
+    "border-emerald-500/30 bg-emerald-500/10 text-emerald-700 dark:text-emerald-200",
+  PENDING:
+    "border-amber-500/30 bg-amber-500/10 text-amber-700 dark:text-amber-200",
+  REJECTED:
+    "border-rose-500/30 bg-rose-500/10 text-rose-700 dark:text-rose-200",
+  SUSPENDED:
+    "border-slate-500/30 bg-slate-500/10 text-slate-700 dark:text-slate-200",
 };
 
-export default function AdminUsersPage() {
-  const pendingUsers = getPendingUsers();
+function formatDate(value?: Date | null) {
+  if (!value) {
+    return "Not yet";
+  }
+
+  return value.toLocaleDateString("en-US");
+}
+
+export default async function AdminUsersPage() {
+  const activeAdmin = await requireAdminPagePermission("users.manage");
+  const prisma = getPrisma();
+  const users = await prisma.adminUser.findMany({
+    orderBy: [
+      {
+        status: "asc",
+      },
+      {
+        createdAt: "desc",
+      },
+    ],
+    select: {
+      accessReason: true,
+      approvedAt: true,
+      createdAt: true,
+      email: true,
+      id: true,
+      lastLoginAt: true,
+      name: true,
+      requestedRole: true,
+      role: true,
+      status: true,
+    },
+  });
+  const pendingUsers = users.filter((user) => user.status === "PENDING");
+  const approvedUsers = users.filter((user) => user.status !== "PENDING");
 
   return (
     <AdminShell
       activePath="/admin/users"
       requiredPermission="users.manage"
       title="Users, roles and approval queue."
-      description="This is where the Super Admin will approve new accounts, assign roles and control who can access CMS features."
+      description="New registration requests wait here as pending database records until a Super Admin approves or rejects them."
     >
       <div className="grid gap-5">
         <section className="grid gap-4 md:grid-cols-3">
@@ -83,51 +117,57 @@ export default function AdminUsersPage() {
               <TechBadge>Super Admin only</TechBadge>
             </div>
 
-            <div className="grid gap-3">
-              {pendingUsers.map((user) => {
-                const role = getRoleDefinition(user.requestedRole);
+            {pendingUsers.length > 0 ? (
+              <div className="grid gap-3">
+                {pendingUsers.map((user) => {
+                  const requestedRole = user.requestedRole as AdminRole;
 
-                return (
-                  <div
-                    key={user.id}
-                    className="grid gap-4 rounded-md border border-border/70 bg-background/55 p-4 md:grid-cols-[1fr_auto]"
-                  >
-                    <div>
-                      <div className="flex flex-wrap items-center gap-2">
-                        <h3 className="font-semibold tracking-tight">
-                          {user.name}
-                        </h3>
-                        <span
-                          className={`rounded-md border px-2 py-1 text-xs capitalize ${statusTone[user.status]}`}
-                        >
-                          {user.status}
-                        </span>
+                  return (
+                    <div
+                      key={user.id}
+                      className="grid gap-4 rounded-md border border-border/70 bg-background/55 p-4 md:grid-cols-[1fr_auto]"
+                    >
+                      <div>
+                        <div className="flex flex-wrap items-center gap-2">
+                          <h3 className="font-semibold tracking-tight">
+                            {user.name}
+                          </h3>
+                          <span
+                            className={`rounded-md border px-2 py-1 text-xs ${statusTone[user.status]}`}
+                          >
+                            {user.status}
+                          </span>
+                        </div>
+                        <p className="mt-1 text-sm text-muted-foreground">
+                          {user.email}
+                        </p>
+                        <p className="mt-2 text-sm leading-6 text-muted-foreground">
+                          {user.accessReason ?? "No access reason provided."}
+                        </p>
+                        <div className="mt-3 flex flex-wrap gap-2">
+                          <TechBadge>
+                            Requested {formatAdminRole(requestedRole)}
+                          </TechBadge>
+                          <span className="rounded-md border border-border/70 px-2 py-1 text-xs text-muted-foreground">
+                            Requested {formatDate(user.createdAt)}
+                          </span>
+                        </div>
                       </div>
-                      <p className="mt-1 text-sm text-muted-foreground">
-                        {user.email}
-                      </p>
-                      <div className="mt-3 flex flex-wrap gap-2">
-                        <TechBadge>{role?.label ?? user.requestedRole}</TechBadge>
-                        <span className="rounded-md border border-border/70 px-2 py-1 text-xs text-muted-foreground">
-                          Requested {user.createdAt}
-                        </span>
-                      </div>
-                    </div>
 
-                    <div className="flex flex-wrap gap-2 md:items-start md:justify-end">
-                      <Button disabled size="sm">
-                        <CheckCircle2 className="size-4" />
-                        Approve
-                      </Button>
-                      <Button disabled variant="destructive" size="sm">
-                        <XCircle className="size-4" />
-                        Reject
-                      </Button>
+                      <UserApprovalControls
+                        requestedRole={requestedRole}
+                        userId={user.id}
+                      />
                     </div>
-                  </div>
-                );
-              })}
-            </div>
+                  );
+                })}
+              </div>
+            ) : (
+              <div className="rounded-md border border-border/70 bg-background/55 p-5 text-sm leading-6 text-muted-foreground">
+                No pending users. New `/admin/register` requests will appear
+                here automatically.
+              </div>
+            )}
           </article>
 
           <article className="glass-panel rounded-lg p-5">
@@ -172,36 +212,55 @@ export default function AdminUsersPage() {
 
         <section className="glass-panel rounded-lg p-5">
           <p className="text-xs font-semibold uppercase tracking-[0.22em] text-primary">
-            Current accounts
+            Current database accounts
           </p>
-          <div className="mt-5 overflow-x-auto rounded-md border border-border/70">
-            <div className="min-w-[44rem]">
-              <div className="grid grid-cols-[1.1fr_1fr_0.7fr_0.7fr] gap-3 border-b border-border/70 bg-background/65 px-4 py-3 text-xs font-semibold uppercase tracking-[0.16em] text-muted-foreground">
-                <span>User</span>
-                <span>Email</span>
-                <span>Role</span>
-                <span>Status</span>
-              </div>
-              {adminUsers.map((user) => {
-                const role = user.assignedRole
-                  ? getRoleDefinition(user.assignedRole)
-                  : getRoleDefinition(user.requestedRole);
-
-                return (
-                  <div
-                    key={user.id}
-                    className="grid grid-cols-[1.1fr_1fr_0.7fr_0.7fr] gap-3 border-b border-border/50 px-4 py-3 text-sm last:border-b-0"
-                  >
-                    <span className="font-medium">{user.name}</span>
-                    <span className="text-muted-foreground">{user.email}</span>
-                    <span>{role?.label}</span>
-                    <span className="capitalize text-muted-foreground">
-                      {user.status}
-                    </span>
+          <div className="mt-5 grid gap-3">
+            {approvedUsers.map((user) => (
+              <article
+                className="rounded-md border border-border/70 bg-background/55 p-4"
+                key={user.id}
+              >
+                <div className="flex flex-wrap items-start justify-between gap-4">
+                  <div>
+                    <div className="flex flex-wrap items-center gap-2">
+                      <h3 className="font-semibold tracking-tight">
+                        {user.name}
+                      </h3>
+                      <span
+                        className={`rounded-md border px-2 py-1 text-xs ${statusTone[user.status]}`}
+                      >
+                        {user.status}
+                      </span>
+                    </div>
+                    <p className="mt-1 text-sm text-muted-foreground">
+                      {user.email}
+                    </p>
+                    <div className="mt-3 flex flex-wrap gap-2">
+                      <TechBadge>{formatAdminRole(user.role)}</TechBadge>
+                      <TechBadge>
+                        Approved {formatDate(user.approvedAt)}
+                      </TechBadge>
+                      <TechBadge>
+                        Last login {formatDate(user.lastLoginAt)}
+                      </TechBadge>
+                    </div>
                   </div>
-                );
-              })}
-            </div>
+
+                  <UserRoleControls
+                    currentRole={user.role}
+                    currentStatus={user.status}
+                    isCurrentUser={user.id === activeAdmin.id}
+                    userId={user.id}
+                  />
+                </div>
+              </article>
+            ))}
+
+            {approvedUsers.length === 0 ? (
+              <div className="rounded-md border border-border/70 bg-background/55 p-5 text-sm leading-6 text-muted-foreground">
+                No approved, rejected or suspended database users yet.
+              </div>
+            ) : null}
           </div>
         </section>
       </div>

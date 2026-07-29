@@ -1,3 +1,4 @@
+import { revalidatePath } from "next/cache";
 import { z } from "zod";
 import { getServerErrorMessage } from "@/lib/backend/auth-errors";
 import { getPrisma } from "@/lib/backend/prisma";
@@ -5,7 +6,19 @@ import {
   getProjectPublishedAt,
   projectPayloadSchema,
 } from "@/lib/backend/project-input";
-import { requireAdminApiPermission } from "@/lib/backend/permissions";
+import {
+  hasAdminPermission,
+  requireAdminApiPermission,
+} from "@/lib/backend/permissions";
+
+function revalidateProjectPages(slug?: string) {
+  revalidatePath("/");
+  revalidatePath("/projects");
+
+  if (slug) {
+    revalidatePath(`/projects/${slug}`);
+  }
+}
 
 export async function GET() {
   try {
@@ -18,6 +31,16 @@ export async function GET() {
     const prisma = getPrisma();
     const projects = await prisma.project.findMany({
       include: {
+        highlights: {
+          orderBy: {
+            sortOrder: "asc",
+          },
+        },
+        screenshots: {
+          orderBy: {
+            sortOrder: "asc",
+          },
+        },
         technologies: {
           orderBy: {
             sortOrder: "asc",
@@ -49,7 +72,21 @@ export async function POST(request: Request) {
 
     const body = await request.json();
     const values = projectPayloadSchema.parse(body);
+    const canPublish = hasAdminPermission(auth.user, "projects.publish");
+    const status = canPublish ? values.status : "DRAFT";
     const prisma = getPrisma();
+    const screenshots =
+      values.screenshots.length > 0
+        ? values.screenshots
+        : [
+            {
+              description:
+                "Project overview generated from the admin CMS record.",
+              imageAlt: values.imageAlt,
+              imageSrc: values.imageSrc,
+              title: "Project overview",
+            },
+          ];
 
     const project = await prisma.project.create({
       data: {
@@ -66,12 +103,27 @@ export async function POST(request: Request) {
         imageSrc: values.imageSrc,
         outcome: values.outcome,
         problem: values.problem,
-        publishedAt: getProjectPublishedAt(values.status),
+        publishedAt: getProjectPublishedAt(status),
         role: values.role,
         slug: values.slug,
-        status: values.status,
+        status,
         title: values.title,
         year: values.year,
+        highlights: {
+          create: values.highlights.map((text, index) => ({
+            text,
+            sortOrder: index,
+          })),
+        },
+        screenshots: {
+          create: screenshots.map((screenshot, index) => ({
+            description: screenshot.description,
+            imageAlt: screenshot.imageAlt,
+            imageSrc: screenshot.imageSrc,
+            sortOrder: index,
+            title: screenshot.title,
+          })),
+        },
         technologies: {
           create: values.tech.map((label, index) => ({
             label,
@@ -80,6 +132,8 @@ export async function POST(request: Request) {
         },
       },
       include: {
+        highlights: true,
+        screenshots: true,
         technologies: true,
       },
     });
@@ -96,6 +150,8 @@ export async function POST(request: Request) {
         },
       },
     });
+
+    revalidateProjectPages(project.slug);
 
     return Response.json(
       {

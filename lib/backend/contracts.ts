@@ -105,8 +105,32 @@ export const adminApiEndpoints = [
   {
     method: "POST",
     path: "/api/admin/translations/draft",
-    permission: "pages.update",
+    permission: "translations.manage",
     purpose: "Creates draft translations while protecting technical terms.",
+  },
+  {
+    method: "PATCH",
+    path: "/api/admin/translations/[id]/review",
+    permission: "translations.manage",
+    purpose: "Marks a draft translation as reviewed before public use.",
+  },
+  {
+    method: "GET",
+    path: "/api/admin/messages",
+    permission: "messages.read",
+    purpose: "Reads contact messages from the public contact form.",
+  },
+  {
+    method: "PATCH",
+    path: "/api/admin/messages/[id]",
+    permission: "messages.update",
+    purpose: "Updates contact message review status.",
+  },
+  {
+    method: "GET",
+    path: "/api/admin/audit-logs",
+    permission: "audit.read",
+    purpose: "Reads recent protected admin activity logs.",
   },
 ] as const;
 
@@ -120,13 +144,13 @@ export function getBackendHealthSnapshot() {
       superAdminEmail: Boolean(process.env.SUPER_ADMIN_EMAIL),
     },
     contentSnapshot: {
-      currentStorage: "static TypeScript data",
+      currentStorage: "PostgreSQL tables with static fallback",
       plannedStorage: "PostgreSQL tables",
       projects: projects.length,
       blogPosts: blogPosts.length,
     },
     decision: backendDecision,
     nextStep:
-      "Connect a real PostgreSQL DATABASE_URL, apply migrations and add admin approval routes.",
+      "Add richer media uploads, soft delete and external translation provider integration.",
   };
 }

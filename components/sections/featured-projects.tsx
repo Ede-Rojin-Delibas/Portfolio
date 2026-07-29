@@ -1,12 +1,12 @@
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { getI18n } from "@/data/i18n";
-import { getLocalizedFeaturedProjects } from "@/data/localized-content";
 import { ProjectCard } from "@/components/projects/project-card";
 import { Reveal } from "@/components/shared/reveal";
 import { Section } from "@/components/shared/section";
 import { WheelScroll } from "@/components/shared/wheel-scroll";
 import { Button } from "@/components/ui/button";
+import { getFeaturedProjects } from "@/lib/content/projects";
 import { getServerLocale } from "@/lib/server-locale";
 
 export async function FeaturedProjects() {
@@ -28,7 +28,7 @@ export async function FeaturedProjects() {
           browse: "Browse all projects",
         };
   const categoryCopy = getI18n(locale).projectExplorer;
-  const showcaseProjects = getLocalizedFeaturedProjects(locale).slice(0, 5);
+  const showcaseProjects = (await getFeaturedProjects(locale)).slice(0, 5);
 
   return (
     <Section

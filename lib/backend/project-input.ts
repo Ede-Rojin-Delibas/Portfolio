@@ -23,9 +23,20 @@ export const projectPayloadSchema = z.object({
   github: optionalUrl,
   imageAlt: z.string().trim().optional().transform((value) => value || null),
   imageSrc: optionalUrl,
+  highlights: z.array(z.string().trim().min(1)).default([]),
   outcome: z.string().min(12, "Outcome must be at least 12 characters."),
   problem: z.string().min(12, "Problem must be at least 12 characters."),
   role: z.string().min(2, "Role is required."),
+  screenshots: z
+    .array(
+      z.object({
+        description: z.string().min(3),
+        imageAlt: z.string().trim().optional().transform((value) => value || null),
+        imageSrc: optionalUrl,
+        title: z.string().min(2),
+      }),
+    )
+    .default([]),
   slug: z
     .string()
     .min(3, "Slug must be at least 3 characters.")

@@ -205,7 +205,7 @@ export default async function AdminStudioPage() {
       activePath="/admin"
       requiredPermission="dashboard.read"
       title="Content Studio for projects, blog posts and translation workflow."
-      description="This is the first safe admin step: no public write actions yet, but the content model, approval model and translation rules are now visible and ready to connect to storage."
+      description="This admin area now connects content, messages, translation drafts and audit logs to PostgreSQL with server-side permission checks."
     >
       <div className="grid gap-5">
         <Reveal>
@@ -213,15 +213,15 @@ export default async function AdminStudioPage() {
             <IconTile icon={AlertTriangle} iconClassName="size-5" tone="amber" />
             <div>
               <p className="text-lg font-semibold tracking-tight">
-                This page is a planning studio, not an authenticated admin yet.
+                This page is now connected to protected admin modules.
               </p>
               <p className="mt-2 text-sm leading-6 text-muted-foreground">
-                The next step should add authentication before save, delete,
-                publish or translation API actions are exposed.
+                Projects, blog posts, contact messages, translation drafts and
+                audit logs are handled by protected backend routes.
               </p>
             </div>
             <span className="rounded-md border border-border/70 bg-background/60 px-3 py-2 text-sm text-muted-foreground">
-              Safe scaffold
+              Database backed
             </span>
           </div>
         </Reveal>

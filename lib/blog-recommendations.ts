@@ -46,7 +46,8 @@ export function getRelatedBlogPosts({
         (score, token) => score + (sourceTokens.has(token) ? 0.35 : 0),
         0,
       );
-      const categoryScore = item.category === post.category ? 8 : 0;
+      const categoryScore =
+        normalize(item.category) === normalize(post.category) ? 8 : 0;
       const toneScore = item.tone === post.tone ? 1 : 0;
       const recencyScore = Math.max(0, posts.length - index) * 0.05;
 

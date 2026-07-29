@@ -49,7 +49,9 @@ const contactFormCopy = {
     idle:
       "Share the project context, goal and the kind of collaboration you have in mind.",
     success:
-      "Message format looks good. Email delivery can be connected next.",
+      "Message saved successfully. I can review it from the admin panel now.",
+    error:
+      "Message could not be saved. Please check the fields and try again.",
     sending: "Sending...",
     submit: "Send message",
     validation: {
@@ -82,7 +84,9 @@ const contactFormCopy = {
     idle:
       "Proje bağlamını, hedefini ve düşündüğün iş birliği türünü paylaş.",
     success:
-      "Mesaj formatı doğru görünüyor. E-posta gönderimi sonraki adımda bağlanabilir.",
+      "Mesaj kaydedildi. Artık admin panelinden incelenebilir.",
+    error:
+      "Mesaj kaydedilemedi. Lütfen alanları kontrol edip tekrar dene.",
     sending: "Gönderiliyor...",
     submit: "Mesaj gönder",
     validation: {
@@ -128,6 +132,7 @@ type ContactFormProps = {
 
 export function ContactForm({ locale = defaultLocale }: ContactFormProps) {
   const [submitted, setSubmitted] = React.useState(false);
+  const [submitError, setSubmitError] = React.useState<string | null>(null);
   const copy = contactFormCopy[locale] ?? contactFormCopy[defaultLocale];
   const contactSchema = React.useMemo(() => createContactSchema(copy), [copy]);
   const form = useForm<ContactFormValues>({
@@ -137,10 +142,25 @@ export function ContactForm({ locale = defaultLocale }: ContactFormProps) {
 
   async function onSubmit(values: ContactFormValues) {
     setSubmitted(false);
+    setSubmitError(null);
 
-    await new Promise((resolve) => setTimeout(resolve, 500));
+    const response = await fetch("/api/contact", {
+      body: JSON.stringify(values),
+      headers: {
+        "Content-Type": "application/json",
+      },
+      method: "POST",
+    });
 
-    console.info("Validated contact form submission", values);
+    const data = (await response.json().catch(() => null)) as {
+      message?: string;
+    } | null;
+
+    if (!response.ok) {
+      setSubmitError(data?.message ?? copy.error);
+      return;
+    }
+
     setSubmitted(true);
     form.reset(defaultValues);
   }
@@ -237,7 +257,19 @@ export function ContactForm({ locale = defaultLocale }: ContactFormProps) {
 
           <div className="mt-5 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
             <AnimatePresence mode="wait" initial={false}>
-              {submitted ? (
+              {submitError ? (
+                <motion.p
+                  key="error"
+                  initial={{ opacity: 0, y: 10, scale: 0.98 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  exit={{ opacity: 0, y: -8, scale: 0.98 }}
+                  transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
+                  aria-live="polite"
+                  className="inline-flex items-center gap-2 rounded-md border border-rose-500/25 bg-rose-500/10 px-3 py-2 text-sm text-rose-500"
+                >
+                  {submitError}
+                </motion.p>
+              ) : submitted ? (
                 <motion.p
                   key="success"
                   initial={{ opacity: 0, y: 10, scale: 0.98 }}

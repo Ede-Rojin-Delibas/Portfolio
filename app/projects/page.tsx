@@ -2,10 +2,10 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import { generatedAssets } from "@/data/generated-assets";
 import { getI18n } from "@/data/i18n";
-import { getLocalizedProjects } from "@/data/localized-content";
 import { ProjectExplorer } from "@/components/projects/project-explorer";
 import { Reveal } from "@/components/shared/reveal";
 import { Section } from "@/components/shared/section";
+import { getProjects } from "@/lib/content/projects";
 import { getServerLocale } from "@/lib/server-locale";
 
 export const metadata: Metadata = {
@@ -17,7 +17,7 @@ export const metadata: Metadata = {
 export default async function ProjectsPage() {
   const locale = await getServerLocale();
   const copy = getI18n(locale).projectsPage;
-  const localizedProjects = getLocalizedProjects(locale);
+  const localizedProjects = await getProjects(locale);
 
   return (
     <main>

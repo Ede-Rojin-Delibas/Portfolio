@@ -1,3 +1,4 @@
+import { revalidatePath } from "next/cache";
 import { z } from "zod";
 import { getServerErrorMessage } from "@/lib/backend/auth-errors";
 import { getPrisma } from "@/lib/backend/prisma";
@@ -5,11 +6,23 @@ import {
   getProjectPublishedAt,
   projectUpdatePayloadSchema,
 } from "@/lib/backend/project-input";
-import { requireAdminApiPermission } from "@/lib/backend/permissions";
+import {
+  hasAdminPermission,
+  requireAdminApiPermission,
+} from "@/lib/backend/permissions";
 
 type ProjectRouteProps = {
   params: Promise<{ id: string }>;
 };
+
+function revalidateProjectPages(slug?: string) {
+  revalidatePath("/");
+  revalidatePath("/projects");
+
+  if (slug) {
+    revalidatePath(`/projects/${slug}`);
+  }
+}
 
 export async function PATCH(request: Request, { params }: ProjectRouteProps) {
   try {
@@ -21,17 +34,47 @@ export async function PATCH(request: Request, { params }: ProjectRouteProps) {
 
     const { id } = await params;
     const body = await request.json();
-    const values = projectUpdatePayloadSchema.parse(body);
+    const values = projectUpdatePayloadSchema.parse(body); //Controls format of the data , either if is broke, missing or dangerous
     const prisma = getPrisma();
-    const { tech, ...projectValues } = values;
-    const shouldUpdatePublishedAt = typeof values.status !== "undefined";
+    const {
+      highlights,
+      screenshots,
+      status: requestedStatus,
+      tech,
+      ...projectValues
+    } = values;
+    const canPublish = hasAdminPermission(auth.user, "projects.publish");
+    const status = canPublish ? requestedStatus : "DRAFT";
+    const shouldUpdatePublishedAt = typeof status !== "undefined";
 
     const project = await prisma.project.update({
       where: { id },
       data: {
         ...projectValues,
         publishedAt: shouldUpdatePublishedAt
-          ? getProjectPublishedAt(values.status)
+          ? getProjectPublishedAt(status)
+          : undefined,
+        status,
+        highlights: highlights
+          ? {
+              deleteMany: {},
+              create: highlights.map((text, index) => ({
+                text,
+                sortOrder: index,
+              })),
+            }
+          : undefined,
+        screenshots: screenshots
+          ? {
+              deleteMany: {},
+              create: screenshots.map((screenshot, index) => ({
+                description: screenshot.description,
+                imageAlt: screenshot.imageAlt,
+                imageSrc: screenshot.imageSrc,
+                sortOrder: index,
+                title: screenshot.title,
+              })),
+            }
           : undefined,
         technologies: tech
           ? {
@@ -44,6 +87,8 @@ export async function PATCH(request: Request, { params }: ProjectRouteProps) {
           : undefined,
       },
       include: {
+        highlights: true,
+        screenshots: true,
         technologies: true,
       },
     });
@@ -60,6 +105,8 @@ export async function PATCH(request: Request, { params }: ProjectRouteProps) {
         },
       },
     });
+
+    revalidateProjectPages(project.slug);
 
     return Response.json({
       message: "Project updated.",
@@ -112,6 +159,8 @@ export async function DELETE(_request: Request, { params }: ProjectRouteProps) {
         },
       },
     });
+
+    revalidateProjectPages(project.slug);
 
     return Response.json({
       message: "Project deleted.",

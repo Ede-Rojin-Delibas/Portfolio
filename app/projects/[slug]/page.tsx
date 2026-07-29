@@ -11,8 +11,6 @@ import {
 } from "lucide-react";
 import { generatedAssets, type GeneratedAsset } from "@/data/generated-assets";
 import { getI18n } from "@/data/i18n";
-import { getLocalizedProject } from "@/data/localized-content";
-import { projects } from "@/data/projects";
 import { ParallaxCard } from "@/components/shared/parallax-card";
 import type { Project } from "@/data/projects";
 import { GithubBrandIcon } from "@/components/shared/brand-icons";
@@ -22,6 +20,7 @@ import { Section } from "@/components/shared/section";
 import { StaggerItem, StaggerList } from "@/components/shared/stagger-list";
 import { TechBadge } from "@/components/shared/tech-badge";
 import { Button } from "@/components/ui/button";
+import { getProjectBySlug, getProjectStaticParams } from "@/lib/content/projects";
 import { cn } from "@/lib/utils";
 import { getServerLocale } from "@/lib/server-locale";
 
@@ -160,10 +159,8 @@ function getProjectScreenshotImage(
   return images[index % images.length];
 }
 
-export function generateStaticParams() {
-  return projects.map((project) => ({
-    slug: project.slug,
-  }));
+export async function generateStaticParams() {
+  return getProjectStaticParams();
 }
 
 export async function generateMetadata({
@@ -171,10 +168,7 @@ export async function generateMetadata({
 }: ProjectDetailPageProps): Promise<Metadata> {
   const { slug } = await params;
   const locale = await getServerLocale();
-  const baseProject = projects.find((item) => item.slug === slug);
-  const project = baseProject
-    ? getLocalizedProject(baseProject, locale)
-    : undefined;
+  const project = await getProjectBySlug(slug, locale);
 
   if (!project) {
     return {
@@ -198,10 +192,7 @@ export default async function ProjectDetailPage({
 }: ProjectDetailPageProps) {
   const { slug } = await params;
   const locale = await getServerLocale();
-  const baseProject = projects.find((item) => item.slug === slug);
-  const project = baseProject
-    ? getLocalizedProject(baseProject, locale)
-    : undefined;
+  const project = await getProjectBySlug(slug, locale);
 
   if (!project) {
     notFound();

@@ -3,9 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeft, ArrowUpRight, CalendarDays, Clock3 } from "lucide-react";
-import { blogPosts } from "@/data/blog";
 import { getI18n } from "@/data/i18n";
-import { getLocalizedBlogPost } from "@/data/localized-content";
 import { BlogPostIcon } from "@/components/blog/blog-post-icon";
 import { IconTile } from "@/components/shared/icon-tile";
 import { Reveal } from "@/components/shared/reveal";
@@ -13,16 +11,15 @@ import { Section } from "@/components/shared/section";
 import { TechBadge } from "@/components/shared/tech-badge";
 import { Button } from "@/components/ui/button";
 import { getRelatedBlogPosts } from "@/lib/blog-recommendations";
+import { getBlogPostBySlug, getBlogPosts, getBlogStaticParams } from "@/lib/content/blog";
 import { getServerLocale } from "@/lib/server-locale";
 
 type BlogPostPageProps = {
   params: Promise<{ slug: string }>;
 };
 
-export function generateStaticParams() {
-  return blogPosts.map((post) => ({
-    slug: post.slug,
-  }));
+export async function generateStaticParams() {
+  return getBlogStaticParams();
 }
 
 export async function generateMetadata({
@@ -30,8 +27,7 @@ export async function generateMetadata({
 }: BlogPostPageProps): Promise<Metadata> {
   const { slug } = await params;
   const locale = await getServerLocale();
-  const basePost = blogPosts.find((item) => item.slug === slug);
-  const post = basePost ? getLocalizedBlogPost(basePost, locale) : undefined;
+  const post = await getBlogPostBySlug(slug, locale);
 
   if (!post) {
     return {
@@ -53,10 +49,10 @@ export async function generateMetadata({
 export default async function BlogPostPage({ params }: BlogPostPageProps) {
   const { slug } = await params;
   const locale = await getServerLocale();
-  const basePost = blogPosts.find((item) => item.slug === slug);
-  const post = basePost ? getLocalizedBlogPost(basePost, locale) : undefined;
+  const allPosts = await getBlogPosts(locale);
+  const post = allPosts.find((item) => item.slug === slug);
 
-  if (!basePost || !post) {
+  if (!post) {
     notFound();
   }
 
@@ -85,9 +81,9 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
           status: post.status,
         };
   const relatedPosts = getRelatedBlogPosts({
-    post: basePost,
-    posts: blogPosts,
-  }).map((item) => getLocalizedBlogPost(item, locale));
+    post,
+    posts: allPosts,
+  });
 
   return (
     <main>

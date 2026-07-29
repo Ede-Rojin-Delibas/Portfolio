@@ -96,6 +96,7 @@ model Project {
   authorId     String?
   author       AdminUser?         @relation(fields: [authorId], references: [id], onDelete: SetNull)
   technologies ProjectTechnology[]
+  highlights   ProjectHighlight[]
   screenshots  ProjectScreenshot[]
   translations ProjectTranslation[]
 }
@@ -119,6 +120,14 @@ model ProjectScreenshot {
   sortOrder   Int     @default(0)
   projectId   String
   project     Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+}
+
+model ProjectHighlight {
+  id        String  @id @default(cuid())
+  text      String
+  sortOrder Int     @default(0)
+  projectId String
+  project   Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
 }
 
 model ProjectTranslation {
