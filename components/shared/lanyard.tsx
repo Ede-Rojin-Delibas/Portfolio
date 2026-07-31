@@ -214,6 +214,14 @@ function Band({
   const ang = React.useMemo(() => new THREE.Vector3(), []);
   const rot = React.useMemo(() => new THREE.Vector3(), []);
   const dir = React.useMemo(() => new THREE.Vector3(), []);
+  const dragBounds = React.useMemo(
+    () => ({
+      maxX: isMobile ? 3.2 : 5.8,
+      maxY: isMobile ? 4.2 : 5.2,
+      minY: isMobile ? -3.2 : -4.4,
+    }),
+    [isMobile],
+  );
   const segmentProps = React.useMemo<RigidBodyProps>(
     () => ({
       angularDamping: 4,
@@ -353,9 +361,17 @@ function Band({
       vec.add(dir.multiplyScalar(state.camera.position.length()));
       [card, j1, j2, j3, fixed].forEach((ref) => ref.current?.wakeUp());
       card.current?.setNextKinematicTranslation({
-        x: vec.x - dragged.x,
-        y: vec.y - dragged.y,
-        z: vec.z - dragged.z,
+        x: THREE.MathUtils.clamp(
+          vec.x - dragged.x,
+          -dragBounds.maxX,
+          dragBounds.maxX,
+        ),
+        y: THREE.MathUtils.clamp(
+          vec.y - dragged.y,
+          dragBounds.minY,
+          dragBounds.maxY,
+        ),
+        z: THREE.MathUtils.clamp(vec.z - dragged.z, -1.25, 1.25),
       });
     }
 

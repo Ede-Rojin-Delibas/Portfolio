@@ -15,6 +15,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import { PasswordInput } from "@/components/admin/password-input";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
@@ -131,9 +132,8 @@ export function RegisterForm() {
               <FormItem>
                 <FormLabel>Password</FormLabel>
                 <FormControl>
-                  <Input
+                  <PasswordInput
                     placeholder="At least 8 characters"
-                    type="password"
                     autoComplete="new-password"
                     {...field}
                   />
@@ -150,9 +150,8 @@ export function RegisterForm() {
               <FormItem>
                 <FormLabel>Confirm password</FormLabel>
                 <FormControl>
-                  <Input
+                  <PasswordInput
                     placeholder="Repeat password"
-                    type="password"
                     autoComplete="new-password"
                     {...field}
                   />

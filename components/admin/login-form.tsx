@@ -18,6 +18,7 @@ import {
 } from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { PasswordInput } from "@/components/admin/password-input";
 
 const loginSchema = z.object({
   email: z.string().email("Enter a valid email address."),
@@ -102,9 +103,8 @@ export function LoginForm() {
             <FormItem>
               <FormLabel>Password</FormLabel>
               <FormControl>
-                <Input
+                <PasswordInput
                   placeholder="At least 8 characters"
-                  type="password"
                   autoComplete="current-password"
                   {...field}
                 />

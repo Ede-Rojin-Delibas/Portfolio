@@ -3421,12 +3421,12 @@
   .about-hero-lanyard {
     position: absolute;
     isolation: isolate;
-    top: clamp(-13rem, -12vw, -9rem);
-    right: clamp(-8rem, -4vw, -2rem);
+    top: clamp(-14rem, -12vw, -9rem);
+    right: clamp(-16rem, -12vw, -6rem);
     z-index: 1;
-    width: min(29rem, 34vw);
-    height: clamp(29rem, 38vw, 37rem);
-    pointer-events: none;
+    width: min(52rem, 62vw);
+    height: clamp(34rem, 44vw, 43rem);
+    pointer-events: auto;
     opacity: 0.96;
     filter:
       drop-shadow(0 34px 80px color-mix(in oklch, var(--primary) 22%, transparent))
@@ -3434,24 +3434,8 @@
   }
 
   .about-hero-lanyard::before {
-    content: "Drag It!";
-    position: absolute;
-    left: 50%;
-    top: 52%;
-    z-index: 0;
-    transform: translate(-50%, -50%);
-    color: color-mix(in oklch, var(--foreground) 8%, transparent);
-    font-size: clamp(4.5rem, 6vw, 6.2rem);
-    font-weight: 900;
-    letter-spacing: 0;
-    line-height: 1;
-    white-space: nowrap;
-    pointer-events: none;
-    user-select: none;
-  }
-
-  .dark .about-hero-lanyard::before {
-    color: rgb(255 255 255 / 0.055);
+    content: none;
+    display: none;
   }
 
   .about-hero-lanyard canvas {
@@ -5002,6 +4986,22 @@
     to {
       stroke-dashoffset: -56;
     }
+  }
+
+  .site-background__grid,
+  .statement-system-visual__grid,
+  .hero-wireframe {
+    display: none;
+  }
+
+  .technical-grid,
+  .contact-map-grid {
+    background-image: none;
+  }
+
+  .hero-skin::after,
+  .admin-skin::before {
+    content: none;
   }
 
   @media (prefers-reduced-motion: reduce) {
