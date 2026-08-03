@@ -49,7 +49,6 @@ const engineeringLayersCopy = {
     panelTitleSuffix: ".",
     panelDescription:
       "The site works better when every section has a distinct purpose: introduction, stack, story, projects, writing and contact.",
-    orbit: ["Code", "Data", "AI", "UI"],
     layers,
     nextStop:
       "Next stop: project cards show how these layers become concrete case studies.",
@@ -67,7 +66,6 @@ const engineeringLayersCopy = {
     panelTitleSuffix: ".",
     panelDescription:
       "Her bölümün net bir amacı olduğunda site daha güçlü çalışır: tanıtım, stack, hikaye, projeler, yazılar ve iletişim.",
-    orbit: ["Kod", "Veri", "YZ", "UI"],
     layers: [
       {
         ...layers[0],
@@ -130,12 +128,6 @@ export function EngineeringLayers({
             <p className="mt-4 text-sm leading-7 text-muted-foreground md:text-base">
               {copy.panelDescription}
             </p>
-
-            <div className="story-orbit mt-8" aria-hidden="true">
-              {copy.orbit.map((item) => (
-                <span key={item}>{item}</span>
-              ))}
-            </div>
           </div>
         </Reveal>
 

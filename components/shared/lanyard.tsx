@@ -83,7 +83,7 @@ type LanyardRigidBody = RapierRigidBody & {
 export function Lanyard({
   backImage = null,
   className,
-  fov = 20,
+  fov = 28,
   frontImage = null,
   gravity = [0, -40, 0],
   imageFit = "cover",
@@ -216,9 +216,9 @@ function Band({
   const dir = React.useMemo(() => new THREE.Vector3(), []);
   const dragBounds = React.useMemo(
     () => ({
-      maxX: isMobile ? 3.2 : 5.8,
-      maxY: isMobile ? 4.2 : 5.2,
-      minY: isMobile ? -3.2 : -4.4,
+      maxX: isMobile ? 2.6 : 4.25,
+      maxY: isMobile ? 3.35 : 4.45,
+      minY: isMobile ? -2.75 : -3.55,
     }),
     [isMobile],
   );

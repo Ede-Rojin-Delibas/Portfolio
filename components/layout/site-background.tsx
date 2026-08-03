@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import { NeatBackground } from "@/components/layout/neat-background";
 
 export function SiteBackground() {
   const backgroundRef = React.useRef<HTMLDivElement>(null);
@@ -26,14 +27,9 @@ export function SiteBackground() {
 
   return (
     <div ref={backgroundRef} aria-hidden="true" className="site-background">
-      <div className="site-background__aurora" />
-      <div className="site-background__texture" />
+      <NeatBackground />
+      <div className="site-background__wash" />
       <div className="site-background__mouse" />
-      <div className="site-background__grid" />
-      <div className="site-background__beam site-background__beam--primary" />
-      <div className="site-background__beam site-background__beam--accent" />
-      <div className="floating-cube floating-cube--primary" />
-      <div className="floating-cube floating-cube--secondary" />
       <div className="site-background__noise" />
     </div>
   );

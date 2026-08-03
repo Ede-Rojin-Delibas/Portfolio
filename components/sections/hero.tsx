@@ -1,5 +1,4 @@
 import Link from "next/link";
-import Image from "next/image";
 import { ArrowRight, Sparkles } from "lucide-react";
 import {
   AuroraText,
@@ -73,25 +72,6 @@ export async function Hero() {
 
   return (
     <section className="hero-skin section-skin relative -mt-20 overflow-hidden pt-28 pb-16 md:pt-32 md:pb-24">
-      <div aria-hidden="true" className="hero-wireframe" />
-      <Image
-        src="/images/hero-glass-crystal.png"
-        alt=""
-        width={900}
-        height={900}
-        preload
-        aria-hidden="true"
-        className="hero-glass-object"
-      />
-      <div
-        aria-hidden="true"
-        className="hero-abstract-object hero-abstract-object--primary"
-      />
-      <div
-        aria-hidden="true"
-        className="hero-abstract-object hero-abstract-object--secondary"
-      />
-
       <Container className="relative z-10 grid min-w-0 items-start gap-12 lg:grid-cols-[1.05fr_0.95fr]">
         <div className="min-w-0">
           <Reveal>

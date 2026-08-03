@@ -25,7 +25,7 @@ export function SiteChrome({ children, locale }: SiteChromeProps) {
       <SiteBackground />
       <div className="relative z-10 flex min-h-screen flex-col">
         <Navbar locale={locale} />
-        <div className="flex-1">{children}</div>
+        <div className="site-content flex-1">{children}</div>
         <Footer locale={locale} />
       </div>
     </>

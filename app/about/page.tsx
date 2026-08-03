@@ -339,7 +339,8 @@ export default async function AboutPage() {
       >
         <Lanyard
           className="about-hero-lanyard"
-          position={[0, 0, 18]}
+          fov={28}
+          position={[0, 0, 20]}
           gravity={[0, -40, 0]}
           lanyardWidth={0.82}
         />
@@ -385,14 +386,6 @@ export default async function AboutPage() {
                 className="object-cover"
               />
               <div className="about-generated-visual__overlay" />
-              <Image
-                src="/images/hero-glass-crystal.png"
-                alt=""
-                width={320}
-                height={320}
-                aria-hidden="true"
-                className="about-generated-visual__object"
-              />
             </div>
             <div className="about-generated-visual__copy">
               <p className="text-xs font-semibold uppercase tracking-[0.24em] text-primary">
